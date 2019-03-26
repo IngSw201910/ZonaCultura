@@ -9,16 +9,15 @@
 <p>Por favor llenar los datos de inicio de sesion o crear una cuenta</p>
 
 
-<form>
-  Username:<br>
-  <input type="text" name="name">
-  <br>
-  Password:<br>
-  <input type="text" name="password">
+<form class="site-form" method="post">
+  {% csrf_token %}
+	{{ form }}
+	<input type="submit" value="Iniciar Sesion">
+
 </form>
 <p>Para crear usuario:</p>
 
-
+<button type="button"><a href="Registro">Registrarse</a></button>
 
 </body>
 </html>
