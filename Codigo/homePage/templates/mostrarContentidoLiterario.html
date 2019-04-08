@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Libro {{Libro.Titulo}}</title>
+</head>
+<body>
+
+
+<h1>{{Libro.Titulo}}</h1>
+<p>Generos: {% for genero in Libro.genero.all %}{{genero}} <br/> {% endfor %}</p>
+<p>Descripcion del libro: {{Libro.Descripcion}}</p>
+<p> Formato: {% for formato in Libro.formato.all %} {{formato}} <br/> {% endfor %}</p>
+<p>Cantidad de paginas: {{Libro.CantidadPaginas}}</p>
+<p>Numero ISBN: {{Libro.ISBN}}</p>
+<p>Idioma: {{Libro.Idioma}}</p>
+<p> Imagen: </p><img src="{{Libro.imagen.url}}">
+<br/>
+<a href="/HomePage">Volver a la Pagina de Inicio</a>
+
+
+
+
+</body>
+</html>

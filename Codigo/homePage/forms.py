@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from homePage.models  import infousuario
-
+from homePage.models  import infoLibro
 
 
 class logInForm (forms.Form):
@@ -26,6 +26,35 @@ class RegistroForm(UserCreationForm):
 		'email':'Correo electronico',
 		}
 
+class contenidoLiterarioForm(forms.ModelForm):
+	class Meta:
+		model=infoLibro
+		fields=[
+		'Titulo',
+		'imagen',
+		'Descripcion',
+		'ISBN',
+		'CantidadPaginas',
+		'formato',
+		'genero',
+		'Idioma'
+		]
+		labels={
+		'Titulo':'Titulo',
+		'imagen':'Imagen del contenido literario',
+		'Descripcion':'Descripcion',
+		'ISBN':'Numero ISBN',
+		'CantidadPaginas':'Numero de paginas del producto',
+		'formato':'Formato del contenido literario',
+		'genero': 'Genero del contenido literario',
+		'Idioma':'Idioma en el que esta escrito el contenido literario'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+
 class infoForm(forms.ModelForm):
  	class Meta:
  		model=infousuario
@@ -37,6 +66,6 @@ class infoForm(forms.ModelForm):
  		 'aficiones':'Disciplinas',
  		   }
  		widgets={
- 			'aficiones':forms.CheckboxSelectMultiple(),
+ 			#'aficiones':forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
  		}

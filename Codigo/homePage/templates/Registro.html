@@ -11,13 +11,13 @@
 <button type="button"><a href="/">Pagina de Inicio</a></button>
 
 
-<form>
-  Username:<br>
-  <input type="text" name="name">
-  <br>
-  Password:<br>
-  <input type="text" name="password">
-   <button type='submit'>Iniciar Sesion </button>
+<form class="site-form" method="post">
+	{% csrf_token %}
+	{{ user_form }}
+	{{profile_form}}
+
+	<input type="submit" value="Registrarse">
+
 </form>
 
 
