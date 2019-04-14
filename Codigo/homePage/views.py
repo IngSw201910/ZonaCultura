@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from homePage.forms import infoForm
 from homePage.forms import infoLibro
+from homePage.models import Carrito
+from homePage.models import infousuario
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
 from homePage.forms import contenidoLiterarioForm
@@ -84,16 +86,22 @@ def subirObraLiteraria_view(request):
 
 @login_required(login_url='/')
 def mostrarObraLiteraria(request,primaryKey):
-	
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
-
-
 	print(primaryKey)
 	try: 
+	
 		Libro=infoLibro.objects.get(pk=primaryKey)
+		if request.GET.get('carrito'):
+			print('Hello! el libro con id: ',Libro.id)
+			carro=Carrito.objects.create(libro= Libro, usuario=infousuario.objects.get(user=request.user))
+
+			#carro.usuario=infousuario.objects.get(user=request.user)
+			
+			#print("Usuario:",infousuario.objects.get(user=request.user).id)
 	except:
 		raise Http404
+
 
 
 	return render(request, 'mostrarContentidoLiterario.html' ,{'Libro':Libro})
