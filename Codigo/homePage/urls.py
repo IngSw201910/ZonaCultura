@@ -9,6 +9,7 @@ urlpatterns=[
 	url(r'^$', views.index, name='Home Page'),
 	url(r'^Registro$', views.registro_view, name='JaveCultura Registro Page'),
 	url(r'^HomePage$', views.homePage_view, name='Home Page'),
+	url(r'^ComprarCredito$', views.comprarCredito_view, name='comprar credito'),
 	url(r'^SubirObra$', views.subirObra_view, name='Seleccion de tipo de Obra'),
 	url(r'^SubirObra/SubirContenidoLiterario$', views.subirObraLiteraria_view, name='Subir contenido literario'),
 	path('Producto/ContenidoLiterario/<int:primaryKey>', views.mostrarObraLiteraria)

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Comprar credito</title>
+</head>
+<body>
+
+<p>Rellenar los campos del siguiente formulario para obtener credito y comprar contenidos artísticos</p>
+
+
+<form class="site-form" method="post"  enctype="multipart/form-data">
+  	{% csrf_token %}
+	{{ card_Form }}
+	{{credit_Form}}
+	<input type="submit" value="Comprar">
+</form>
+<a href="vistaUsuario">vistica</a>
+
+
+
+</body>
+</html>

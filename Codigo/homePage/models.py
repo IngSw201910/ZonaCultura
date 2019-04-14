@@ -35,7 +35,7 @@ class infoLibro(models.Model):
 	def __str__(self):
 		return'{}'.format(self.Titulo+' de '+self.user.first_name + ' '+self.user.last_name)
 class infousuario(models.Model):
-	balance= models.IntegerField(default=0)
+	balance= models.IntegerField()
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
 	aficiones= models.ManyToManyField(Aficion, blank=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)
@@ -52,3 +52,29 @@ class cuentaPorCobrar(models.Model):
 	usuarioComprador= models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True, related_name='%(class)s_usuarioComprador')
 	usuarioPropioDelCobro=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='%(class)s_usuarioPropioDelCobro')
 	articuloLibro=models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
+
+class infoTarjeta(models.Model):
+	numeroTarjeta= models.IntegerField()
+	nombreTitular= models.CharField(max_length=15)
+	apellidoTitular= models.CharField(max_length=15)
+	fechaExpiración =models.CharField(max_length=5)
+	codigoSeguridad= models.IntegerField()
+	numeroCuotas =models.IntegerField()
+
+	def __str__(self):
+		return'{}'.format(self.numeroTarjeta + ' '+self.nombreTitular )
+
+class PagoCreditoManager (models.Manager):
+	def crear_pago (self,id_pago,usuario,balance):
+		pago= self.Create(usuario= usuario,id_pago=id_pago,balance=balance)
+		return pago
+class PagoCredito (models.Model):
+	usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
+	id_pago=models.CharField(max_length=64, db_index=True)
+	pagado=models.BooleanField(default=False)
+	objects=PagoCreditoManager()
+
+
+	
+
+

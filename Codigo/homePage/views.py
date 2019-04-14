@@ -5,8 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from homePage.forms import infoForm
 from homePage.forms import infoLibro
+from homePage.forms import contenidoTarjetaForm
+from homePage.forms import contenidoCreditForm
 from homePage.models import Carrito
 from homePage.models import infousuario
+from homePage.models import infoTarjeta
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
 from homePage.forms import contenidoLiterarioForm
@@ -105,3 +108,34 @@ def mostrarObraLiteraria(request,primaryKey):
 
 
 	return render(request, 'mostrarContentidoLiterario.html' ,{'Libro':Libro})
+
+@login_required(login_url='/')
+def comprarCredito_view(request):
+	if request.method =='POST':
+		Card_Form= contenidoTarjetaForm(request.POST)
+		Credit_Form= contenidoCreditForm(request.POST)
+		if Card_Form.is_valid() and Credit_Form.is_valid():
+			data= Card_Form.cleaned_data
+			data2=Credit_Form.cleaned_data
+			numeroTarjeta=data.get("numeroTarjeta")
+			nombreTitular= data.get("nombreTitular")
+			apellidoTitular= data.get("apellidoTitular")
+			fechaExpiración= data.get("fechaExpiración")
+			codigoSeguridad= data.get("codigoSeguridad")
+			numeroCuotas= data.get("numeroCuotas")
+			balance=data2.get("balance")
+			user = infousuario.objects.get(user = request.user)
+			user.balance= balance
+			user.save()
+			print("Usuario:",infousuario.objects.get(user=request.user).id)
+			print("Usuario:",infousuario.objects.get(user=request.user).balance)
+			
+			print("\n***********Formulario valido")
+			return HttpResponse("Comprado")
+			#return redirect('/') 
+	else:
+		Card_Form =contenidoTarjetaForm()
+		Credit_Form =contenidoCreditForm()
+		
+	return render(request,'CompraCredito.html',{'card_Form':Card_Form,'credit_Form':Credit_Form})
+

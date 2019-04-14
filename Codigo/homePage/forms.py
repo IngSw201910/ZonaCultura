@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django import forms
 from homePage.models  import infousuario
 from homePage.models  import infoLibro
+from homePage.models import infoTarjeta
 
 
 class logInForm (forms.Form):
@@ -67,5 +68,43 @@ class infoForm(forms.ModelForm):
  		   }
  		widgets={
  			#'aficiones':forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+class contenidoTarjetaForm(forms.ModelForm):
+	class Meta:
+		model=infoTarjeta
+		fields=[
+		'numeroTarjeta',
+		'nombreTitular',
+		'apellidoTitular',
+		'fechaExpiración',
+		'codigoSeguridad',
+		'numeroCuotas'
+		]
+		labels={
+		'numeroTarjeta':'Número de la tarjeta de credito',
+		'nombreTitular':'Nombre del titular',
+		'apellidoTitular':'Apellido del titulat',
+		'fechaExpiración':'Fecha de expiración Formato mm/aa',
+		'codigoSeguridad':'Código de seguridad de la tarjeta',
+		'numeroCuotas':'Número de cuotas'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+class contenidoCreditForm(forms.ModelForm):
+	class Meta:
+		model=infousuario
+		fields=[
+		'balance'
+		]
+		labels={
+		'balance':'ingrese el credito que desea obtener'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
  		}
