@@ -176,3 +176,13 @@ def carrito_view(request):
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
 	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total}) 
+@login_required(login_url='/')
+def comprados_view(request):
+	usuario= infousuario.objects.get(user = request.user)
+	libros=[]
+	comprados =ArticulosComprados.objects.filter(usuario= infousuario.objects.get(user = request.user))
+	for item in comprados:
+		if( item.libro is not None):#Si es un libro
+			libros.append(item.libro)
+
+	return render(request,'VistaComprados.html',{'libros':libros}) 
