@@ -35,7 +35,7 @@ class infoLibro(models.Model):
 	def __str__(self):
 		return'{}'.format(self.Titulo+' de '+self.user.first_name + ' '+self.user.last_name)
 class infousuario(models.Model):
-	balance= models.IntegerField()
+	balance= models.IntegerField(default=0)
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
 	aficiones= models.ManyToManyField(Aficion, blank=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)

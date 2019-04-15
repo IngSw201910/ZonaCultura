@@ -35,7 +35,7 @@ def index(request):
 			login(request,acceso)
 			return redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
-			return HttpResponse("Usuario o contraseña no coincide/existe")
+			return HttpResponse("Usuario o contrasenia no coincide/existe")
 	else:
 		form=logInForm()
 	return render(request, 'paginaInicio.html',{'form':form})
@@ -123,7 +123,6 @@ def comprarCredito_view(request):
 			apellidoTitular= data.get("apellidoTitular")
 			fechaExpiracion= data.get("fechaExpiracion")
 			codigoSeguridad= data.get("codigoSeguridad")
-			numeroCuotas= data.get("numeroCuotas")
 			balance=data2.get("balance")
 			user = infousuario.objects.get(user = request.user)
 			user.balance= user.balance+balance
