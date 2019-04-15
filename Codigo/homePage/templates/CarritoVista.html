@@ -6,12 +6,24 @@
 <body>
 
 
-<h1>Lista de artÃ­culos que aÃ±adiÃ³ a su carrito de compras</h1>
-<p>Libros: {% for Libro in Carrito.libro.all%}{{Libro.Titulo}} <br/> {% endfor %}</p>
+<h1>Lista de artículos que añadió a su carrito de compras</h1>
+
 <a href="/HomePage">Volver a la Pagina de Inicio</a>
 
+<p>Obras literarias </p>
+
+{% for Libro in libros %}
+
+<p>Nombre Obra literaria: {{Libro.Titulo}}</p>
+<p>Precio: {{Libro.PrecioLibro}}</p>
+{%endfor%}
+
+
+
+<p> Total: {{Subtotal}}</p>
+
 <form method="get">
-  	
+  	<input type="submit" value="Realizar Compra" name="carrito">
 	
 </form>
 

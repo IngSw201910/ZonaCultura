@@ -142,6 +142,19 @@ def comprarCredito_view(request):
 @login_required(login_url='/')
 def carrito_view(request):
 
-	carro=Carrito.objects
-	
-	return render(request,'CarritoVista.html',{'Carro':carro})
+	libros=[]
+	carri=Carrito.objects.filter(usuario= infousuario.objects.get(user = request.user))
+	for item in carri:
+		if( item.libro is not None):#Si es un libro
+			libros.append(item.libro)
+
+
+	total=0
+	#Sacar total libros
+
+	for p in libros:
+		total=total+p.PrecioLibro
+
+	#print("Total ",total )
+	#print([p.Titulo for p in libros])
+	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total})
