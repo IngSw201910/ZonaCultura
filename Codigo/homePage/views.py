@@ -121,7 +121,7 @@ def comprarCredito_view(request):
 			numeroTarjeta=data.get("numeroTarjeta")
 			nombreTitular= data.get("nombreTitular")
 			apellidoTitular= data.get("apellidoTitular")
-			fechaExpiración= data.get("fechaExpiración")
+			fechaExpiracion= data.get("fechaExpiracion")
 			codigoSeguridad= data.get("codigoSeguridad")
 			numeroCuotas= data.get("numeroCuotas")
 			balance=data2.get("balance")

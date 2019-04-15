@@ -57,7 +57,7 @@ class infoTarjeta(models.Model):
 	numeroTarjeta= models.IntegerField()
 	nombreTitular= models.CharField(max_length=15)
 	apellidoTitular= models.CharField(max_length=15)
-	fechaExpiración =models.CharField(max_length=5)
+	fechaExpiracion =models.CharField(max_length=5)
 	codigoSeguridad= models.IntegerField()
 	numeroCuotas =models.IntegerField()
 
