@@ -139,3 +139,9 @@ def comprarCredito_view(request):
 		
 	return render(request,'CompraCredito.html',{'card_Form':Card_Form,'credit_Form':Credit_Form})
 
+@login_required(login_url='/')
+def carrito_view(request):
+
+	carro=Carrito.objects
+	
+	return render(request,'CarritoVista.html',{'Carro':carro})
