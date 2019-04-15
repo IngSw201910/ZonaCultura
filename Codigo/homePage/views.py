@@ -12,6 +12,7 @@ from homePage.models import infousuario
 from homePage.models import infoTarjeta
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
+from homePage.models import  ArticulosComprados
 from homePage.forms import contenidoLiterarioForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -34,7 +35,7 @@ def index(request):
 			login(request,acceso)
 			return redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
-			return HttpResponse("Usuario o contraseÃ±a no coincide/existe")
+			return HttpResponse("Usuario o contraseña no coincide/existe")
 	else:
 		form=logInForm()
 	return render(request, 'paginaInicio.html',{'form':form})
@@ -120,12 +121,12 @@ def comprarCredito_view(request):
 			numeroTarjeta=data.get("numeroTarjeta")
 			nombreTitular= data.get("nombreTitular")
 			apellidoTitular= data.get("apellidoTitular")
-			fechaExpiraciÃ³n= data.get("fechaExpiraciÃ³n")
+			fechaExpiración= data.get("fechaExpiración")
 			codigoSeguridad= data.get("codigoSeguridad")
 			numeroCuotas= data.get("numeroCuotas")
 			balance=data2.get("balance")
 			user = infousuario.objects.get(user = request.user)
-			user.balance= balance
+			user.balance= user.balance+balance
 			user.save()
 			print("Usuario:",infousuario.objects.get(user=request.user).id)
 			print("Usuario:",infousuario.objects.get(user=request.user).balance)
@@ -141,7 +142,7 @@ def comprarCredito_view(request):
 
 @login_required(login_url='/')
 def carrito_view(request):
-
+	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
 	carri=Carrito.objects.filter(usuario= infousuario.objects.get(user = request.user))
 	for item in carri:
@@ -154,7 +155,24 @@ def carrito_view(request):
 
 	for p in libros:
 		total=total+p.PrecioLibro
+	print(usuario.balance)
+	if request.GET.get('carrito'):#realizar transacciones
+			#print('Hello! el libro con id: ',Libro.id)
+			if usuario.balance >= total:# realizar transaccion
+				usuario.balance=usuario.balance-total
+				print(usuario.balance)
+				usuario.save()
+				for q in libros:
+					p=infousuario.objects.get(user = q.user)
+					p.balance=p.balance+q.PrecioLibro
+					p.save() 
 
+
+				for item in carri:
+					ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
+					item.delete() 
+			else:
+				return redirect('/ComprarCredito')#pagina para comprar credito
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
-	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total})
+	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total}) 

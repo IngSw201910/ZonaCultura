@@ -35,7 +35,7 @@ class infoLibro(models.Model):
 	def __str__(self):
 		return'{}'.format(self.Titulo+' de '+self.user.first_name + ' '+self.user.last_name)
 class infousuario(models.Model):
-	balance= models.IntegerField(default=0)
+	balance= models.IntegerField()
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
 	aficiones= models.ManyToManyField(Aficion, blank=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)
@@ -44,9 +44,9 @@ class infousuario(models.Model):
 		return'{}'.format(self.user.first_name + ' '+self.user.last_name)
 	#is_Escritor= models.BooleanField (default=False)
 class Carrito(models.Model):
-		libro= models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
-		#multimedia
-		#manualidad
+		libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
+		#multimedia=NULL
+		#manualidad=NULL
 		usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
 class cuentaPorCobrar(models.Model):
 	usuarioComprador= models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True, related_name='%(class)s_usuarioComprador')
@@ -57,7 +57,7 @@ class infoTarjeta(models.Model):
 	numeroTarjeta= models.IntegerField()
 	nombreTitular= models.CharField(max_length=15)
 	apellidoTitular= models.CharField(max_length=15)
-	fechaExpiraciÃ³n =models.CharField(max_length=5)
+	fechaExpiración =models.CharField(max_length=5)
 	codigoSeguridad= models.IntegerField()
 	numeroCuotas =models.IntegerField()
 
@@ -74,7 +74,9 @@ class PagoCredito (models.Model):
 	pagado=models.BooleanField(default=False)
 	objects=PagoCreditoManager()
 
-
+class ArticulosComprados(models.Model):
+		libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
+		#multimedia=NULL
+		#manualidad=NULL
+		usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
 	
-
-
