@@ -17,6 +17,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.http import Http404
+from homePage.models import ArticulosComprados
 #from django.core.urlresolvers import reverse_lazy
 def index(request):
 	form=logInForm(request.POST or None)
@@ -34,7 +35,7 @@ def index(request):
 			login(request,acceso)
 			return redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
-			return HttpResponse("Usuario o contraseniaa no coincide/existe")
+			return HttpResponse("Usuario o contraseña no coincide/existe")
 	else:
 		form=logInForm()
 	return render(request, 'paginaInicio.html',{'form':form})
@@ -120,11 +121,11 @@ def comprarCredito_view(request):
 			numeroTarjeta=data.get("numeroTarjeta")
 			nombreTitular= data.get("nombreTitular")
 			apellidoTitular= data.get("apellidoTitular")
-			fechaExpiracion= data.get("fechaExpiracion")
+			fechaExpiración= data.get("fechaExpiración")
 			codigoSeguridad= data.get("codigoSeguridad")
 			balance=data2.get("balance")
 			user = infousuario.objects.get(user = request.user)
-			user.balance=user.balance+balance
+			user.balance= user.balance+balance
 			user.save()
 			print("Usuario:",infousuario.objects.get(user=request.user).id)
 			print("Usuario:",infousuario.objects.get(user=request.user).balance)
@@ -169,6 +170,7 @@ def carrito_view(request):
 				for item in carri:
 					ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
 					item.delete() 
+				return redirect('/CarritoVista')
 			else:
 				return redirect('/ComprarCredito')#pagina para comprar credito
 	#print("Total ",total )

@@ -44,9 +44,9 @@ class infousuario(models.Model):
 		return'{}'.format(self.user.first_name + ' '+self.user.last_name)
 	#is_Escritor= models.BooleanField (default=False)
 class Carrito(models.Model):
-		libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
-		#multimedia=NULL
-		#manualidad=NULL
+		libro= models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
+		#multimedia
+		#manualidad
 		usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
 class cuentaPorCobrar(models.Model):
 	usuarioComprador= models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True, related_name='%(class)s_usuarioComprador')
@@ -57,9 +57,8 @@ class infoTarjeta(models.Model):
 	numeroTarjeta= models.IntegerField()
 	nombreTitular= models.CharField(max_length=15)
 	apellidoTitular= models.CharField(max_length=15)
-	fechaExpiracion =models.CharField(max_length=5)
+	fechaExpiración =models.CharField(max_length=5)
 	codigoSeguridad= models.IntegerField()
-
 	def __str__(self):
 		return'{}'.format(self.numeroTarjeta + ' '+self.nombreTitular )
 
@@ -72,10 +71,11 @@ class PagoCredito (models.Model):
 	id_pago=models.CharField(max_length=64, db_index=True)
 	pagado=models.BooleanField(default=False)
 	objects=PagoCreditoManager()
-
 class ArticulosComprados(models.Model):
 		libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
 		#multimedia=NULL
 		#manualidad=NULL
 		usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
 	
+
+
