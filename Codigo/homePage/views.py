@@ -12,7 +12,6 @@ from homePage.models import infousuario
 from homePage.models import infoTarjeta
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
-from homePage.models import  ArticulosComprados
 from homePage.forms import contenidoLiterarioForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -35,7 +34,7 @@ def index(request):
 			login(request,acceso)
 			return redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
-			return HttpResponse("Usuario o contrasenia no coincide/existe")
+			return HttpResponse("Usuario o contraseniaa no coincide/existe")
 	else:
 		form=logInForm()
 	return render(request, 'paginaInicio.html',{'form':form})
@@ -125,7 +124,7 @@ def comprarCredito_view(request):
 			codigoSeguridad= data.get("codigoSeguridad")
 			balance=data2.get("balance")
 			user = infousuario.objects.get(user = request.user)
-			user.balance= user.balance+balance
+			user.balance=user.balance+balance
 			user.save()
 			print("Usuario:",infousuario.objects.get(user=request.user).id)
 			print("Usuario:",infousuario.objects.get(user=request.user).balance)
