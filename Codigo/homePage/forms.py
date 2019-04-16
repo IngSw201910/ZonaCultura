@@ -94,12 +94,12 @@ class contenidoTarjetaForm(forms.ModelForm):
  		}
 class contenidoCreditForm(forms.ModelForm):
 	class Meta:
-		model=infousuario
+		model=Donacion
 		fields=[
-		'balance'
+		'monto'
 		]
 		labels={
-		'balance':'ingrese el credito que desea obtener'
+		'monto':'ingrese el monto que desea donar'
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),

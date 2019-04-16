@@ -84,3 +84,7 @@ class Compradores(models.Model):
 		libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
 		usuarioDuenio=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDuenio')
 		usuarioComprador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioComprador')
+class Donacion(models.Model):
+		usuarioDonante=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDuenio')
+		usuarioBene=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioComprador')
+		monto= models.IntegerField(default=0)
