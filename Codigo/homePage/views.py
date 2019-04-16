@@ -98,7 +98,13 @@ def mostrarObraLiteraria(request,primaryKey):
 		Libro=infoLibro.objects.get(pk=primaryKey)
 		if request.GET.get('carrito'):
 			print('Hello! el libro con id: ',Libro.id)
-			carro=Carrito.objects.create(libro= Libro, usuario=infousuario.objects.get(user=request.user))
+			c=Carrito.objects.filter(libro=Libro,usuario=infousuario.objects.get(user=request.user)).first()
+			print(c)
+			if c is None :
+				carro=Carrito.objects.create(libro= Libro, usuario=infousuario.objects.get(user=request.user))
+				return redirect('/CarritoVista')
+			else:
+				return HttpResponse("Usted ya tiene este elemento en el carrito")
 
 			#carro.usuario=infousuario.objects.get(user=request.user)
 			

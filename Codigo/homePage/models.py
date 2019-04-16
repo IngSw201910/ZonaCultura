@@ -44,10 +44,13 @@ class infousuario(models.Model):
 		return'{}'.format(self.user.first_name + ' '+self.user.last_name)
 	#is_Escritor= models.BooleanField (default=False)
 class Carrito(models.Model):
+
 		libro= models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
 		#multimedia
 		#manualidad
 		usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
+		class Meta:
+			unique_together=('libro', 'usuario')
 class cuentaPorCobrar(models.Model):
 	usuarioComprador= models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True, related_name='%(class)s_usuarioComprador')
 	usuarioPropioDelCobro=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='%(class)s_usuarioPropioDelCobro')
