@@ -218,3 +218,8 @@ def compradores_view(request):
 			libros.append(item.libro)
 
 	return render(request,'VistaCompradores.html',{'libros':libros}) 
+
+@login_required(login_url='/')
+def SubirContenidoMultimedia_view(request):
+	return render(request,'SubirVideo.html');
+
