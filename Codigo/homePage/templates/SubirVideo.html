@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Seleccionar contenido</title>
+</head>
+<body>
+
+<h1>Bienvenido a la seccion donde puede subir su obra multimedia</h1>
+<p>Ingrese la info del video</p>
+	<form action="/" class="site-form" method="post">
+  		{% csrf_token %}
+		{{ multimedia_form.as_p}}	
+		<input type="submit" value="Subir Video">
+	</form>
+
+
+</body>
+</html>

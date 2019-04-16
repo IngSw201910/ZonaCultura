@@ -1,0 +1,14 @@
+#input-search{
+	width: 400px;
+	height: 30px;
+	text-indent: 10px;
+}
+#Salir{
+	width: 70px;
+	margin-left: 20px;
+	margin-right: 0 auto;
+	background-color: #F59251;
+}
+#Buscar{
+	height: 30px;
+}
