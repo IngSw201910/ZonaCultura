@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vista de los usuarios que adquirieron artículos</title>
+</head>
+<body>
+
+
+<h1>Lista de usuarios que compraron sus productos</h1>
+
+<a href="/HomePage">Volver a la Pagina de Inicio</a>
+
+<p>Usuarios </p>
+
+{% for Usuarios in usuarios %}
+
+<p>Nombre del usuario : {{Usuarios.user.first_name}}</p>
+<p>Apellido del usuario : {{Usuarios.user.last_name}}</p>
+
+{%endfor%}
+</body>
+</html>

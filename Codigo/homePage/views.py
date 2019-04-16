@@ -154,7 +154,13 @@ def carrito_view(request):
 
 	for p in libros:
 		total=total+p.PrecioLibro
-	print(usuario.balance)
+		#print(usuario.balance)
+	#if request.GET.get('name'):
+	#		produc=infoLibro.objects.get(Titulo=request.libro.Titulo)
+			#print(produc.Titulo)
+			#print(produc)
+    	 	#carri.remove(produc)
+
 	if request.GET.get('carrito'):#realizar transacciones
 			#print('Hello! el libro con id: ',Libro.id)
 			if usuario.balance >= total:# realizar transaccion
@@ -173,9 +179,18 @@ def carrito_view(request):
 				return redirect('/CarritoVista')
 			else:
 				return redirect('/ComprarCredito')#pagina para comprar credito
+	else:
+		for libro in libros:
+			aux="Libro"+str(libro.pk)
+			aux=aux.strip()
+			print(aux)
+			if request.GET.get(aux) is not None:
+				print('Encontro articulo')
+				carr=Carrito.objects.filter(libro=libro,usuario=usuario)
+				carr[0].delete()
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
-	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total}) 
+	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total,'carrito':carri}) 
 @login_required(login_url='/')
 def comprados_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -186,3 +201,14 @@ def comprados_view(request):
 			libros.append(item.libro)
 
 	return render(request,'VistaComprados.html',{'libros':libros}) 
+@login_required(login_url='/')
+def compradores_view(request):
+	usuario= infousuario.objects.get(user = request.user)
+
+	libros=[]
+	comprados =ArticulosComprados.objects.filter(usuario= infousuario.objects.get(user = request.user))
+	for item in comprados:
+		if( item.libro is not None):#Si es un libro
+			libros.append(item.libro)
+
+	return render(request,'VistaCompradores.html',{'libros':libros}) 

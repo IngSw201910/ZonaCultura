@@ -12,6 +12,7 @@ urlpatterns=[
 	url(r'^ComprarCredito$', views.comprarCredito_view, name='comprar credito'),
 	url(r'^SubirObra$', views.subirObra_view, name='Seleccion de tipo de Obra'),
 	url(r'^VistaComprados$', views.comprados_view, name='ver comprados'),
+	url(r'^VistaCompradores$', views.compradores_view, name='ver compradores'),
 	url(r'^CarritoVista$', views.carrito_view, name='ver carrito'),
 	url(r'^SubirObra/SubirContenidoLiterario$', views.subirObraLiteraria_view, name='Subir contenido literario'),
 	path('Producto/ContenidoLiterario/<int:primaryKey>', views.mostrarObraLiteraria)

@@ -14,7 +14,12 @@
 
 {% for Libro in libros %}
 
-<p>Nombre Obra literaria: {{Libro.Titulo}}</p>
+<p>Nombre Obra literaria: {{Libro.Titulo}}
+   <form method="get">
+  	  <input type="submit" value="Libro{{Libro.pk}}" name="Libro{{Libro.pk}}">
+	
+</form>
+</p>
 <p>Precio: {{Libro.PrecioLibro}}</p>
 {%endfor%}
 
