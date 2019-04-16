@@ -12,11 +12,13 @@
 
 <p>Usuarios </p>
 
-{% for Usuarios in usuarios %}
+{% for  Usuarios in usuariosCompradores %}
 
-<p>Nombre del usuario : {{Usuarios.user.first_name}}</p>
-<p>Apellido del usuario : {{Usuarios.user.last_name}}</p>
+<p>Nombre del usuario : {{Usuarios.usuarioComprador.user.first_name}}</p>
+<p>Apellido del usuario : {{Usuarios.usuarioComprador.user.last_name}}</p>
+<p>Libro comprado : {{Usuarios.libro.Titulo}}</p>
 
 {%endfor%}
 </body>
 </html>
+

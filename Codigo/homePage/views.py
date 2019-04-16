@@ -216,11 +216,10 @@ def comprados_view(request):
 @login_required(login_url='/')
 def compradores_view(request):
 	usuario= infousuario.objects.get(user = request.user)
+	usuariosCompradores=[]
+	compradxres=Compradores.objects.filter(usuarioDuenio=infousuario.objects.get(user = request.user))
+	for item in compradxres:
+		if( item.usuarioComprador is not None and item.libro is not None ):#Si es un libro
+			usuariosCompradores.append(item)
 
-	libros=[]
-	comprados =ArticulosComprados.objects.filter(usuario= infousuario.objects.get(user = request.user))
-	for item in comprados:
-		if( item.libro is not None):#Si es un libro
-			libros.append(item.libro)
-
-	return render(request,'VistaCompradores.html',{'libros':libros}) 
+	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores}s) 
