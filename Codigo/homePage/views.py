@@ -8,6 +8,7 @@ from homePage.forms import infoLibro
 from homePage.forms import contenidoTarjetaForm
 from homePage.forms import contenidoCreditForm
 from homePage.models import Carrito
+from homePage.models import Compradores
 from homePage.models import infousuario
 from homePage.models import infoTarjeta
 from homePage.forms import RegistroForm
@@ -87,7 +88,6 @@ def subirObraLiteraria_view(request):
 	else:
 		Form=contenidoLiterarioForm()
 	return render(request,'SubirContenidoLiterario.html',{'Form':Form})
-
 @login_required(login_url='/')
 def mostrarObraLiteraria(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
@@ -181,6 +181,12 @@ def carrito_view(request):
 
 				for item in carri:
 					ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
+					
+					usuarioD= infousuario.objects.get(user =item.libro.user)
+					#print("voy a imprimir el dueño")
+					#print(item.libro.user.username)
+					
+					Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
 					item.delete() 
 				return redirect('/CarritoVista')
 			else:
@@ -218,8 +224,3 @@ def compradores_view(request):
 			libros.append(item.libro)
 
 	return render(request,'VistaCompradores.html',{'libros':libros}) 
-
-@login_required(login_url='/')
-def SubirContenidoMultimedia_view(request):
-	return render(request,'SubirVideo.html');
-
