@@ -222,4 +222,4 @@ def compradores_view(request):
 		if( item.usuarioComprador is not None and item.libro is not None ):#Si es un libro
 			usuariosCompradores.append(item)
 
-	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores}s) 
+	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores}) 
