@@ -14,6 +14,7 @@ from homePage.models import infoTarjeta
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
 from homePage.forms import contenidoLiterarioForm
+from homePage.forms import contenidoMultimediaForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -223,3 +224,13 @@ def compradores_view(request):
 			usuariosCompradores.append(item)
 
 	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores}) 
+def SubirContenidoMultimedia_view(request):
+    if request.method=='POST':
+        multimedia_form=contenidoMultimediaForm(request.POST)
+        if multimedia_form.is_valid():
+            return HttpResponse("Submited")
+        else:
+            return HttpResponse("Fallo")
+    else:
+        multimedia_form=contenidoMultimediaForm()
+    return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form})

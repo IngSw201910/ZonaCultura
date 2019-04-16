@@ -5,6 +5,8 @@ from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.forms import ModelForm
+from django.utils import timezone
 
 class FormatoLiterario(models.Model):
 	nombre=models.CharField(max_length=50)
@@ -84,7 +86,10 @@ class Compradores(models.Model):
 		libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
 		usuarioDuenio=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDuenio')
 		usuarioComprador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioComprador')
-class Donacion(models.Model):
-		usuarioDonante=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDuenio')
-		usuarioBene=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioComprador')
-		monto= models.IntegerField(default=0)
+
+class contenidoMultimedia(models.Model): 
+	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+	title=models.CharField(max_length=50)
+	descripcion=models.TextField(max_length=150)
+	clip=models.FileField(upload_to='media/video')
+	fecha=models.DateTimeField(default=timezone.now)

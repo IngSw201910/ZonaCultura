@@ -6,6 +6,7 @@ from homePage.models import GeneroLiterario
 from homePage.models import infoLibro
 from homePage.models import Carrito
 from homePage.models import ArticulosComprados
+from homePage.models import contenidoMultimedia
 # Register your models here.
 admin.site.register(Aficion)
 admin.site.register(infousuario)
@@ -14,3 +15,4 @@ admin.site.register(GeneroLiterario)
 admin.site.register(infoLibro)
 admin.site.register(Carrito)
 admin.site.register(ArticulosComprados)
+admin.site.register(contenidoMultimedia)

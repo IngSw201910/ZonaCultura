@@ -5,6 +5,8 @@ from django import forms
 from homePage.models  import infousuario
 from homePage.models  import infoLibro
 from homePage.models import infoTarjeta
+from homePage.models import contenidoMultimedia
+from django.forms import ModelForm
 
 
 class logInForm (forms.Form):
@@ -94,12 +96,34 @@ class contenidoTarjetaForm(forms.ModelForm):
  		}
 class contenidoCreditForm(forms.ModelForm):
 	class Meta:
-		model=Donacion
+		model=infousuario
 		fields=[
-		'monto'
+		'balance'
 		]
 		labels={
-		'monto':'ingrese el monto que desea donar'
+		'balance':'ingrese el credito que desea obtener'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+class contenidoMultimediaForm(ModelForm):
+	class Meta:
+		model=contenidoMultimedia
+		fields= [
+		'user',
+		'title',
+		'descripcion',
+		'clip',
+		'fecha',
+		]
+		labels={
+		'user': 'Nombre del Autor',
+		'title': 'Titulo del Video',
+		'descripcion':'Descripcion del Video',
+		'clip':'Contenido Multimedia',
+		'fecha': 'Fecha de Creacion',
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),
