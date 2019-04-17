@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vista de los usuarios a quien done</title>
+</head>
+<body>
+
+
+<h1>Lista de usuarios a quien done</h1>
+
+<a href="/HomePage">Volver a la Pagina de Inicio</a>
+
+<p>Usuarios </p>
+
+{% for  Usuarios in usuariosQDone %}
+
+<p>Nombre del usuario : {{Usuarios.usuarioBen.user.first_name}}</p>
+<p>Apellido del usuario : {{Usuarios.usuarioBen.user.last_name}}</p>
+<p>Monto donado : {{Usuarios.cantidad}}</p>
+
+{%endfor%}
+</body>
+</html>

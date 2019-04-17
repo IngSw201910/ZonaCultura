@@ -242,11 +242,12 @@ def Donacion_view(request,primaryKey):
 	if request.method =='POST':
 		Donacion_Form =DonacionForm(request.POST)
 		if Donacion_Form.is_valid():
+			Usuario=infousuario.objects.get(pk=primaryKey)
+			Usua=infousuario.objects.get(user=request.user)
 			data= Donacion_Form.cleaned_data
 			cantida=data.get("cantidad")
 			print(cantida)
-			Usuario=infousuario.objects.get(pk=primaryKey)
-			Usua=infousuario.objects.get(user=request.user)
+
 			#print(Usu)
 			if Usua.balance>=cantida:
 				Doni=Donacion.objects.create( usuarioDonante=Usua,usuarioBen=Usuario,cantidad=cantida)
@@ -266,7 +267,7 @@ def Donacion_view(request,primaryKey):
 	else:
 		Donacion_Form=DonacionForm()
 		
-	return render(request,'VistaDonacion.html',{'Donacion_Form':Donacion_Form})
+	return render(request,'VistaDonacion.html',{'UsuariBeni':infousuario.objects.get(pk=primaryKey),'Donacion_Form':Donacion_Form})
 @login_required(login_url='/')
 def mostrarUsuario(request,primaryKey):
 	try: 
@@ -278,3 +279,23 @@ def mostrarUsuario(request,primaryKey):
 	except:
 		raise Http404
 	return render(request, 'VistaUsuario.html' ,{'Usu':Usu})
+@login_required(login_url='/')
+def donadores_view(request):
+	usuario= infousuario.objects.get(user = request.user)
+	usuariosDonadores=[]
+	donadorex=Donacion.objects.filter(usuarioBen=infousuario.objects.get(user = request.user))
+	for item in donadorex:
+		if( item.usuarioDonante is not None and item.cantidad is not None ):#Si es un libro
+			usuariosDonadores.append(item)
+
+	return render(request,'VistaDonantes.html',{'usuariosDonadores':usuariosDonadores}) 
+@login_required(login_url='/')
+def AquienDone_view(request):
+	usuario= infousuario.objects.get(user = request.user)
+	usuariosQDone=[]
+	donadorex=Donacion.objects.filter(usuarioDonante=infousuario.objects.get(user = request.user))
+	for item in donadorex:
+		if( item.usuarioBen is not None and item.cantidad is not None ):#Si es un libro
+			usuariosQDone.append(item)
+
+	return render(request,'AquienDone.html',{'usuariosQDone':usuariosQDone}) 

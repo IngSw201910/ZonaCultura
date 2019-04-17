@@ -8,6 +8,7 @@
 <p>Rellenar los campos del siguiente formulario para donar al usuario seleccionado</p>
 
 
+<p>Nombre del usuario al que que desea donar : {{UsuariBeni.user.first_name}} {{UsuariBeni.user.last_name}}</p>
 <form class="site-form" method="post"  enctype="multipart/form-data">
   	{% csrf_token %}
 	{{ Donacion_Form }}
