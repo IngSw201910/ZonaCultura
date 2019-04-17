@@ -14,8 +14,10 @@ urlpatterns=[
 	url(r'^VistaComprados$', views.comprados_view, name='ver comprados'),
 	url(r'^VistaCompradores$', views.compradores_view, name='ver compradores'),
 	url(r'^CarritoVista$', views.carrito_view, name='ver carrito'),
+	url(r'^VistaDonacion$', views.mostrarUsuario, name='donar'),
 	url(r'^SubirObra/SubirContenidoLiterario$', views.subirObraLiteraria_view, name='Subir contenido literario'),
 	url(r'^SubirContenidoMultimedia$',views.SubirContenidoMultimedia_view,name='Subir contenido multimedia'),
+	path('VistaUsuario/Usuario/<int:primaryKey>', views.mostrarUsuario),
 	path('Producto/ContenidoLiterario/<int:primaryKey>', views.mostrarObraLiteraria)
 # Create your views here.
 		]

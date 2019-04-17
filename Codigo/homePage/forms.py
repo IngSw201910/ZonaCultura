@@ -6,6 +6,7 @@ from homePage.models  import infousuario
 from homePage.models  import infoLibro
 from homePage.models import infoTarjeta
 from homePage.models import contenidoMultimedia
+from homePage.models import Donacion
 from django.forms import ModelForm
 
 
@@ -124,6 +125,20 @@ class contenidoMultimediaForm(ModelForm):
 		'descripcion':'Descripcion del Video',
 		'clip':'Contenido Multimedia',
 		'fecha': 'Fecha de Creacion',
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+class DonacionForm(ModelForm):
+	class Meta:
+		model=Donacion
+		fields= [
+		'cantidad'
+		]
+		labels={
+		'cantidad': 'Valor de la donacion'
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),

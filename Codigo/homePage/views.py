@@ -234,3 +234,46 @@ def SubirContenidoMultimedia_view(request):
     else:
         multimedia_form=contenidoMultimediaForm()
     return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form})
+
+@login_required(login_url='/')
+def Donacion_view(request):
+	if request.method =='POST':
+		Card_Form= contenidoTarjetaForm(request.POST)
+		Credit_Form= contenidoCreditForm(request.POST)
+		if Card_Form.is_valid() and Credit_Form.is_valid():
+			data= Card_Form.cleaned_data
+			data2=Credit_Form.cleaned_data
+			numeroTarjeta=data.get("numeroTarjeta")
+			nombreTitular= data.get("nombreTitular")
+			apellidoTitular= data.get("apellidoTitular")
+			fechaExpiración= data.get("fechaExpiración")
+			codigoSeguridad= data.get("codigoSeguridad")
+			balance=data2.get("balance")
+			user = infousuario.objects.get(user = request.user)
+			user.balance= user.balance+balance
+			user.save()
+			print("Usuario:",infousuario.objects.get(user=request.user).id)
+			print("Usuario:",infousuario.objects.get(user=request.user).balance)
+			
+			print("\n***********Formulario valido")
+			return HttpResponse("Comprado")
+			#return redirect('/') 
+	else:
+		Card_Form =contenidoTarjetaForm()
+		Credit_Form =contenidoCreditForm()
+		
+	return render(request,'CompraCredito.html',{'card_Form':Card_Form,'credit_Form':Credit_Form})
+@login_required(login_url='/')
+def mostrarUsuario(request,primaryKey):
+	#allObjects=infoLibro.objects.all()
+	#print([p.pk for p in allObjects])
+	#Usu=infousuario.objects.get(user=primaryKey)
+	
+	#print(primaryKey)
+	try: 
+	
+		Usu=infousuario.objects.get(pk=primaryKey)
+		
+	except:
+		raise Http404
+	return render(request, 'VistaUsuario.html' ,{'Usu':Usu})

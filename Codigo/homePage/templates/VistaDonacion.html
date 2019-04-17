@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Comprar credito</title>
+</head>
+<body>
+
+<p>Rellenar los campos del siguiente formulario para donar al usuario seleccionado</p>
+
+
+<form class="site-form" method="post"  enctype="multipart/form-data">
+  	{% csrf_token %}
+	{{ Donacion_Form }}
+	<input type="submit" value="Don">
+</form>
+<a href="vistaUsuario">vistica</a>
+
+
+
+</body>
+</html>

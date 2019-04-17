@@ -93,3 +93,8 @@ class contenidoMultimedia(models.Model):
 	descripcion=models.TextField(max_length=150)
 	clip=models.FileField(upload_to='media/video')
 	fecha=models.DateTimeField(default=timezone.now)
+	
+class Donacion(models.Model):
+		usuarioDonante=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDonante')
+		usuarioBen=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioBen')
+		cantidad =models.IntegerField(default=0)
