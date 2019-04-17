@@ -102,7 +102,7 @@ class contenidoCreditForm(forms.ModelForm):
 		'balance'
 		]
 		labels={
-		'balance':'ingrese el credito que desea obtener'
+		'balance':'ingrese el credito'
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),

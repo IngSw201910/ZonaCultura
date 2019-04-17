@@ -8,6 +8,7 @@ from homePage.forms import infoLibro
 from homePage.forms import contenidoTarjetaForm
 from homePage.forms import contenidoCreditForm
 from homePage.models import Carrito
+from homePage.models import Donacion
 from homePage.models import Compradores
 from homePage.models import infousuario
 from homePage.models import infoTarjeta
@@ -15,6 +16,7 @@ from homePage.forms import RegistroForm
 from homePage.forms import logInForm
 from homePage.forms import contenidoLiterarioForm
 from homePage.forms import contenidoMultimediaForm
+from homePage.forms import DonacionForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -191,7 +193,7 @@ def carrito_view(request):
 					item.delete() 
 				return redirect('/CarritoVista')
 			else:
-				return redirect('/ComprarCredito')#pagina para comprar credito
+				return redirect('/CompraCredito')#pagina para comprar credito
 	else:
 		for libro in libros:
 			aux="Libro"+str(libro.pk)
@@ -236,44 +238,43 @@ def SubirContenidoMultimedia_view(request):
     return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form})
 
 @login_required(login_url='/')
-def Donacion_view(request):
+def Donacion_view(request,primaryKey):
 	if request.method =='POST':
-		Card_Form= contenidoTarjetaForm(request.POST)
-		Credit_Form= contenidoCreditForm(request.POST)
-		if Card_Form.is_valid() and Credit_Form.is_valid():
-			data= Card_Form.cleaned_data
-			data2=Credit_Form.cleaned_data
-			numeroTarjeta=data.get("numeroTarjeta")
-			nombreTitular= data.get("nombreTitular")
-			apellidoTitular= data.get("apellidoTitular")
-			fechaExpiración= data.get("fechaExpiración")
-			codigoSeguridad= data.get("codigoSeguridad")
-			balance=data2.get("balance")
-			user = infousuario.objects.get(user = request.user)
-			user.balance= user.balance+balance
-			user.save()
-			print("Usuario:",infousuario.objects.get(user=request.user).id)
-			print("Usuario:",infousuario.objects.get(user=request.user).balance)
+		Donacion_Form =DonacionForm(request.POST)
+		if Donacion_Form.is_valid():
+			data= Donacion_Form.cleaned_data
+			cantida=data.get("cantidad")
+			print(cantida)
+			Usuario=infousuario.objects.get(pk=primaryKey)
+			Usua=infousuario.objects.get(user=request.user)
+			#print(Usu)
+			if Usua.balance>=cantida:
+				Doni=Donacion.objects.create( usuarioDonante=Usua,usuarioBen=Usuario,cantidad=cantida)
+				usu=infousuario.objects.get(user=request.user)
+				usu.balance=usu.balance - cantida
+				usu.save()
+				Usuario.balance=Usuario.balance+cantida
+				Usuario.save()
+				print("donit")
+				print(Usuario.balance)
+				return HttpResponse("Donacion satisfactoria")
+			else:
+				return redirect('/CompraCredito')
+
+
 			
-			print("\n***********Formulario valido")
-			return HttpResponse("Comprado")
-			#return redirect('/') 
 	else:
-		Card_Form =contenidoTarjetaForm()
-		Credit_Form =contenidoCreditForm()
+		Donacion_Form=DonacionForm()
 		
-	return render(request,'CompraCredito.html',{'card_Form':Card_Form,'credit_Form':Credit_Form})
+	return render(request,'VistaDonacion.html',{'Donacion_Form':Donacion_Form})
 @login_required(login_url='/')
 def mostrarUsuario(request,primaryKey):
-	#allObjects=infoLibro.objects.all()
-	#print([p.pk for p in allObjects])
-	#Usu=infousuario.objects.get(user=primaryKey)
-	
-	#print(primaryKey)
 	try: 
 	
 		Usu=infousuario.objects.get(pk=primaryKey)
-		
+		print("hola1")
+		if request.GET.get('donar'):
+			return redirect('/VistaDonacion')
 	except:
 		raise Http404
 	return render(request, 'VistaUsuario.html' ,{'Usu':Usu})
