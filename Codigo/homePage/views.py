@@ -50,13 +50,13 @@ def index(request):
 def registro_view(request):
 	if request.method =='POST':
 		User_Form= RegistroForm(request.POST)
-		Info_Form=infoForm(request.POST)
+		Info_Form=infoForm(request.POST,request.FILES)
 		if User_Form.is_valid() and Info_Form.is_valid():
 			user=User_Form.save()
 			profile=Info_Form.save(commit=False)
 			profile.user=user
 			profile.save()
-			#return redirect('/') 
+			return redirect('/') 
 	else:
 		User_Form= RegistroForm()
 		Info_Form=infoForm()

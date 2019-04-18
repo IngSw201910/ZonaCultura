@@ -41,12 +41,12 @@ class infousuario(models.Model):
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
 	aficiones= models.ManyToManyField(Aficion, blank=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)
+	profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
 	es_Nada= models.BooleanField(default=False)
 	def __str__(self):
 		return'{}'.format(self.user.first_name + ' '+self.user.last_name)
 	#is_Escritor= models.BooleanField (default=False)
 class Carrito(models.Model):
-
 		libro= models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
 		#multimedia
 		#manualidad

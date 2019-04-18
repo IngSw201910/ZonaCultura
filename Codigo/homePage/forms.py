@@ -63,11 +63,12 @@ class infoForm(forms.ModelForm):
  	class Meta:
  		model=infousuario
  		fields=[
- 		 'aficiones',
+ 		 'profile_img'
  		 ]
 
  		labels={
- 		 'aficiones':'Disciplinas',
+ 		 'profile_img': 'Imagen de Perfil'
+ 	
  		   }
  		widgets={
  			#'aficiones':forms.CheckboxSelectMultiple(),

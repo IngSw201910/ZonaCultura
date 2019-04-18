@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Registro</title>
+	<title>Registro</title>
+	<link rel="stylesheet" href="static/css/Registro.css">
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap1.min.css">
+	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+	<script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    
 </head>
-<body>
-
-<h1>Bienvenido a la paina de Registro de ZonaCultura</h1>
-<p>Diligenciar los siguientes campos para poder crear cuenta</p>
-
-<button type="button"><a href="/">Pagina de Inicio</a></button>
-
-
-<form class="site-form" method="post">
-	{% csrf_token %}
-	{{ user_form }}
-	{{profile_form}}
-
-	<input type="submit" value="Registrarse">
-
-</form>
-
-
-
+<body class="body">
+	<div class="section">
+		<button type="submit" class="btn btn-primary"><a href="/"><i class="fas fa-caret-square-left"></i>  Volver</a></button>
+	</div>
+	<div>
+		<div class="columns row">
+			<div class="column-2 col col-3"></div>
+			<div class="column col col-6">
+				<h1 class="heading">SEA PARTE DE NUESTRA <br> COMUNIDAD</h1>				
+			</div>
+			<div class="col col-3"></div>			
+		</div>
+	</div>
+	<div class="conteiner conteiner">
+	</div>
+	<div>
+		<div class="row">
+			<div class="col col-3"><img src="static/img/manchas.png" class="image" width="300" height="300"></div>
+			<div class="col col-6">
+				<div class="container-2 conteiner">
+					<form class="site-form" method="post">
+						{% csrf_token %}
+						{{ user_form.as_ul}}
+						{{profile_form.as_ul}}
+						<input class="buttom" type="submit" value="Registrarse" >
+					</form>
+				</div>
+			</div>
+			<div class="col col-3"><img src="static/img/manchas2.png" class="image-2" width="300" height="300"></div>
+		</div>
+	</div>
 
 </body>
 </html>
