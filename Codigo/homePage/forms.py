@@ -63,16 +63,19 @@ class infoForm(forms.ModelForm):
  	class Meta:
  		model=infousuario
  		fields=[
- 		 'profile_img'
+ 		'aficiones',
+ 		'es_CreadorDeContenido',
+ 		'profile_img' 		
  		 ]
 
  		labels={
- 		 'profile_img': 'Imagen de Perfil'
- 	
+ 		'aficiones': 'Posees algun taleno',
+ 		'es_CreadorDeContenido' : 'Quiere ser creador de contenido',
+ 		'profile_img': 'Imagen de Perfil' 	
  		   }
  		widgets={
- 			#'aficiones':forms.CheckboxSelectMultiple(),
- 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		'aficiones':forms.CheckboxSelectMultiple(),
+ 	    
  		}
 class contenidoTarjetaForm(forms.ModelForm):
 	class Meta:
