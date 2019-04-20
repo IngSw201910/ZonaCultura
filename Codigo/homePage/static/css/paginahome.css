@@ -1,5 +1,5 @@
 #input-search{
-	width: 400px;
+	width: 300px;
 	height: 30px;
 	text-indent: 10px;
 }
@@ -41,4 +41,23 @@
 }
 td a{
 	color: black;
+}
+.container-3{
+
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	margin-right: 0px;
+	margin-bottom: 50px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
+	border-radius: 4px;
+	color: #000;
+	background-color: #D5D5D5;
+	
+}
+#ii2{
+	margin-left: 250px;
+	border-color: #0C144E;
 }
