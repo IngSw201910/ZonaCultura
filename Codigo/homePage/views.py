@@ -68,8 +68,12 @@ def registro_view(request):
 
 @login_required(login_url='/')
 def homePage_view(request):
-
 	return render(request, 'HomePage.html')
+
+@login_required(login_url='/')
+def perfil_view(request):
+	return render(request, 'Perfil.html')
+
 @login_required(login_url='/')
 def libros_view(request):
 	libros=infoLibro.objects.all()
