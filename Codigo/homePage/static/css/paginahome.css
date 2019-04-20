@@ -12,3 +12,33 @@
 #Buscar{
 	height: 30px;
 }
+.table{
+	margin-top: 50px;
+	border-color: #000;
+	background-color: #9F977A;
+	color: black;
+
+}
+.btn-group-vertical{
+	margin-top: 0px;
+	padding-top: 50px;
+	margin-left: 50px;
+}
+
+#lll{
+	margin-top: 50px;
+	margin-left: 90px;
+	margin-bottom: 0px;
+}
+.nav-link{
+	margin-left: 40px;
+}
+.button{
+	color: #000;
+}
+.btn a{
+	color: black;
+}
+td a{
+	color: black;
+}

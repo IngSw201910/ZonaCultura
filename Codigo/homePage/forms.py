@@ -69,7 +69,7 @@ class infoForm(forms.ModelForm):
  		 ]
 
  		labels={
- 		'aficiones': 'Posees algun taleno',
+ 		'aficiones': 'Posee algun taleno',
  		'es_CreadorDeContenido' : 'Quiere ser creador de contenido',
  		'profile_img': 'Imagen de Perfil' 	
  		   }

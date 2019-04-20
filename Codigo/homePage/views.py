@@ -18,6 +18,7 @@ from homePage.forms import contenidoLiterarioForm
 from homePage.forms import contenidoMultimediaForm
 from homePage.forms import DonacionForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.http import Http404
@@ -67,7 +68,13 @@ def registro_view(request):
 
 @login_required(login_url='/')
 def homePage_view(request):
+
 	return render(request, 'HomePage.html')
+@login_required(login_url='/')
+def libros_view(request):
+	libros=infoLibro.objects.all()
+	contexto={'libros':libros}
+	return render(request, 'catalogolibros.html',contexto)
 
 @login_required(login_url='/')
 def subirObra_view (request):
@@ -270,8 +277,7 @@ def Donacion_view(request,primaryKey):
 	return render(request,'VistaDonacion.html',{'UsuariBeni':infousuario.objects.get(pk=primaryKey),'Donacion_Form':Donacion_Form})
 @login_required(login_url='/')
 def mostrarUsuario(request,primaryKey):
-	try: 
-	
+	try: 	
 		Usu=infousuario.objects.get(pk=primaryKey)
 		print("hola1")
 		if request.GET.get('donar'):
@@ -299,3 +305,4 @@ def AquienDone_view(request):
 			usuariosQDone.append(item)
 
 	return render(request,'AquienDone.html',{'usuariosQDone':usuariosQDone}) 
+

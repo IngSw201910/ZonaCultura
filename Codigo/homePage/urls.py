@@ -9,6 +9,7 @@ urlpatterns=[
 	url(r'^$', views.index, name='Home Page'),
 	url(r'^Registro$', views.registro_view, name='JaveCultura Registro Page'),
 	url(r'^HomePage$', views.homePage_view, name='Home Page'),
+	url(r'^CatalogoLibros$',views.libros_view, name='catalogo libros'),
 	url(r'^CompraCredito$', views.comprarCredito_view, name='comprar credito'),
 	url(r'^SubirObra$', views.subirObra_view, name='Seleccion de tipo de Obra'),
 	url(r'^VistaComprados$', views.comprados_view, name='ver comprados'),
