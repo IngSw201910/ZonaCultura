@@ -72,7 +72,8 @@ def homePage_view(request):
 
 @login_required(login_url='/')
 def perfil_view(request):
-	return render(request, 'Perfil.html')
+	user=infousuario.objects.get(user=request.user)
+	return render(request, 'Perfil.html',{'user':user})
 
 @login_required(login_url='/')
 def libros_view(request):

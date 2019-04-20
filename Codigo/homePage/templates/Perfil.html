@@ -57,6 +57,12 @@
             <button type="button" class="btn btn-secondary"><a href="VistaCompradores">Articulos Vendidos</a></button>
             <button type="button" class="btn btn-secondary"><a href="VistaDonantes">Mis donaciones</a></button>
           </div>
+          <form class="site-form" method="post">
+
+            {% csrf_token %}
+            <h1 id="Credito"><i class="fas fa-money-bill-alt"></i>  {{user.balance}}</h1>
+          </form>
+          
       </div>   
       <div class="col col-6">
         <div class="container-2 conteiner">
