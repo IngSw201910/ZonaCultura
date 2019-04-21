@@ -91,6 +91,8 @@ class contenidoMultimedia(models.Model):
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	title=models.CharField(max_length=50)
 	descripcion=models.TextField(max_length=150)
+	formato=models.CharField(max_length=20,blank=True)
+	precioV=models.IntegerField(default=0)
 	clip=models.FileField(upload_to='media/video')
 	fecha=models.DateTimeField(default=timezone.now)
 	

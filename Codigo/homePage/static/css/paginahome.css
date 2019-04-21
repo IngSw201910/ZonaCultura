@@ -58,8 +58,14 @@ td a{
 	
 }
 #ii2{
-	margin-left: 250px;
+	margin-left: 150px;
 	border-color: #0C144E;
+	background-color: #A5FFE6;
+}
+#ii1{
+	margin-left: 50px;
+	border-color: #0C144E;
+	background-color: #FEBEBE;
 }
 #Credito{
 	margin-left: 70px;

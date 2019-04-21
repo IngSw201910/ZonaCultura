@@ -63,11 +63,14 @@
 						<p><font face="Trebuchet MS" size="4">Nombre Obra literaria:  </font> <font face="Trebuchet MS"  color="046C4F" size="3">{{Libro.Titulo}}</font></p>
 						<p><font face="Trebuchet MS" size="4">Precio:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Libro.PrecioLibro}}</font></p>
 						{%endfor%}
+						<form>
+							
+						</form>
 						<p><font face="Trebuchet MS" size="4">Total:  </font><font face="Trebuchet MS"  color="046C4F" size="3">{{Subtotal}}</font></p>
 						<form method="get">
 							{% csrf_token %}
   							<input type="submit" value="Realizar Compra" name="carrito" id="ii2">
-	
+							<input type="submit" value="Borrar" name="borrar" id="ii1">
 						</form>
 				</div>
 			</div>

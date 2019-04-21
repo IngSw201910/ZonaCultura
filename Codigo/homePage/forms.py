@@ -120,6 +120,8 @@ class contenidoMultimediaForm(ModelForm):
 		'user',
 		'title',
 		'descripcion',
+		'formato',
+		'precioV',
 		'clip',
 		'fecha',
 		]
@@ -127,6 +129,8 @@ class contenidoMultimediaForm(ModelForm):
 		'user': 'Nombre del Autor',
 		'title': 'Titulo del Video',
 		'descripcion':'Descripcion del Video',
+		'formato':'Formato del Video',
+		'precioV':'Precio del Video',
 		'clip':'Contenido Multimedia',
 		'fecha': 'Fecha de Creacion',
 		}

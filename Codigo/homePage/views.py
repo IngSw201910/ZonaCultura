@@ -12,6 +12,7 @@ from homePage.models import Donacion
 from homePage.models import Compradores
 from homePage.models import infousuario
 from homePage.models import infoTarjeta
+from homePage.models import contenidoMultimedia
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
 from homePage.forms import contenidoLiterarioForm
@@ -73,13 +74,19 @@ def homePage_view(request):
 @login_required(login_url='/')
 def perfil_view(request):
 	user=infousuario.objects.get(user=request.user)
-	return render(request, 'Perfil.html',{'user':user})
+	return render(request, 'Perfil.html',{'user':user})	
 
 @login_required(login_url='/')
 def libros_view(request):
 	libros=infoLibro.objects.all()
 	contexto={'libros':libros}
 	return render(request, 'catalogolibros.html',contexto)
+
+@login_required(login_url='/')
+def multimedia_view(request):
+	videos=contenidoMultimedia.objects.all()
+	contexto={'videos':videos}
+	return render(request,'catalogoMultimedia.html',contexto)
 
 @login_required(login_url='/')
 def subirObra_view (request):
@@ -126,10 +133,11 @@ def mostrarObraLiteraria(request,primaryKey):
 			#print("Usuario:",infousuario.objects.get(user=request.user).id)
 	except:
 		raise Http404
-
-
-
 	return render(request, 'mostrarContentidoLiterario.html' ,{'Libro':Libro})
+@login_required(login_url='/')
+def mostrarMultimedia(request,primaryKey):
+	video=contenidoMultimedia.objects.get(pk=primaryKey)
+	return render(request,'mostrarContentidoMultimedia.html',{'video':video})
 
 @login_required(login_url='/')
 def comprarCredito_view(request):
@@ -206,6 +214,10 @@ def carrito_view(request):
 				return redirect('/CarritoVista')
 			else:
 				return redirect('/CompraCredito')#pagina para comprar credito
+	elif request.GET.get('borrar'):
+		for item in carri:
+			item.delete()
+		libros=[]
 	else:
 		for libro in libros:
 			aux="Libro"+str(libro.pk)
