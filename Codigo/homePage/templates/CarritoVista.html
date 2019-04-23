@@ -61,7 +61,12 @@
 						<h2><em><font face="Trebuchet MS" size="5"> Obras literarias</font></em></h2>
 						{% for Libro in libros %}
 						<p><font face="Trebuchet MS" size="4">Nombre Obra literaria:  </font> <font face="Trebuchet MS"  color="046C4F" size="3">{{Libro.Titulo}}</font></p>
-						<p><font face="Trebuchet MS" size="4">Precio:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Libro.PrecioLibro}}</font></p>
+						<p><font face="Trebuchet MS" size="4">Precio:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Libro.PrecioLibro}}</font>
+            <form method="get">
+              <input type="submit" value="Eliminar del carrito" name="Libro{{Libro.pk}}">
+  
+            </form>
+            </p>
 						{%endfor%}
 						<form>
 							

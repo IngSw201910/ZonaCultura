@@ -69,6 +69,9 @@ def registro_view(request):
 
 @login_required(login_url='/')
 def homePage_view(request):
+	if request.GET.get('Salir'):
+		print("hola")
+		return redirect('/')
 	return render(request, 'HomePage.html')
 
 @login_required(login_url='/')
@@ -217,7 +220,7 @@ def carrito_view(request):
 	elif request.GET.get('borrar'):
 		for item in carri:
 			item.delete()
-		libros=[]
+		return redirect('/CarritoVista')
 	else:
 		for libro in libros:
 			aux="Libro"+str(libro.pk)
@@ -227,6 +230,7 @@ def carrito_view(request):
 				print('Encontro articulo')
 				carr=Carrito.objects.filter(libro=libro,usuario=usuario)
 				carr[0].delete()
+				return redirect('/CarritoVista')
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
 	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total,'carrito':carri}) 
