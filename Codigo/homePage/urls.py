@@ -21,10 +21,12 @@ urlpatterns=[
 	url(r'^AquienDone$', views.AquienDone_view, name='ver a quien done'),
 	url(r'^SubirObra/SubirContenidoLiterario$', views.subirObraLiteraria_view, name='Subir contenido literario'),
 	url(r'^SubirContenidoMultimedia$',views.SubirContenidoMultimedia_view,name='Subir contenido multimedia'),
+	url(r'^SubirManualidad$', views.subirManualidades_view, name='Subir contenido Manual'),
 	path('VistaUsuario/Usuario/<int:primaryKey>', views.mostrarUsuario),
 	path('Producto/ContenidoMultimedia/<int:primaryKey>', views.mostrarMultimedia),
 	path('Producto/ContenidoLiterario/<int:primaryKey>', views.mostrarObraLiteraria),
-	path('VistaUsuario/Usuario/Donacion/<int:primaryKey>', views.Donacion_view)
+	path('VistaUsuario/Usuario/Donacion/<int:primaryKey>', views.Donacion_view),
+	path('Producto/ContenidoManualidad/<int:primaryKey>', views.mostrarManualidad)
 # Create your views here.
 		]
 urlpatterns += staticfiles_urlpatterns()

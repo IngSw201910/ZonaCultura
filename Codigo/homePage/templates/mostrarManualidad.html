@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Manualidad {{Manualidad.title}}</title>
+</head>
+<body>
+
+
+<h1>{{Manualidad.title}}</h1>
+<p>Generos: {% for genero in Manualidad.genero.all %}{{genero}} <br/> {% endfor %}</p>
+<p>Descripcion de la manualidad: {{Manualidad.title.Descripcion}}</p>
+<p>Precio: {{Manualidad.precioV}}</p>
+<p> Imagen: </p><img src="{{Manualidad.imagen.url}}">
+<br/>
+<a href="/HomePage">Volver a la Pagina de Inicio</a>
+<form method="get">
+  	
+	<input type="submit" value="Añadir al carrito" name="carrito">
+</form>
+
+
+</body>
+</html>

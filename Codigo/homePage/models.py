@@ -22,7 +22,19 @@ class Aficion (models.Model):
 	nombre= models.CharField(max_length=50)
 	def __str__(self):
 		return'{}'.format(self.nombre)
-
+class GeneroManualidad(models.Model):
+	nombre=models.CharField(max_length=50)
+	def __str__(self):
+		return'{}'.format(self.nombre)
+class contenidoManualidad(models.Model): 
+	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+	title=models.CharField(max_length=50)
+	descripcion=models.TextField(max_length=150)
+	genero= models.ManyToManyField(GeneroManualidad)
+	precioV=models.IntegerField(default=0)
+	imagen=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
+	def __str__(self):
+		return'{}'.format(self.title+' de '+self.user.first_name + ' '+self.user.last_name)
 class infoLibro(models.Model):
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	genero= models.ManyToManyField(GeneroLiterario)

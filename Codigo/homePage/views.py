@@ -18,6 +18,8 @@ from homePage.forms import logInForm
 from homePage.forms import contenidoLiterarioForm
 from homePage.forms import contenidoMultimediaForm
 from homePage.forms import DonacionForm
+from homePage.forms import contenidoManualidad
+from homePage.forms import contenidoManualForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -327,3 +329,33 @@ def AquienDone_view(request):
 
 	return render(request,'AquienDone.html',{'usuariosQDone':usuariosQDone}) 
 
+@login_required(login_url='/')
+def subirManualidades_view(request):
+	if request.method =='POST':
+		Form=contenidoManualForm(request.POST, request.FILES)
+		if Form.is_valid():
+			producto=Form.save(commit=False)
+			producto.user= request.user
+			producto.save()
+			print("\n***********Formulario valido")
+			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
+			
+			return HttpResponse("Submited")
+		else:
+			print("\n***********Formulario no valido")
+			return HttpResponse("Fallo")
+	else:
+		Form=contenidoManualForm()
+	return render(request,'SubirManualidad.html',{'Form':Form})
+@login_required(login_url='/')
+def mostrarManualidad(request,primaryKey):
+	#allObjects=infoLibro.objects.all()
+	#print([p.pk for p in allObjects])
+	print(primaryKey)
+	try: 
+	 
+		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
+		
+	except:
+		raise Http404
+	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad})

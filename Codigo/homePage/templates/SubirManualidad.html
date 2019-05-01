@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Subir Contenido Manual</title>
+</head>
+<body>
+
+<h1>Hora de Subir tu Contenido manual</h1>
+<p>Rellenar los campos del siguiente formulario para comenzar a vender su producto manual</p>
+
+
+<form class="site-form" method="post"  enctype="multipart/form-data">
+  	{% csrf_token %}
+	{{ Form }}
+	<input type="submit" value="Subir producto">
+</form>
+
+
+
+
+</body>
+</html>

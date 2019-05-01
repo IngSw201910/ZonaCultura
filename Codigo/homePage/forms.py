@@ -7,6 +7,7 @@ from homePage.models  import infoLibro
 from homePage.models import infoTarjeta
 from homePage.models import contenidoMultimedia
 from homePage.models import Donacion
+from homePage.models import contenidoManualidad
 from django.forms import ModelForm
 
 
@@ -147,6 +148,29 @@ class DonacionForm(ModelForm):
 		]
 		labels={
 		'cantidad': 'Valor de la donacion'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+
+class contenidoManualForm(forms.ModelForm):
+	class Meta:
+		model=contenidoManualidad
+		fields=[
+		'title',
+		'descripcion',
+		'genero',
+		'precioV',
+		'imagen'
+		]
+		labels={
+		'title':'Titulo',
+		'descripcion':'Descripcion',
+		'genero': 'Genero del contenido literario',
+		'precioV':'Precio de la manualidad',
+		'imagen':'Imagen del contenido literario'
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),
