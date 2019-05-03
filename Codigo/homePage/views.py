@@ -354,8 +354,36 @@ def mostrarManualidad(request,primaryKey):
 	print(primaryKey)
 	try: 
 	 
-		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
-		
+		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)		 		
+
 	except:
 		raise Http404
 	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad})
+
+@login_required(login_url='/')
+def editarManualidades_view(request,primaryKey):
+	 
+	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
+	print("aca llegue2")
+	if request.method =='POST':
+		print("entre")
+		print("aca llegue1")
+		Form=contenidoManualForm(request.POST, request.FILES,instance=Manualidad)
+		print("aca llegue")
+		if Form.is_valid():
+			producto=Form.save(commit=False)
+			producto.user= request.user
+			producto.save()
+			print("\n***********Formulario valido")
+			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
+				
+			return HttpResponse("Submited")
+		else:
+			Form = EmpleadoForm(instance=Manualidad)
+			print("\n***********Formulario no valido")
+			return HttpResponse("Fallo")
+	else:
+		Form=contenidoManualForm(instance=Manualidad)
+		print("que pasa mani")
+	
+	return render(request,'EditarManualidad.html',{'Form':Form})

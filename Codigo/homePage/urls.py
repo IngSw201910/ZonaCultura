@@ -22,6 +22,7 @@ urlpatterns=[
 	url(r'^SubirObra/SubirContenidoLiterario$', views.subirObraLiteraria_view, name='Subir contenido literario'),
 	url(r'^SubirContenidoMultimedia$',views.SubirContenidoMultimedia_view,name='Subir contenido multimedia'),
 	url(r'^SubirManualidad$', views.subirManualidades_view, name='Subir contenido Manual'),
+	path('Producto/ContenidoManualidad/Editar/<int:primaryKey>', views.editarManualidades_view),
 	path('VistaUsuario/Usuario/<int:primaryKey>', views.mostrarUsuario),
 	path('Producto/ContenidoMultimedia/<int:primaryKey>', views.mostrarMultimedia),
 	path('Producto/ContenidoLiterario/<int:primaryKey>', views.mostrarObraLiteraria),
