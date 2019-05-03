@@ -352,10 +352,10 @@ def mostrarManualidad(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
-	try: 
-	 
-		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)		 		
+	try:
 
+	 
+		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 	except:
 		raise Http404
 	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad})
