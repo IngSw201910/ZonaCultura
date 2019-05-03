@@ -182,7 +182,7 @@ def carrito_view(request):
 	for item in carri:
 		if( item.libro is not None):#Si es un libro
 			libros.append(item.libro)
-		if( item.manualidad is not None):
+		if( item.manualidad is not None and item.manualidad.existencias!=0):
 			manualidades.append(item.manualidad)
 
 
@@ -211,8 +211,10 @@ def carrito_view(request):
 					p.balance=p.balance+q.PrecioLibro
 					p.save() 
 				for n in manualidades:
-					m=infousuario.objects.get(user=n.user)
-					m.balance=m.balance+n.precioV
+					if(n.existencias!=0):
+						m=infousuario.objects.get(user=n.user)
+						m.balance=m.balance+n.precioV
+						n.existencias=n.existencias-1
 
 				for item in carri:
 					if(item.libro is not None):
