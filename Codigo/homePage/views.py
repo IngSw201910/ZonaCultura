@@ -257,22 +257,28 @@ def carrito_view(request):
 def comprados_view(request):
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
+	manualidades=[]
 	comprados =ArticulosComprados.objects.filter(usuario= infousuario.objects.get(user = request.user))
 	for item in comprados:
 		if( item.libro is not None):#Si es un libro
 			libros.append(item.libro)
+		if( item.manualidad is not None):#Si es un libro
+			manualidades.append(item.manualidad)
 
-	return render(request,'VistaComprados.html',{'libros':libros}) 
+	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades}) 
 @login_required(login_url='/')
 def compradores_view(request):
 	usuario= infousuario.objects.get(user = request.user)
 	usuariosCompradores=[]
+	usuariosCompraManu=[]
 	compradxres=Compradores.objects.filter(usuarioDuenio=infousuario.objects.get(user = request.user))
 	for item in compradxres:
 		if( item.usuarioComprador is not None and item.libro is not None ):#Si es un libro
 			usuariosCompradores.append(item)
+		if( item.usuarioComprador is not None and item.manualidad is not None ):#Si es un libro
+			usuariosCompraManu.append(item)
 
-	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores}) 
+	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores,'usuariosCompraManu':usuariosCompraManu}) 
 def SubirContenidoMultimedia_view(request):
     if request.method=='POST':
         multimedia_form=contenidoMultimediaForm(request.POST)
