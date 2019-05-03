@@ -303,8 +303,6 @@ def mostrarUsuario(request,primaryKey):
 	try: 	
 		Usu=infousuario.objects.get(pk=primaryKey)
 		print("hola1")
-		if request.GET.get('donar'):
-			return redirect('/VistaDonacion')
 	except:
 		raise Http404
 	return render(request, 'VistaUsuario.html' ,{'Usu':Usu})
@@ -353,8 +351,6 @@ def mostrarManualidad(request,primaryKey):
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
 	try:
-
-	 
 		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 	except:
 		raise Http404
