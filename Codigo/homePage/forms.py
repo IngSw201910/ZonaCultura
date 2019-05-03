@@ -160,6 +160,7 @@ class contenidoManualForm(forms.ModelForm):
 		model=contenidoManualidad
 		fields=[
 		'title',
+		'existencias',
 		'descripcion',
 		'genero',
 		'precioV',
@@ -167,6 +168,7 @@ class contenidoManualForm(forms.ModelForm):
 		]
 		labels={
 		'title':'Titulo',
+		'existencias':'Existencias',
 		'descripcion':'Descripcion',
 		'genero': 'Genero del contenido literario',
 		'precioV':'Precio de la manualidad',

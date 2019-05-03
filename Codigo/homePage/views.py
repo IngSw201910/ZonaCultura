@@ -379,10 +379,13 @@ def mostrarManualidad(request,primaryKey):
 		if request.GET.get('carrito'):
 			#c=Carrito.objects.filter(manualidad=Manualidad,usuario=infousuario.objects.get(user=request.user)).first()
 			#print(c)
-			
-			carro=Carrito.objects.create(manualidad= Manualidad, usuario=infousuario.objects.get(user=request.user))
-			print(carro.manualidad.title)
-			return redirect('/CarritoVista')
+			if(Manualidad.existencias!=0):
+				carro=Carrito.objects.create(manualidad= Manualidad, usuario=infousuario.objects.get(user=request.user))
+				print(carro.manualidad.title)
+				return redirect('/CarritoVista')
+			else :
+				return HttpResponse("No hay unidades")
+
 			
 
 	except:

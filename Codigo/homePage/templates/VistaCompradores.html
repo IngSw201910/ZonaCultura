@@ -18,7 +18,13 @@
 <p>Apellido del usuario : {{Usuarios.usuarioComprador.user.last_name}}</p>
 <p>Libro comprado : {{Usuarios.libro.Titulo}}</p>
 {%endfor%}
+{% for  Usuar in usuariosCompraManu %}
 
+<p>Nombre del usuario : {{Usuar.usuarioComprador.user.first_name}}</p>
+<p>Apellido del usuario : {{Usuar.usuarioComprador.user.last_name}}</p>
+<p>Libro comprado : {{Usuar.manualidad.title}}</p>
+
+{%endfor%}
 </body>
 </html>
 

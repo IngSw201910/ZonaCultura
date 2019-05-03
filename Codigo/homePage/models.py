@@ -29,6 +29,7 @@ class GeneroManualidad(models.Model):
 class contenidoManualidad(models.Model): 
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	title=models.CharField(max_length=50)
+	existencias=models.IntegerField(default=0)
 	descripcion=models.TextField(max_length=150)
 	genero= models.ManyToManyField(GeneroManualidad)
 	precioV=models.IntegerField(default=0)
@@ -62,7 +63,6 @@ class Carrito(models.Model):
 		libro= models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
 		manualidad= models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
 		#multimedia
-		#manualidad
 		usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
 		class Meta:
 			unique_together=('libro', 'usuario')
