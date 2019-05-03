@@ -177,10 +177,13 @@ def comprarCredito_view(request):
 def carrito_view(request):
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
+	manualidades=[]
 	carri=Carrito.objects.filter(usuario= infousuario.objects.get(user = request.user))
 	for item in carri:
 		if( item.libro is not None):#Si es un libro
 			libros.append(item.libro)
+		if( item.manualidad is not None):
+			manualidades.append(item.manualidad)
 
 
 	total=0
@@ -188,6 +191,8 @@ def carrito_view(request):
 
 	for p in libros:
 		total=total+p.PrecioLibro
+	for m in manualidades:
+		total=total+m.precioV
 		#print(usuario.balance)
 	#if request.GET.get('name'):
 	#		produc=infoLibro.objects.get(Titulo=request.libro.Titulo)
@@ -205,16 +210,19 @@ def carrito_view(request):
 					p=infousuario.objects.get(user = q.user)
 					p.balance=p.balance+q.PrecioLibro
 					p.save() 
-
+				for n in manualidades:
+					m=infousuario.objects.get(user=n.user)
+					m.balance=m.balance+n.precioV
 
 				for item in carri:
-					ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
-					
-					usuarioD= infousuario.objects.get(user =item.libro.user)
-					#print("voy a imprimir el dueño")
-					#print(item.libro.user.username)
-					
-					Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
+					if(item.libro is not None):
+						ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
+						usuarioD= infousuario.objects.get(user =item.libro.user)
+						Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
+					if(item.manualidad is not None):
+						ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
+						usuarioDd= infousuario.objects.get(user =item.manualidad.user)
+						Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
 					item.delete() 
 				return redirect('/CarritoVista')
 			else:
@@ -233,9 +241,18 @@ def carrito_view(request):
 				carr=Carrito.objects.filter(libro=libro,usuario=usuario)
 				carr[0].delete()
 				return redirect('/CarritoVista')
+		for manual in manualidades:
+			aux1="Manual"+str(manual.pk)
+			aux1=aux1.strip()
+			print(aux1)
+			if request.GET.get(aux1) is not None:
+				print('Encontro articulo')
+				carr=Carrito.objects.filter(manualidad=manual,usuario=usuario)
+				carr[0].delete()
+				return redirect('/CarritoVista')
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
-	return render(request,'CarritoVista.html',{'libros':libros, 'Subtotal': total,'carrito':carri}) 
+	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'Subtotal': total,'carrito':carri}) 
 @login_required(login_url='/')
 def comprados_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -351,7 +368,17 @@ def mostrarManualidad(request,primaryKey):
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
 	try:
+		print("hola")
 		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
+		if request.GET.get('carrito'):
+			#c=Carrito.objects.filter(manualidad=Manualidad,usuario=infousuario.objects.get(user=request.user)).first()
+			#print(c)
+			
+			carro=Carrito.objects.create(manualidad= Manualidad, usuario=infousuario.objects.get(user=request.user))
+			print(carro.manualidad.title)
+			return redirect('/CarritoVista')
+			
+
 	except:
 		raise Http404
 	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad})
