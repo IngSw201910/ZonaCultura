@@ -214,7 +214,7 @@ def carrito_view(request):
 					if(n.existencias!=0):
 						m=infousuario.objects.get(user=n.user)
 						m.balance=m.balance+n.precioV
-						n.existencias=n.existencias-1
+
 
 				for item in carri:
 					if(item.libro is not None):
@@ -222,6 +222,7 @@ def carrito_view(request):
 						usuarioD= infousuario.objects.get(user =item.libro.user)
 						Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
 					if(item.manualidad is not None):
+						item.manualidad.existencias=item.manualidad.existencias-1
 						ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
 						usuarioDd= infousuario.objects.get(user =item.manualidad.user)
 						Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
