@@ -444,26 +444,30 @@ def editarManualidades_view(request,primaryKey):
 def comentarios_calificacionManu(request,primaryKey):
 	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 	usu = infousuario.objects.get(user = request.user)
-	if request.method =='POST':
-		com= comenycaliForm(request.POST)
-		if com.is_valid():
-			data= com.cleaned_data
-			calif=data.get("califi")
-	
-			suma=Manualidad.puntaje*Manualidad.canticomp
-			suma=suma+calif
-			print("sum")
-			print(suma)
-			Manualidad.canticomp=Manualidad.canticomp+1
-			Manualidad.puntaje=suma/Manualidad.canticomp
-			print("cc")
-			print(Manualidad.canticomp)
 
-			Manualidad.save()
-			comentar= data.get("comentario")
-			cc=Comentario.objects.create(manu=Manualidad,califi=calif,comentario=comentar,usuarioComentador=usu)
-			print("\n***********Formulario valido")
-			return HttpResponse("Comentario enviado")
+	if request.method =='POST':
+		if(Manualidad.user.username==usu.user.username):
+			return HttpResponse("No puede comentar su propia obra")
+		else:
+			com= comenycaliForm(request.POST)
+			if com.is_valid():
+				data= com.cleaned_data
+				calif=data.get("califi")
+		
+				suma=Manualidad.puntaje*Manualidad.canticomp
+				suma=suma+calif
+				print("sum")
+				print(suma)
+				Manualidad.canticomp=Manualidad.canticomp+1
+				Manualidad.puntaje=suma/Manualidad.canticomp
+				print("cc")
+				print(Manualidad.canticomp)
+
+				Manualidad.save()
+				comentar= data.get("comentario")
+				cc=Comentario.objects.create(manu=Manualidad,califi=calif,comentario=comentar,usuarioComentador=usu)
+				print("\n***********Formulario valido")
+				return HttpResponse("Comentario enviado")
 			#return redirect('/') 
 	else:
 		com =comenycaliForm()
