@@ -9,6 +9,8 @@ from homePage.models import ArticulosComprados
 from homePage.models import contenidoMultimedia
 from homePage.models import GeneroManualidad
 from homePage.models import contenidoManualidad
+from homePage.models import Donacion
+from homePage.models import Comentario
 # Register your models here.
 admin.site.register(Aficion)
 admin.site.register(infousuario)
@@ -20,3 +22,5 @@ admin.site.register(ArticulosComprados)
 admin.site.register(contenidoMultimedia)
 admin.site.register(GeneroManualidad)
 admin.site.register(contenidoManualidad)
+admin.site.register(Donacion)
+admin.site.register(Comentario)

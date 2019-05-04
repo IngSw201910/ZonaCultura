@@ -7,11 +7,13 @@
 
 
 <h1>{{Manualidad.title}}</h1>
+<p>Puntaje: {{Manualidad.puntaje}}</p>
 <p>Generos: {% for genero in Manualidad.genero.all %}{{genero}} <br/> {% endfor %}</p>
 <p>Descripcion de la manualidad: {{Manualidad.title.Descripcion}}</p>
 <p>Precio: {{Manualidad.precioV}}</p>
 <p>Unidades disponibles: {{Manualidad.existencias}}</p>
 <p> Imagen: </p><img src="{{Manualidad.imagen.url}}">
+
 <br/>
 <a href="/HomePage">Volver a la Pagina de Inicio</a>
 

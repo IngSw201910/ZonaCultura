@@ -8,6 +8,7 @@ from homePage.models import infoTarjeta
 from homePage.models import contenidoMultimedia
 from homePage.models import Donacion
 from homePage.models import contenidoManualidad
+from homePage.models import Comentario
 from django.forms import ModelForm
 
 
@@ -144,10 +145,12 @@ class DonacionForm(ModelForm):
 	class Meta:
 		model=Donacion
 		fields= [
-		'cantidad'
+		'cantidad',
+		'mensaje'
 		]
 		labels={
-		'cantidad': 'Valor de la donacion'
+		'cantidad': 'Valor de la donacion',
+		'mensaje':'Mensaje para el usuario a donar'
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),
@@ -173,6 +176,23 @@ class contenidoManualForm(forms.ModelForm):
 		'genero': 'Genero del contenido literario',
 		'precioV':'Precio de la manualidad',
 		'imagen':'Imagen del contenido literario'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+
+class comenycaliForm(ModelForm):
+	class Meta:
+		model=Comentario
+		fields= [
+		'califi',
+		'comentario'
+		]
+		labels={
+		'califi': 'Puntaje de 1-5',
+		'comentario':'Comentarios acerca de la obra'
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),

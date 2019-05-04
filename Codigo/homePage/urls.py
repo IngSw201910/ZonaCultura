@@ -27,7 +27,8 @@ urlpatterns=[
 	path('Producto/ContenidoMultimedia/<int:primaryKey>', views.mostrarMultimedia),
 	path('Producto/ContenidoLiterario/<int:primaryKey>', views.mostrarObraLiteraria),
 	path('VistaUsuario/Usuario/Donacion/<int:primaryKey>', views.Donacion_view),
-	path('Producto/ContenidoManualidad/<int:primaryKey>', views.mostrarManualidad)
+	path('Producto/ContenidoManualidad/<int:primaryKey>', views.mostrarManualidad),
+	path('Producto/ContenidoManualidad/Comentar/<int:primaryKey>', views.comentarios_calificacionManu)
 # Create your views here.
 		]
 urlpatterns += staticfiles_urlpatterns()

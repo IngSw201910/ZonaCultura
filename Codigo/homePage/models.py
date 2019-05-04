@@ -1,13 +1,13 @@
 from django.db import models
 
 # Create your models here.
+
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms import ModelForm
 from django.utils import timezone
-
 class FormatoLiterario(models.Model):
 	nombre=models.CharField(max_length=50)
 	def __str__(self):
@@ -34,6 +34,8 @@ class contenidoManualidad(models.Model):
 	genero= models.ManyToManyField(GeneroManualidad)
 	precioV=models.IntegerField(default=0)
 	imagen=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
+	puntaje=models.IntegerField(default=0)
+	canticomp=models.IntegerField(default=0)
 	def __str__(self):
 		return'{}'.format(self.title+' de '+self.user.first_name + ' '+self.user.last_name)
 class infoLibro(models.Model):
@@ -115,3 +117,9 @@ class Donacion(models.Model):
 		usuarioDonante=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDonante')
 		usuarioBen=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioBen')
 		cantidad =models.IntegerField(default=0)
+		mensaje=models.TextField(max_length=150,default="")
+class Comentario(models.Model):
+		manu = models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
+		califi=models.IntegerField(default=0)
+		comentario=models.TextField(max_length=150,default="")
+		usuarioComentador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)

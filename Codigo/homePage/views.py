@@ -8,11 +8,13 @@ from homePage.forms import infoLibro
 from homePage.forms import contenidoTarjetaForm
 from homePage.forms import contenidoCreditForm
 from homePage.models import Carrito
+from homePage.models import Comentario
 from homePage.models import Donacion
 from homePage.models import Compradores
 from homePage.models import infousuario
 from homePage.models import infoTarjeta
 from homePage.models import contenidoMultimedia
+from homePage.forms import comenycaliForm
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
 from homePage.forms import contenidoLiterarioForm
@@ -228,6 +230,7 @@ def carrito_view(request):
 						ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
 						usuarioDd= infousuario.objects.get(user =item.manualidad.user)
 						item.manualidad.existencias=item.manualidad.existencias-1
+						item.manualidad.canticomp=item.manualidad.canticomp+1
 						item.manualidad.save()
 						Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
 						item.delete() 
@@ -310,11 +313,12 @@ def Donacion_view(request,primaryKey):
 			Usua=infousuario.objects.get(user=request.user)
 			data= Donacion_Form.cleaned_data
 			cantida=data.get("cantidad")
+			msj=data.get("mensaje")
 			print(cantida)
 
 			#print(Usu)
 			if Usua.balance>=cantida:
-				Doni=Donacion.objects.create( usuarioDonante=Usua,usuarioBen=Usuario,cantidad=cantida)
+				Doni=Donacion.objects.create( usuarioDonante=Usua,usuarioBen=Usuario,cantidad=cantida,mensaje=msj)
 				usu=infousuario.objects.get(user=request.user)
 				usu.balance=usu.balance - cantida
 				usu.save()
@@ -391,7 +395,7 @@ def mostrarManualidad(request,primaryKey):
 		if request.GET.get('carrito'):
 			#c=Carrito.objects.filter(manualidad=Manualidad,usuario=infousuario.objects.get(user=request.user)).first()
 			#print(c)
-			if(Manualidad.existencias!=0 and Manualidad.user!= usuaio):
+			if(Manualidad.existencias!=0 and Manualidad.user!= usuario):
 				carro=Carrito.objects.create(manualidad= Manualidad, usuario=infousuario.objects.get(user=request.user))
 				print(carro.manualidad.title)
 				return redirect('/CarritoVista')
@@ -401,12 +405,11 @@ def mostrarManualidad(request,primaryKey):
 			
 
 	except:
-		raise Http404
+		return HttpResponse("vergas")
 	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad})
 
 @login_required(login_url='/')
 def editarManualidades_view(request,primaryKey):
-	 
 	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 	print("aca llegue2")
 	if request.method =='POST':
@@ -430,3 +433,25 @@ def editarManualidades_view(request,primaryKey):
 		Form=contenidoManualForm(instance=Manualidad)
 	
 	return render(request,'EditarManualidad.html',{'Form':Form})
+@login_required(login_url='/')
+def comentarios_calificacionManu(request,primaryKey):
+	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
+	usu = infousuario.objects.get(user = request.user)
+	if request.method =='POST':
+		com= comenycaliForm(request.POST)
+		if com.is_valid():
+			data= com.cleaned_data
+			calif=data.get("califi")
+			suma=Manualidad.puntaje*Manualidad.canticomp
+			suma=suma+calif
+			Manualidad.puntaje=suma/Manualidad.canticomp
+			Manualidad.save()
+			comentar= data.get("comentario")
+			cc=Comentario.objects.create(manu=Manualidad,califi=calif,comentario=comentar,usuarioComentador=usu)
+			print("\n***********Formulario valido")
+			return HttpResponse("Comentario enviado")
+			#return redirect('/') 
+	else:
+		com =comenycaliForm()
+		
+	return render(request,'comentarManu.html',{'com':com,'Manualidad':Manualidad})

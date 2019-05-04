@@ -13,11 +13,10 @@
 <p>Artículos </p>
 
 {% for Libro in libros %}
-
 <p>Nombre Obra literaria: {{Libro.Titulo}}</p>
 {%endfor%}
 {% for Manualidad in manualidades %}
-
+<td><a href="Producto/ContenidoManualidad/Comentar/{{Manualidad.pk}}">Comentar</td>
 <p>Nombre Obra Manual: {{Manualidad.title}}</p>
 {%endfor%}
 </body>

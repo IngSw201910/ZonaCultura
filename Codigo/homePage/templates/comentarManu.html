@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Comentar Contenido Manual</title>
+</head>
+<body>
+
+<h1>Hora de calificar {{Manualidad.title}}</h1>
+<p>Rellenar los campos del siguiente formulario para calificar {{Manualidad.title}}</p>
+
+
+<form class="site-form" method="post"  enctype="multipart/form-data">
+  	{% csrf_token %}
+	{{ com }}
+	<input type="submit" value="Comentar">
+</form>
+
+
+
+
+</body>
+</html>
