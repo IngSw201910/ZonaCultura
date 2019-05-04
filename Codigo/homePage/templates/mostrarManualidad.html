@@ -13,15 +13,27 @@
 <p>Precio: {{Manualidad.precioV}}</p>
 <p>Unidades disponibles: {{Manualidad.existencias}}</p>
 <p> Imagen: </p><img src="{{Manualidad.imagen.url}}">
+<p>Comentarios y calificaciones: </p>
+{% for comi in com %}
+<p></p>
+<p>Usuario: {{comi.usuarioComentador}}</p>
+<p>Calificación: {{comi.califi}}</p>
+<p>Comemtario: {{comi.comentario}} <br/> {% endfor %}</p>
 
 <br/>
 <a href="/HomePage">Volver a la Pagina de Inicio</a>
+<tbody>
+{% if Manualidad.user.username == usuario.user.username %}
+	<td><a href="Editar/{{Manualidad.pk}}">editar</td>
+{% else %}
 
 <form method="get">
   	
 	<input type="submit" value="Añadir al carrito" name="carrito">
 </form>
-<td><a href="Editar/{{Manualidad.pk}}">editar</td>
+
+</tbody>
+{% endif %}
 
 
 </body>

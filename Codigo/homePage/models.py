@@ -34,7 +34,7 @@ class contenidoManualidad(models.Model):
 	genero= models.ManyToManyField(GeneroManualidad)
 	precioV=models.IntegerField(default=0)
 	imagen=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
-	puntaje=models.IntegerField(default=0)
+	puntaje=models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 	canticomp=models.IntegerField(default=0)
 	def __str__(self):
 		return'{}'.format(self.title+' de '+self.user.first_name + ' '+self.user.last_name)

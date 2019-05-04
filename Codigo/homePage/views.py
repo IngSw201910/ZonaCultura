@@ -230,7 +230,6 @@ def carrito_view(request):
 						ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
 						usuarioDd= infousuario.objects.get(user =item.manualidad.user)
 						item.manualidad.existencias=item.manualidad.existencias-1
-						item.manualidad.canticomp=item.manualidad.canticomp+1
 						item.manualidad.save()
 						Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
 						item.delete() 
@@ -392,21 +391,29 @@ def mostrarManualidad(request,primaryKey):
 		print("hola")
 		usuario= infousuario.objects.get(user = request.user)
 		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
+		comenn=Comentario.objects.filter(manu=Manualidad)
+		com=[]
+		for cc in comenn:
+			if(cc is not None):
+				com.append(cc)
+	
+
+		print(usuario.user.username)
+
 		if request.GET.get('carrito'):
 			#c=Carrito.objects.filter(manualidad=Manualidad,usuario=infousuario.objects.get(user=request.user)).first()
 			#print(c)
-			if(Manualidad.existencias!=0 and Manualidad.user!= usuario):
+
+			if(Manualidad.existencias!=0):
 				carro=Carrito.objects.create(manualidad= Manualidad, usuario=infousuario.objects.get(user=request.user))
 				print(carro.manualidad.title)
 				return redirect('/CarritoVista')
 			else :
 				return HttpResponse("No se pudo añadir")
-
 			
-
 	except:
-		return HttpResponse("vergas")
-	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad})
+		raise Http404
+	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad,'com':com,'usuario':usuario})
 
 @login_required(login_url='/')
 def editarManualidades_view(request,primaryKey):
@@ -442,9 +449,16 @@ def comentarios_calificacionManu(request,primaryKey):
 		if com.is_valid():
 			data= com.cleaned_data
 			calif=data.get("califi")
+	
 			suma=Manualidad.puntaje*Manualidad.canticomp
 			suma=suma+calif
+			print("sum")
+			print(suma)
+			Manualidad.canticomp=Manualidad.canticomp+1
 			Manualidad.puntaje=suma/Manualidad.canticomp
+			print("cc")
+			print(Manualidad.canticomp)
+
 			Manualidad.save()
 			comentar= data.get("comentario")
 			cc=Comentario.objects.create(manu=Manualidad,califi=calif,comentario=comentar,usuarioComentador=usu)
