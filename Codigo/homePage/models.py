@@ -8,6 +8,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms import ModelForm
 from django.utils import timezone
+def validate_file_extension(value):
+    if not value.name.endswith('.pdf'):
+        raise ValidationError(u'Error message')
+
 class FormatoLiterario(models.Model):
 	nombre=models.CharField(max_length=50)
 	def __str__(self):
@@ -40,8 +44,8 @@ class contenidoManualidad(models.Model):
 		return'{}'.format(self.title+' de '+self.user.first_name + ' '+self.user.last_name)
 class infoLibro(models.Model):
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+	archivo=models.FileField(upload_to='contenido/books/', validators=[validate_file_extension],default='contenido/books/default.pdf')
 	genero= models.ManyToManyField(GeneroLiterario)
-	formato=models.ManyToManyField(FormatoLiterario)
 	Titulo= models.CharField(max_length=50)
 	Descripcion=models.TextField(max_length=2000)
 	ISBN= models.IntegerField()

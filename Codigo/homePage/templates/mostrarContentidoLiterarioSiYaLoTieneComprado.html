@@ -12,16 +12,20 @@
 <p>Cantidad de paginas: {{Libro.CantidadPaginas}}</p>
 <p>Numero ISBN: {{Libro.ISBN}}</p>
 <p>Idioma: {{Libro.Idioma}} </p>
+
+
+
+<p> Descarga: {{Libro.archivo}}</p>
+<form method="get">
+  	
+	<input type="submit" value="Descargar" name="descarga">
+</form>
+
+
 <p> Imagen: </p><img src="{{Libro.imagen.url}}">
 <br/>
 
 
-<a href="/HomePage">Volver a la Pagina de Inicio</a>
-
-<form method="get">
-  	
-	<input type="submit" value="Añadir al carrito" name="carrito">
-</form>
 
 
 </body>

@@ -38,20 +38,20 @@ class contenidoLiterarioForm(forms.ModelForm):
 		fields=[
 		'Titulo',
 		'imagen',
+		'archivo',
 		'Descripcion',
 		'ISBN',
 		'CantidadPaginas',
-		'formato',
 		'genero',
 		'Idioma'
 		]
 		labels={
+		'archivo':'Archivo del contenido literario (Solo acepta formato pdf)',
 		'Titulo':'Titulo',
 		'imagen':'Imagen del contenido literario',
 		'Descripcion':'Descripcion',
 		'ISBN':'Numero ISBN',
 		'CantidadPaginas':'Numero de paginas del producto',
-		'formato':'Formato del contenido literario',
 		'genero': 'Genero del contenido literario',
 		'Idioma':'Idioma en el que esta escrito el contenido literario'
 		}

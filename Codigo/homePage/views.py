@@ -13,7 +13,9 @@ from homePage.models import Donacion
 from homePage.models import Compradores
 from homePage.models import infousuario
 from homePage.models import infoTarjeta
+from homePage.models import ArticulosComprados
 from homePage.models import contenidoMultimedia
+from homePage.models import  cuentaPorCobrar
 from homePage.forms import comenycaliForm
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
@@ -27,7 +29,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.http import Http404
-from homePage.models import ArticulosComprados
+from django.conf import settings
+import os
+
 #from django.core.urlresolvers import reverse_lazy
 def index(request):
 	form=logInForm(request.POST or None)
@@ -122,9 +126,29 @@ def mostrarObraLiteraria(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
-	try: 
 	
+
+	try:
+
 		Libro=infoLibro.objects.get(pk=primaryKey)
+		if(ArticulosComprados.objects.filter(usuario=infousuario.objects.get(user = request.user),libro=Libro).first() is not None):
+			permitir=False
+			print('lo tiene')
+		else:
+			permitir=True
+			print('no lo tiene')
+		if request.GET.get('descarga'):
+			print('lol')
+			print (Libro.archivo)
+			file_path = os.path.join(settings.MEDIA_ROOT, Libro.archivo.path)
+			print(file_path)
+			if os.path.exists(file_path):
+				with open(file_path, 'rb') as fh:
+					response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+					response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+					return response
+				#print(file_path)	 
+		
 		if request.GET.get('carrito'):
 			print('Hello! el libro con id: ',Libro.id)
 			c=Carrito.objects.filter(libro=Libro,usuario=infousuario.objects.get(user=request.user)).first()
@@ -136,11 +160,17 @@ def mostrarObraLiteraria(request,primaryKey):
 				return HttpResponse("Usted ya tiene este elemento en el carrito")
 
 			#carro.usuario=infousuario.objects.get(user=request.user)
-			
+		
 			#print("Usuario:",infousuario.objects.get(user=request.user).id)
+		
+		
 	except:
 		raise Http404
-	return render(request, 'mostrarContentidoLiterario.html' ,{'Libro':Libro})
+	if permitir:
+		return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro})
+	else:
+		return render(request, 'mostrarContentidoLiterarioSiYaLoTieneComprado.html',{'Libro':Libro})
+		
 @login_required(login_url='/')
 def mostrarMultimedia(request,primaryKey):
 	video=contenidoMultimedia.objects.get(pk=primaryKey)
