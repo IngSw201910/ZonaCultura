@@ -14,6 +14,7 @@ from homePage.models import Compradores
 from homePage.models import infousuario
 from homePage.models import infoTarjeta
 from homePage.models import GeneroLiterario
+from homePage.models import GeneroManualidad
 from homePage.models import ArticulosComprados
 from homePage.models import contenidoMultimedia
 from homePage.models import  cuentaPorCobrar
@@ -27,6 +28,7 @@ from homePage.forms import contenidoManualidad
 from homePage.forms import contenidoManualForm
 from homePage.forms import  competenciasForm
 from homePage.forms import  generoLiterarioForm
+from homePage.forms import  GeneroManualidadForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -347,6 +349,10 @@ def compradores_view(request):
 			usuariosCompraManu.append(item)
 
 	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores,'usuariosCompraManu':usuariosCompraManu}) 
+
+
+
+
 def SubirContenidoMultimedia_view(request):
     if request.method=='POST':
         multimedia_form=contenidoMultimediaForm(request.POST)
@@ -419,13 +425,18 @@ def AquienDone_view(request):
 
 	return render(request,'AquienDone.html',{'usuariosQDone':usuariosQDone}) 
 
+
+
 @login_required(login_url='/')
 def subirManualidades_view(request):
 	if request.method =='POST':
 		Form=contenidoManualForm(request.POST, request.FILES)
+		Form2=GeneroManualidadForm(request.POST)
 		if Form.is_valid():
+			generos=Form2.save()
 			producto=Form.save(commit=False)
 			producto.user= request.user
+			producto.genero=generos
 			producto.save()
 			print("\n***********Formulario valido")
 			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
@@ -435,15 +446,17 @@ def subirManualidades_view(request):
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
+		Form2=GeneroManualidadForm()	
 		Form=contenidoManualForm()
-	return render(request,'SubirManualidad.html',{'Form':Form})
+	return render(request,'SubirManualidad.html',{'Form':Form,'Form2':Form2})
+
 @login_required(login_url='/')
 def mostrarManualidad(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
 	try:
-		print("hola")
+		
 		usuario= infousuario.objects.get(user = request.user)
 		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 		comenn=Comentario.objects.filter(manu=Manualidad)
@@ -468,7 +481,43 @@ def mostrarManualidad(request,primaryKey):
 			
 	except:
 		raise Http404
-	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad,'com':com,'usuario':usuario})
+		
+	listaDeGeneros=Manualidad.genero
+	print(listaDeGeneros)
+	aux=''
+	if listaDeGeneros.Bodegon==True :
+		print('Es Bodegon')
+		aux=aux+'Bodegon '
+	if listaDeGeneros.Vanitas==True :
+		aux=aux+'Vanitas '
+	if listaDeGeneros.Retrato==True :
+		aux=aux+'Retrato '
+	if listaDeGeneros.Terror==True :
+		aux=aux+'Terror '
+	if listaDeGeneros.Desnudo==True :
+		aux=aux+'Desnudo '
+	if listaDeGeneros.Religioso==True :
+		aux=aux+'Religioso '
+	if listaDeGeneros.Historico==True :
+		aux=aux+'Historico '
+	if listaDeGeneros.Mitologico==True :
+		aux=aux+'Mitologico '
+	if listaDeGeneros.Paisaje==True :
+		aux=aux+'Paisaje '
+	if listaDeGeneros.Funeraria==True :
+		aux=aux+'Funeraria '
+	if listaDeGeneros.Retrato==True :
+		aux=aux+'Retrato '
+	if listaDeGeneros.Monumento==True :
+		aux=aux+'Monumento '
+	if listaDeGeneros.Estatuilla==True :
+		aux=aux+'Estatuilla '
+	if listaDeGeneros.Figura==True :
+		aux=aux+'Figura '
+	if listaDeGeneros.Relieve==True :
+		aux=aux+'Relieve '
+
+	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad,'com':com,'usuario':usuario,'generos':aux})
 
 @login_required(login_url='/')
 def editarManualidades_view(request,primaryKey):
@@ -478,10 +527,13 @@ def editarManualidades_view(request,primaryKey):
 		print("entre")
 		print("aca llegue1")
 		Form=contenidoManualForm(request.POST, request.FILES,instance=Manualidad)
+		Form2=GeneroManualidadForm(request.POST,instance=Manualidad.genero)
 		print("aca llegue")
 		if Form.is_valid():
+			generos=Form2.save()
 			producto=Form.save(commit=False)
 			producto.user= request.user
+			producto.genero=generos
 			producto.save()
 			print("\n***********Formulario valido")
 			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
@@ -492,9 +544,10 @@ def editarManualidades_view(request,primaryKey):
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
+		Form2=GeneroManualidadForm(instance=Manualidad.genero)
 		Form=contenidoManualForm(instance=Manualidad)
 	
-	return render(request,'EditarManualidad.html',{'Form':Form})
+	return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
 @login_required(login_url='/')
 def comentarios_calificacionManu(request,primaryKey):
 	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)

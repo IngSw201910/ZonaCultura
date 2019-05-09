@@ -39,18 +39,32 @@ class GeneroLiterario(models.Model):
 	Ciencia_Ficción =models.BooleanField(default=False)
 
 class GeneroManualidad(models.Model):
-	nombre=models.CharField(max_length=50)
-	def __str__(self):
-		return'{}'.format(self.nombre)
+	Bodegon=models.BooleanField(default=False)
+	Vanitas=models.BooleanField(default=False)
+	Retrato=models.BooleanField(default=False)
+	Terror=models.BooleanField(default=False)
+	Desnudo=models.BooleanField(default=False)
+	Religioso=models.BooleanField(default=False)
+	Historico=models.BooleanField(default=False)
+	Mitologico =models.BooleanField(default=False)
+	Paisaje=models.BooleanField(default=False)
+	Funeraria=models.BooleanField(default=False)
+	Retrato=models.BooleanField(default=False)
+	Monumento=models.BooleanField(default=False)
+	Estatuilla =models.BooleanField(default=False)
+	Figura =models.BooleanField(default=False)
+	Relieve =models.BooleanField(default=False)
+   
+
 class contenidoManualidad(models.Model): 
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	title=models.CharField(max_length=50)
 	existencias=models.IntegerField(default=0)
 	descripcion=models.TextField(max_length=150)
-	genero= models.ManyToManyField(GeneroManualidad)
+	genero=models.ForeignKey(GeneroManualidad, on_delete=models.SET_NULL, null=True)
 	precioV=models.IntegerField(default=0)
 	imagen=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
-	puntaje=models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+	puntaje=models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0.00)
 	canticomp=models.IntegerField(default=0)
 	def __str__(self):
 		return'{}'.format(self.title)

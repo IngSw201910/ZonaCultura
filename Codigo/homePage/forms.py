@@ -11,6 +11,7 @@ from homePage.models import contenidoManualidad
 from homePage.models import Comentario
 from homePage.models import competencias
 from homePage.models import GeneroLiterario
+from homePage.models import GeneroManualidad
 from django.forms import ModelForm
 
 
@@ -61,7 +62,26 @@ class competenciasForm(forms.ModelForm):
 		'Fotografo',
 		'Actor',
 		]
-
+class GeneroManualidadForm(forms.ModelForm):
+	class Meta:
+		model=GeneroManualidad
+		fields=[
+		'Bodegon',
+		'Vanitas',
+		'Retrato',
+		'Terror',
+	    'Desnudo',
+	    'Religioso',
+	    'Historico',
+	    'Mitologico', 
+	    'Paisaje',
+	    'Funeraria',
+	    'Retrato',
+	    'Monumento',
+	    'Estatuilla',
+	    'Figura',
+	    'Relieve'
+		]
 class contenidoLiterarioForm(forms.ModelForm):
 	class Meta:
 		model=infoLibro
@@ -190,7 +210,6 @@ class contenidoManualForm(forms.ModelForm):
 		'title',
 		'existencias',
 		'descripcion',
-		'genero',
 		'precioV',
 		'imagen'
 		]
