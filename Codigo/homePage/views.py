@@ -245,21 +245,27 @@ def carrito_view(request):
 	libros=[]
 	manualidades=[]
 	carri=Carrito.objects.filter(usuario= infousuario.objects.get(user = request.user))
+	cantidad=0
 	for item in carri:
 		if( item.libro is not None):#Si es un libro
 			libros.append(item.libro)
+			cantidad=cantidad+1
 		if( item.manualidad is not None):
 			manualidades.append(item.manualidad)
+			cantidad=cantidad+1
 
 
 	total=0
+	
 	#Sacar total libros
 
 	for p in libros:
 		total=total+p.PrecioLibro
+		
 	for m in manualidades:
 		if(m.existencias!=0):
 			total=total+m.precioV
+			
 		#print(usuario.balance)
 	#if request.GET.get('name'):
 	#		produc=infoLibro.objects.get(Titulo=request.libro.Titulo)
@@ -290,6 +296,7 @@ def carrito_view(request):
 						usuarioD= infousuario.objects.get(user =item.libro.user)
 						Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
 						item.delete() 
+						cantidad=cantidad-1
 					if(item.manualidad is not None and item.manualidad.existencias !=0):
 						ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
 						usuarioDd= infousuario.objects.get(user =item.manualidad.user)
@@ -297,9 +304,15 @@ def carrito_view(request):
 						item.manualidad.save()
 						Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
 						item.delete() 
-				if(carri is not None):
-					return HttpResponse("No se pudieron comprar todos los atículos" )
-				return redirect('/CarritoVista')
+						cantidad=cantidad-1
+				print("hola cssantidad")
+				print(cantidad)
+				if(cantidad!=0):
+					print("hola cantidad")
+					print(cantidad)
+					return HttpResponse("No se pudieron comprar todos los elemntos, verifique quizás las existencias del articulo se agotaron ")
+				else:
+					return redirect('/CarritoVista')
 			else:
 				return redirect('/CompraCredito')#pagina para comprar credito
 	elif request.GET.get('borrar'):
