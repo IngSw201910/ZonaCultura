@@ -39,6 +39,9 @@ import os
 
 #from django.core.urlresolvers import reverse_lazy
 def index(request):
+	print(request.user.pk)
+	if(request.user.pk is not None):
+		return redirect('/HomePage')	
 	form=logInForm(request.POST or None)
 	print("Inicio de sesion:")
 	if form.is_valid():
@@ -94,7 +97,11 @@ def homePage_view(request):
 @login_required(login_url='/')
 def perfil_view(request):
 	user=infousuario.objects.get(user=request.user)
-	return render(request, 'Perfil.html',{'user':user})	
+
+	if(user.es_CreadorDeContenido==True):
+		return render(request, 'PerfilCreadorDeContenidoPropio.html',{'user':user})	
+	if(user.es_CreadorDeContenido==False):
+		return render(request, 'PerfilPropio.html',{'user':user})	
 
 @login_required(login_url='/')
 def libros_view(request):
@@ -523,6 +530,8 @@ def mostrarManualidad(request,primaryKey):
 def editarManualidades_view(request,primaryKey):
 	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 	print("aca llegue2")
+	if Manualidad.user.pk != request.user.pk: ##LO AGREGO SANTIAGO
+		raise Http404							##PORQUE RECUERDEN QUE SI EL AUTOR NO SOY YO NO PUEDO EDITAR
 	if request.method =='POST':
 		print("entre")
 		print("aca llegue1")
@@ -581,3 +590,58 @@ def comentarios_calificacionManu(request,primaryKey):
 		com =comenycaliForm()
 		
 	return render(request,'comentarManu.html',{'com':com,'Manualidad':Manualidad})
+
+@login_required(login_url='/')
+def editarContenidoLiterario_view(request,primaryKey):
+	Libro=infoLibro.objects.get(pk=primaryKey)
+	if Libro.user.pk != request.user.pk:
+		raise Http404
+	else:
+		if request.method =='POST':
+			Form=contenidoLiterarioForm(request.POST, request.FILES,instance=Libro)
+			Form2=generoLiterarioForm(request.POST,instance=Libro.genero)
+			print("aca llegue")
+			if Form.is_valid():
+				generos=Form2.save()
+				producto=Form.save(commit=False)
+				producto.user= request.user
+				producto.genero=generos
+				producto.save()
+			
+				print("Obra",producto.Titulo," subida, y le quedo una llave primaria de:", producto.pk)
+					
+				return HttpResponse("Submited")
+			else:
+				print("\n***********Formulario no valido")
+				return HttpResponse("Fallo")
+		else:
+			Form=contenidoLiterarioForm(instance=Libro)
+			Form2=generoLiterarioForm(instance=Libro.genero)
+		
+		return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
+
+@login_required(login_url='/')
+def editarUsuarioInfo(request):
+	#asegurarse que el usuario sea el mismo 
+	usuario=infousuario.objects.get(user=request.user)
+	if request.method =='POST':
+		Form=RegistroForm(request.POST,instance=usuario.user)
+		Form2=competenciasForm(request.POST,instance=usuario.aficiones)
+		Form3=infoForm(request.POST,request.FILES,instance=usuario)
+		print("aca llegue")
+		if Form.is_valid():
+			user=Form.save()
+			competencias=Form2.save()
+			profile=Form3.save(commit=False)
+			profile.aficiones=competencias
+			profile.user=user
+			profile.save()
+			return HttpResponse("Submited")
+		else:
+			print("\n***********Formulario no valido")
+			return HttpResponse("Fallo")
+	else:
+		Form=RegistroForm(instance=usuario.user)
+		Form2=competenciasForm(instance=usuario.aficiones)
+		Form3=infoForm(instance=usuario)
+	return render(request,'Registro2.html',{'user_form':Form,'competencias_Form':Form2,'profile_form':Form3})
