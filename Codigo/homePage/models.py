@@ -64,6 +64,8 @@ class contenidoManualidad(models.Model):
 	genero=models.ForeignKey(GeneroManualidad, on_delete=models.SET_NULL, null=True)
 	precioV=models.IntegerField(default=0)
 	imagen=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
+	imagen2=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
+	imagen3=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
 	puntaje=models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0.00)
 	canticomp=models.IntegerField(default=0)
 	def __str__(self):

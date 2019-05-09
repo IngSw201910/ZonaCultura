@@ -211,14 +211,18 @@ class contenidoManualForm(forms.ModelForm):
 		'existencias',
 		'descripcion',
 		'precioV',
-		'imagen'
+		'imagen',
+		'imagen2',
+		'imagen3'
 		]
 		labels={
 		'title':'Titulo',
 		'existencias':'Existencias',
 		'descripcion':'Descripcion',
 		'precioV':'Precio de la manualidad',
-		'imagen':'Imagen del contenido literario'
+		'imagen':'Imagen del contenido manual',
+		'imagen2':'Imagen del contenido manual',
+		'imagen3':'Imagen del contenido manual'
 		}
 		widgets={
  			#'formato':forms.CheckboxSelectMultiple(),
