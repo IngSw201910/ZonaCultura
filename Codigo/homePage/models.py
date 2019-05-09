@@ -11,21 +11,33 @@ from django.utils import timezone
 def validate_file_extension(value):
     if not value.name.endswith('.pdf'):
         raise ValidationError(u'Error message')
-
+class competencias (models.Model):
+	Escritor=models.BooleanField(default=False)
+	Pintor=models.BooleanField(default=False)
+	Escultor=models.BooleanField(default=False)
+	Cantante=models.BooleanField(default=False)
+	Guitarrista=models.BooleanField(default=False)
+	Bajista=models.BooleanField(default=False)
+	Pianista=models.BooleanField(default=False)
+	Baterista=models.BooleanField(default=False)
+	Violinista=models.BooleanField(default=False)
+	Saxofonista=models.BooleanField(default=False)
+	Acordeonista=models.BooleanField(default=False)
+	Trompetista=models.BooleanField(default=False)
+	Fotografo=models.BooleanField(default=False)
+	Actor=models.BooleanField(default=False)
 class FormatoLiterario(models.Model):
 	nombre=models.CharField(max_length=50)
 	def __str__(self):
 		return'{}'.format(self.nombre)
 
 class GeneroLiterario(models.Model):
-	nombre=models.CharField(max_length=50)
-	def __str__(self):
-		return'{}'.format(self.nombre)
+	Comedia=models.BooleanField(default=False)
+	Drama=models.BooleanField(default=False)
+	Tragicomedia=models.BooleanField(default=False)
+	Terror=models.BooleanField(default=False)
+	Ciencia_Ficción =models.BooleanField(default=False)
 
-class Aficion (models.Model):
-	nombre= models.CharField(max_length=50)
-	def __str__(self):
-		return'{}'.format(self.nombre)
 class GeneroManualidad(models.Model):
 	nombre=models.CharField(max_length=50)
 	def __str__(self):
@@ -41,11 +53,11 @@ class contenidoManualidad(models.Model):
 	puntaje=models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 	canticomp=models.IntegerField(default=0)
 	def __str__(self):
-		return'{}'.format(self.title+' de '+self.user.first_name + ' '+self.user.last_name)
+		return'{}'.format(self.title)
 class infoLibro(models.Model):
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	archivo=models.FileField(upload_to='contenido/books/', validators=[validate_file_extension],default='contenido/books/default.pdf')
-	genero= models.ManyToManyField(GeneroLiterario)
+	genero= models.ForeignKey(GeneroLiterario, on_delete=models.SET_NULL, null=True)
 	Titulo= models.CharField(max_length=50)
 	Descripcion=models.TextField(max_length=2000)
 	ISBN= models.IntegerField()
@@ -54,14 +66,15 @@ class infoLibro(models.Model):
 	Idioma=models.CharField(max_length=15)
 	imagen=models.ImageField(upload_to='images/books/covers/',default='images/books/covers/default.jpg', null=True,blank=True )
 	def __str__(self):
-		return'{}'.format(self.Titulo+' de '+self.user.first_name + ' '+self.user.last_name)
+		return'{}'.format(self.Titulo)
 class infousuario(models.Model):
 	balance= models.IntegerField(default=0)
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
-	aficiones= models.ManyToManyField(Aficion, blank=True)
+	aficiones= models.ForeignKey(competencias,on_delete=models.CASCADE,null=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)
 	profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
 	es_Nada= models.BooleanField(default=False)
+
 	def __str__(self):
 		return'{}'.format(self.user.first_name + ' '+self.user.last_name)
 	#is_Escritor= models.BooleanField (default=False)

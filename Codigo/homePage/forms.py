@@ -9,13 +9,24 @@ from homePage.models import contenidoMultimedia
 from homePage.models import Donacion
 from homePage.models import contenidoManualidad
 from homePage.models import Comentario
+from homePage.models import competencias
+from homePage.models import GeneroLiterario
 from django.forms import ModelForm
 
 
 class logInForm (forms.Form):
 	nombreUsuario=forms.CharField(max_length=150, required=True, label ="Nombre de Usuario",widget=(forms.TextInput()))
 	contraseniaUsuario= forms.CharField(max_length=150, required=True, label= "Contraseña",widget=(forms.PasswordInput()))
-
+class generoLiterarioForm(forms.ModelForm):
+	class Meta:
+		model=GeneroLiterario
+		fields=[
+		'Comedia',
+		'Drama',
+		'Tragicomedia',
+		'Terror',
+		'Ciencia_Ficción' ,
+		]
 class RegistroForm(UserCreationForm):
 	class Meta:
 		model= User
@@ -31,6 +42,25 @@ class RegistroForm(UserCreationForm):
 		'last_name': 'Apellidos',
 		'email':'Correo electronico',
 		}
+class competenciasForm(forms.ModelForm):
+	class Meta:
+		model=competencias
+		fields=[
+		'Escritor',
+		'Pintor',
+		'Escultor',
+		'Cantante',
+		'Guitarrista',
+		'Bajista',
+		'Pianista',
+		'Baterista',
+		'Violinista',
+		'Saxofonista',
+		'Acordeonista',
+		'Trompetista',
+		'Fotografo',
+		'Actor',
+		]
 
 class contenidoLiterarioForm(forms.ModelForm):
 	class Meta:
@@ -42,7 +72,6 @@ class contenidoLiterarioForm(forms.ModelForm):
 		'Descripcion',
 		'ISBN',
 		'CantidadPaginas',
-		'genero',
 		'Idioma'
 		]
 		labels={
@@ -52,7 +81,6 @@ class contenidoLiterarioForm(forms.ModelForm):
 		'Descripcion':'Descripcion',
 		'ISBN':'Numero ISBN',
 		'CantidadPaginas':'Numero de paginas del producto',
-		'genero': 'Genero del contenido literario',
 		'Idioma':'Idioma en el que esta escrito el contenido literario'
 		}
 		widgets={
@@ -65,18 +93,15 @@ class infoForm(forms.ModelForm):
  	class Meta:
  		model=infousuario
  		fields=[
- 		'aficiones',
  		'es_CreadorDeContenido',
  		'profile_img' 		
  		 ]
 
  		labels={
- 		'aficiones': 'Posee algun taleno',
  		'es_CreadorDeContenido' : 'Quiere ser creador de contenido',
  		'profile_img': 'Imagen de Perfil' 	
  		   }
  		widgets={
- 		'aficiones':forms.CheckboxSelectMultiple(),
  	    
  		}
 class contenidoTarjetaForm(forms.ModelForm):
@@ -173,7 +198,6 @@ class contenidoManualForm(forms.ModelForm):
 		'title':'Titulo',
 		'existencias':'Existencias',
 		'descripcion':'Descripcion',
-		'genero': 'Genero del contenido literario',
 		'precioV':'Precio de la manualidad',
 		'imagen':'Imagen del contenido literario'
 		}

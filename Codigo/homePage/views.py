@@ -13,6 +13,7 @@ from homePage.models import Donacion
 from homePage.models import Compradores
 from homePage.models import infousuario
 from homePage.models import infoTarjeta
+from homePage.models import GeneroLiterario
 from homePage.models import ArticulosComprados
 from homePage.models import contenidoMultimedia
 from homePage.models import  cuentaPorCobrar
@@ -24,6 +25,8 @@ from homePage.forms import contenidoMultimediaForm
 from homePage.forms import DonacionForm
 from homePage.forms import contenidoManualidad
 from homePage.forms import contenidoManualForm
+from homePage.forms import  competenciasForm
+from homePage.forms import  generoLiterarioForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -59,18 +62,22 @@ def index(request):
 
 def registro_view(request):
 	if request.method =='POST':
+		Competencias_Form=competenciasForm(request.POST)
 		User_Form= RegistroForm(request.POST)
 		Info_Form=infoForm(request.POST,request.FILES)
 		if User_Form.is_valid() and Info_Form.is_valid():
 			user=User_Form.save()
+			competencias=Competencias_Form.save()
 			profile=Info_Form.save(commit=False)
+			profile.aficiones=competencias
 			profile.user=user
 			profile.save()
 			return redirect('/') 
 	else:
+		Competencias_Form=competenciasForm()
 		User_Form= RegistroForm()
 		Info_Form=infoForm()
-	return render(request, 'Registro.html', {'user_form':User_Form, 'profile_form':Info_Form})	
+	return render(request, 'Registro.html', {'competencias_Form':Competencias_Form,'user_form':User_Form, 'profile_form':Info_Form})	
 	#success_url= reverse_lazy ("Home Page")
 			#logear usuario
 			#return redirect
@@ -107,9 +114,12 @@ def subirObra_view (request):
 def subirObraLiteraria_view(request):
 	if request.method =='POST':
 		Form=contenidoLiterarioForm(request.POST, request.FILES)
+		Form2=generoLiterarioForm(request.POST)
 		if Form.is_valid():
+			generos=Form2.save()
 			producto=Form.save(commit=False)
 			producto.user= request.user
+			producto.genero=generos
 			producto.save()
 			print("\n***********Formulario valido")
 			print("Obra",producto.Titulo," subida, y le quedo una llave primaria de:", producto.id)
@@ -119,8 +129,9 @@ def subirObraLiteraria_view(request):
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
+		Form2=generoLiterarioForm()	
 		Form=contenidoLiterarioForm()
-	return render(request,'SubirContenidoLiterario.html',{'Form':Form})
+	return render(request,'SubirContenidoLiterario.html',{'Form':Form,'Form2':Form2})
 @login_required(login_url='/')
 def mostrarObraLiteraria(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
@@ -131,6 +142,9 @@ def mostrarObraLiteraria(request,primaryKey):
 	try:
 
 		Libro=infoLibro.objects.get(pk=primaryKey)
+		
+
+
 		if(ArticulosComprados.objects.filter(usuario=infousuario.objects.get(user = request.user),libro=Libro).first() is not None):
 			permitir=False
 			print('lo tiene')
@@ -138,7 +152,6 @@ def mostrarObraLiteraria(request,primaryKey):
 			permitir=True
 			print('no lo tiene')
 		if request.GET.get('descarga'):
-			print('lol')
 			print (Libro.archivo)
 			file_path = os.path.join(settings.MEDIA_ROOT, Libro.archivo.path)
 			print(file_path)
@@ -158,18 +171,30 @@ def mostrarObraLiteraria(request,primaryKey):
 				return redirect('/CarritoVista')
 			else:
 				return HttpResponse("Usted ya tiene este elemento en el carrito")
-
 			#carro.usuario=infousuario.objects.get(user=request.user)
-		
 			#print("Usuario:",infousuario.objects.get(user=request.user).id)
 		
 		
 	except:
 		raise Http404
+	listaDeGeneros= Libro.genero
+	print(listaDeGeneros)
+	aux=''
+	if listaDeGeneros.Comedia==True :
+		print('Es de Comedia')
+		aux=aux+'Comedia '
+	if listaDeGeneros.Drama==True :
+		aux=aux+'Drama '
+	if listaDeGeneros.Tragicomedia==True :
+		aux=aux+'Tragicomedia '
+	if listaDeGeneros.Terror==True :
+		aux=aux+'Terror '
+	if listaDeGeneros.Ciencia_Ficción==True :
+		aux=aux+'Comedia '
 	if permitir:
-		return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro})
+		return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro,'generos':aux})
 	else:
-		return render(request, 'mostrarContentidoLiterarioSiYaLoTieneComprado.html',{'Libro':Libro})
+		return render(request, 'mostrarContentidoLiterarioSiYaLoTieneComprado.html',{'Libro':Libro,'generos':aux})
 		
 @login_required(login_url='/')
 def mostrarMultimedia(request,primaryKey):
