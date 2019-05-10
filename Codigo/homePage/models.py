@@ -12,7 +12,7 @@ from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
 def validate_file_extension(value):
     if not value.name.endswith('.pdf'):
-        raise ValidationError(u'Error message')
+        raise ValidationError('Error message')
 class competencias (models.Model):
 	Escritor=models.BooleanField(default=False)
 	Pintor=models.BooleanField(default=False)

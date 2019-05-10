@@ -40,13 +40,21 @@
     		<div class="col-12">
       			<input class="form-control mr-sm-0" type="text" placeholder="Buscar" id="input-search">
       			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-      			<button class="btn btn-dark my-5 my-sm-0" type="submit" id="Salir"><a href="">Salir</a></button>
+      			<button class="btn btn-dark my-5 my-sm-0" type="submit" name="Salir" value="Salir" id="Salir">Salir</a></button>
       		
       			
       		</div>
     	</form>
   	</div>
   </nav>
+
+
+  <script type="text/javascript"> 
+   var esCreadorDeContenido = "{{user.es_CreadorDeContenido}}";
+      document.getElementById('chart').style.display = "none"
+      document.getElementById('chart').style.display = ""
+   
+  </script>
   <div>
     <div class="row">
       <div class="col col-3">

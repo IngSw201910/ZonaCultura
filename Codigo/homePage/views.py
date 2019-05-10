@@ -90,14 +90,15 @@ def registro_view(request):
 @login_required(login_url='/')
 def homePage_view(request):
 	if request.GET.get('Salir'):
-		print("hola")
+		logout(request)
 		return redirect('/')
 	return render(request, 'HomePage.html')
 
 @login_required(login_url='/')
 def perfil_view(request):
 	user=infousuario.objects.get(user=request.user)
-
+	if request.GET.get('Salir'):
+		logout(request)
 	if(user.es_CreadorDeContenido==True):
 		return render(request, 'PerfilCreadorDeContenidoPropio.html',{'user':user})	
 	if(user.es_CreadorDeContenido==False):
@@ -241,6 +242,8 @@ def comprarCredito_view(request):
 
 @login_required(login_url='/')
 def carrito_view(request):
+	if request.GET.get('Salir'):
+		logout(request)
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
 	manualidades=[]
