@@ -131,21 +131,18 @@ class contenidoTarjetaForm(forms.ModelForm):
 		'numeroTarjeta',
 		'nombreTitular',
 		'apellidoTitular',
-		'fechaExpiración',
+		'mesExpiracion',
+		'anoExpiracion',
 		'codigoSeguridad'
 		]
 		labels={
 		'numeroTarjeta':'Número de la tarjeta de credito',
 		'nombreTitular':'Nombre del titular',
 		'apellidoTitular':'Apellido del titulat',
-		'fechaExpiración':'Fecha de expiración Formato mm/aa',
+		'mesExpiracion':'Mes de expiración Formato mm',
+		'anoExpiracion':'Ano de expiración Formato aa',
 		'codigoSeguridad':'Código de seguridad de la tarjeta'
 		}
-		widgets={
- 			#'formato':forms.CheckboxSelectMultiple(),
- 			#'genero': forms.CheckboxSelectMultiple(),
- 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
- 		}
 class contenidoCreditForm(forms.ModelForm):
 	class Meta:
 		model=infousuario

@@ -8,6 +8,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms import ModelForm
 from django.utils import timezone
+from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
 def validate_file_extension(value):
     if not value.name.endswith('.pdf'):
         raise ValidationError(u'Error message')
@@ -62,7 +64,7 @@ class contenidoManualidad(models.Model):
 	existencias=models.IntegerField(default=0)
 	descripcion=models.TextField(max_length=150)
 	genero=models.ForeignKey(GeneroManualidad, on_delete=models.SET_NULL, null=True)
-	precioV=models.IntegerField(default=0)
+	precioV=models.PositiveIntegerField(default=0)
 	imagen=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
 	imagen2=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
 	imagen3=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
@@ -108,11 +110,12 @@ class cuentaPorCobrar(models.Model):
 	articuloManual=models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
 
 class infoTarjeta(models.Model):
-	numeroTarjeta= models.IntegerField()
-	nombreTitular= models.CharField(max_length=15)
-	apellidoTitular= models.CharField(max_length=15)
-	fechaExpiración =models.CharField(max_length=5)
-	codigoSeguridad= models.IntegerField()
+	numeroTarjeta= models.PositiveIntegerField(validators=[MinValueValidator(9000000000000000),MaxValueValidator(9000000000000000)])
+	nombreTitular= models.CharField(max_length=10)
+	apellidoTitular= models.CharField(max_length=10)
+	mesExpiracion =models.PositiveIntegerField(default=0,validators=[ MinValueValidator(1),MaxValueValidator(12)])
+	anoExpiracion =models.PositiveIntegerField(default=0,validators=[MinValueValidator(20),MaxValueValidator(50)])
+	codigoSeguridad= models.PositiveIntegerField(validators=[MaxValueValidator(900)])
 	def __str__(self):
 		return'{}'.format(self.numeroTarjeta + ' '+self.nombreTitular )
 
@@ -149,10 +152,10 @@ class contenidoMultimedia(models.Model):
 class Donacion(models.Model):
 		usuarioDonante=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDonante')
 		usuarioBen=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioBen')
-		cantidad =models.IntegerField(default=0)
+		cantidad =models.PositiveIntegerField(default=0)
 		mensaje=models.TextField(max_length=150,default="")
 class Comentario(models.Model):
 		manu = models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
-		califi=models.IntegerField(default=0)
+		califi=models.PositiveIntegerField(default=0)
 		comentario=models.TextField(max_length=150,default="")
 		usuarioComentador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
