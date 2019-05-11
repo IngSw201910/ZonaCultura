@@ -110,14 +110,14 @@ class cuentaPorCobrar(models.Model):
 	articuloManual=models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
 
 class infoTarjeta(models.Model):
-	numeroTarjeta= models.PositiveIntegerField(validators=[MinValueValidator(9000000000000000),MaxValueValidator(9000000000000000)])
-	nombreTitular= models.CharField(max_length=10)
-	apellidoTitular= models.CharField(max_length=10)
+	numeroTarjeta= models.PositiveIntegerField(validators=[MinValueValidator(1000000000000000),MaxValueValidator(9000000000000000)])
+	nombreTitular= models.CharField(max_length=20)
+	apellidoTitular= models.CharField(max_length=20)
 	mesExpiracion =models.PositiveIntegerField(default=0,validators=[ MinValueValidator(1),MaxValueValidator(12)])
-	anoExpiracion =models.PositiveIntegerField(default=0,validators=[MinValueValidator(20),MaxValueValidator(50)])
+	anoExpiracion =models.PositiveIntegerField(default=0,validators=[MinValueValidator(19),MaxValueValidator(50)])
 	codigoSeguridad= models.PositiveIntegerField(validators=[MaxValueValidator(900)])
 	def __str__(self):
-		return'{}'.format(self.numeroTarjeta + ' '+self.nombreTitular )
+		return'{}'.format(self.nombreTitular )
 
 class PagoCreditoManager (models.Manager):
 	def crear_pago (self,id_pago,usuario,balance):

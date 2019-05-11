@@ -11,6 +11,7 @@ from homePage.models import contenidoManualidad
 from homePage.models import Donacion
 from homePage.models import Comentario
 from homePage.models import competencias
+from homePage.models import infoTarjeta
 
 # Register your models here.
 admin.site.register(infousuario)
@@ -25,3 +26,4 @@ admin.site.register(contenidoManualidad)
 admin.site.register(Donacion)
 admin.site.register(Comentario)
 admin.site.register(competencias)
+admin.site.register(infoTarjeta)

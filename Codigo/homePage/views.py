@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from datetime import date
 from homePage.forms import infoForm
 from homePage.forms import infoLibro
 from homePage.forms import contenidoTarjetaForm
@@ -222,17 +223,36 @@ def comprarCredito_view(request):
 			numeroTarjeta=data.get("numeroTarjeta")
 			nombreTitular= data.get("nombreTitular")
 			apellidoTitular= data.get("apellidoTitular")
-			fechaExpiración= data.get("fechaExpiración")
+			mesExpiracion= data.get("mesExpiracion")
+			anoExpiracion= data.get("anoExpiracion")
 			codigoSeguridad= data.get("codigoSeguridad")
-			balance=data2.get("balance")
-			user = infousuario.objects.get(user = request.user)
-			user.balance= user.balance+balance
-			user.save()
-			print("Usuario:",infousuario.objects.get(user=request.user).id)
-			print("Usuario:",infousuario.objects.get(user=request.user).balance)
-			
-			print("\n***********Formulario valido")
-			return HttpResponse("Comprado")
+			existe=0
+			for numTarj in infoTarjeta.objects.all():
+				if numeroTarjeta== numTarj.numeroTarjeta :
+					if nombreTitular== numTarj.nombreTitular:
+						if apellidoTitular==numTarj.apellidoTitular:
+							if mesExpiracion==numTarj.mesExpiracion:
+								if anoExpiracion==numTarj.anoExpiracion:
+									if codigoSeguridad==numTarj.codigoSeguridad:
+										if(mesExpiracion>date.today().month and anoExpiracion==date.today().year):
+											existe=existe+1
+										else:
+											return HttpResponse("La tarjeta es valida pero ya esta vencida")
+
+			if existe==1:	
+
+				balance=data2.get("balance")
+				user = infousuario.objects.get(user = request.user)
+				user.balance= user.balance+balance
+				user.save()
+				print("Usuario:",infousuario.objects.get(user=request.user).id)
+				print("Usuario:",infousuario.objects.get(user=request.user).balance)
+				
+				print("\n***********Formulario valido")
+				return HttpResponse("Comprado")
+			else:
+				return HttpResponse("La tarjeta no existe o ingreso algún campo erroneo")
+
 			#return redirect('/') 
 	else:
 		Card_Form =contenidoTarjetaForm()
