@@ -42,7 +42,7 @@ import os
 def index(request):
 	print(request.user.pk)
 	if(request.user.pk is not None):
-		return redirect('/HomePage')	
+		return redirect('/HomePage')
 	form=logInForm(request.POST or None)
 	print("Inicio de sesion:")
 	if form.is_valid():
@@ -78,12 +78,12 @@ def registro_view(request):
 			profile.aficiones=competencias
 			profile.user=user
 			profile.save()
-			return redirect('/') 
+			return redirect('/')
 	else:
 		Competencias_Form=competenciasForm()
 		User_Form= RegistroForm()
 		Info_Form=infoForm()
-	return render(request, 'Registro.html', {'competencias_Form':Competencias_Form,'user_form':User_Form, 'profile_form':Info_Form})	
+	return render(request, 'Registro.html', {'competencias_Form':Competencias_Form,'user_form':User_Form, 'profile_form':Info_Form})
 	#success_url= reverse_lazy ("Home Page")
 			#logear usuario
 			#return redirect
@@ -100,10 +100,11 @@ def perfil_view(request):
 	user=infousuario.objects.get(user=request.user)
 	if request.GET.get('Salir'):
 		logout(request)
+		return redirect('/')
 	if(user.es_CreadorDeContenido==True):
-		return render(request, 'PerfilCreadorDeContenidoPropio.html',{'user':user})	
+		return render(request, 'PerfilCreadorDeContenidoPropio.html',{'user':user})
 	if(user.es_CreadorDeContenido==False):
-		return render(request, 'PerfilPropio.html',{'user':user})	
+		return render(request, 'PerfilPropio.html',{'user':user})
 
 @login_required(login_url='/')
 def libros_view(request):
@@ -134,13 +135,13 @@ def subirObraLiteraria_view(request):
 			producto.save()
 			print("\n***********Formulario valido")
 			print("Obra",producto.Titulo," subida, y le quedo una llave primaria de:", producto.id)
-			
+
 			return HttpResponse("Submited")
 		else:
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
-		Form2=generoLiterarioForm()	
+		Form2=generoLiterarioForm()
 		Form=contenidoLiterarioForm()
 	return render(request,'SubirContenidoLiterario.html',{'Form':Form,'Form2':Form2})
 @login_required(login_url='/')
@@ -148,12 +149,12 @@ def mostrarObraLiteraria(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
-	
+
 
 	try:
 
 		Libro=infoLibro.objects.get(pk=primaryKey)
-		
+
 
 
 		if(ArticulosComprados.objects.filter(usuario=infousuario.objects.get(user = request.user),libro=Libro).first() is not None):
@@ -171,8 +172,8 @@ def mostrarObraLiteraria(request,primaryKey):
 					response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
 					response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
 					return response
-				#print(file_path)	 
-		
+				#print(file_path)
+
 		if request.GET.get('carrito'):
 			print('Hello! el libro con id: ',Libro.id)
 			c=Carrito.objects.filter(libro=Libro,usuario=infousuario.objects.get(user=request.user)).first()
@@ -184,8 +185,8 @@ def mostrarObraLiteraria(request,primaryKey):
 				return HttpResponse("Usted ya tiene este elemento en el carrito")
 			#carro.usuario=infousuario.objects.get(user=request.user)
 			#print("Usuario:",infousuario.objects.get(user=request.user).id)
-		
-		
+
+
 	except:
 		raise Http404
 	listaDeGeneros= Libro.genero
@@ -201,12 +202,12 @@ def mostrarObraLiteraria(request,primaryKey):
 	if listaDeGeneros.Terror==True :
 		aux=aux+'Terror '
 	if listaDeGeneros.Ciencia_Ficción==True :
-		aux=aux+'Comedia '
+		aux=aux+'Ciencia Ficción '
 	if permitir:
 		return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro,'generos':aux})
 	else:
 		return render(request, 'mostrarContentidoLiterarioSiYaLoTieneComprado.html',{'Libro':Libro,'generos':aux})
-		
+
 @login_required(login_url='/')
 def mostrarMultimedia(request,primaryKey):
 	video=contenidoMultimedia.objects.get(pk=primaryKey)
@@ -244,9 +245,9 @@ def comprarCredito_view(request):
 												existe=existe+1
 										else:
 											existe=existe+1
-											
 
-			if existe==1:	
+
+			if existe==1:
 
 				balance=data2.get("balance")
 				user = infousuario.objects.get(user = request.user)
@@ -254,23 +255,24 @@ def comprarCredito_view(request):
 				user.save()
 				print("Usuario:",infousuario.objects.get(user=request.user).id)
 				print("Usuario:",infousuario.objects.get(user=request.user).balance)
-				
+
 				print("\n***********Formulario valido")
 				return HttpResponse("Comprado")
 			else:
 				return HttpResponse("La tarjeta no existe o ingreso algún campo erroneo")
 
-			#return redirect('/') 
+			#return redirect('/')
 	else:
 		Card_Form =contenidoTarjetaForm()
 		Credit_Form =contenidoCreditForm()
-		
+
 	return render(request,'CompraCredito.html',{'card_Form':Card_Form,'credit_Form':Credit_Form})
 
 @login_required(login_url='/')
 def carrito_view(request):
 	if request.GET.get('Salir'):
 		logout(request)
+		return redirect('/')
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
 	manualidades=[]
@@ -286,16 +288,16 @@ def carrito_view(request):
 
 
 	total=0
-	
+
 	#Sacar total libros
 
 	for p in libros:
 		total=total+p.PrecioLibro
-		
+
 	for m in manualidades:
 		if(m.existencias!=0):
 			total=total+m.precioV
-			
+
 		#print(usuario.balance)
 	#if request.GET.get('name'):
 	#		produc=infoLibro.objects.get(Titulo=request.libro.Titulo)
@@ -312,7 +314,7 @@ def carrito_view(request):
 				for q in libros:
 					p=infousuario.objects.get(user = q.user)
 					p.balance=p.balance+q.PrecioLibro
-					p.save() 
+					p.save()
 				for n in manualidades:
 					if(n.existencias!=0):
 						m=infousuario.objects.get(user=n.user)
@@ -325,7 +327,7 @@ def carrito_view(request):
 						ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
 						usuarioD= infousuario.objects.get(user =item.libro.user)
 						Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
-						item.delete() 
+						item.delete()
 						cantidad=cantidad-1
 					if(item.manualidad is not None and item.manualidad.existencias !=0):
 						ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
@@ -333,7 +335,7 @@ def carrito_view(request):
 						item.manualidad.existencias=item.manualidad.existencias-1
 						item.manualidad.save()
 						Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
-						item.delete() 
+						item.delete()
 						cantidad=cantidad-1
 				print("hola cssantidad")
 				print(cantidad)
@@ -368,11 +370,11 @@ def carrito_view(request):
 				carr=Carrito.objects.filter(manualidad=manual,usuario=usuario)
 				carr[0].delete()
 				return redirect('/CarritoVista')
-	
+
 
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
-	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'Subtotal': total,'carrito':carri}) 
+	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'Subtotal': total,'carrito':carri})
 @login_required(login_url='/')
 def comprados_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -385,7 +387,7 @@ def comprados_view(request):
 		if( item.manualidad is not None):#Si es un libro
 			manualidades.append(item.manualidad)
 
-	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades}) 
+	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades})
 @login_required(login_url='/')
 def compradores_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -398,7 +400,7 @@ def compradores_view(request):
 		if( item.usuarioComprador is not None and item.manualidad is not None ):#Si es un libro
 			usuariosCompraManu.append(item)
 
-	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores,'usuariosCompraManu':usuariosCompraManu}) 
+	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores,'usuariosCompraManu':usuariosCompraManu})
 
 
 
@@ -441,14 +443,14 @@ def Donacion_view(request,primaryKey):
 				return redirect('/CompraCredito')
 
 
-			
+
 	else:
 		Donacion_Form=DonacionForm()
-		
+
 	return render(request,'VistaDonacion.html',{'UsuariBeni':infousuario.objects.get(pk=primaryKey),'Donacion_Form':Donacion_Form})
 @login_required(login_url='/')
 def mostrarUsuario(request,primaryKey):
-	try: 	
+	try:
 		Usu=infousuario.objects.get(pk=primaryKey)
 		print("hola1")
 	except:
@@ -463,7 +465,7 @@ def donadores_view(request):
 		if( item.usuarioDonante is not None and item.cantidad is not None ):#Si es un libro
 			usuariosDonadores.append(item)
 
-	return render(request,'VistaDonantes.html',{'usuariosDonadores':usuariosDonadores}) 
+	return render(request,'VistaDonantes.html',{'usuariosDonadores':usuariosDonadores})
 @login_required(login_url='/')
 def AquienDone_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -473,7 +475,7 @@ def AquienDone_view(request):
 		if( item.usuarioBen is not None and item.cantidad is not None ):#Si es un libro
 			usuariosQDone.append(item)
 
-	return render(request,'AquienDone.html',{'usuariosQDone':usuariosQDone}) 
+	return render(request,'AquienDone.html',{'usuariosQDone':usuariosQDone})
 
 
 
@@ -490,13 +492,13 @@ def subirManualidades_view(request):
 			producto.save()
 			print("\n***********Formulario valido")
 			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
-			
+
 			return HttpResponse("Submited")
 		else:
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
-		Form2=GeneroManualidadForm()	
+		Form2=GeneroManualidadForm()
 		Form=contenidoManualForm()
 	return render(request,'SubirManualidad.html',{'Form':Form,'Form2':Form2})
 
@@ -506,7 +508,7 @@ def mostrarManualidad(request,primaryKey):
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
 	try:
-		
+
 		usuario= infousuario.objects.get(user = request.user)
 		Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 		comenn=Comentario.objects.filter(manu=Manualidad)
@@ -514,7 +516,7 @@ def mostrarManualidad(request,primaryKey):
 		for cc in comenn:
 			if(cc is not None):
 				com.append(cc)
-	
+
 
 		print(usuario.user.username)
 
@@ -528,16 +530,16 @@ def mostrarManualidad(request,primaryKey):
 				return redirect('/CarritoVista')
 			else :
 				return HttpResponse("No se pudo añadir")
-			
+
 	except:
 		raise Http404
-		
+
 	listaDeGeneros=Manualidad.genero
 	print(listaDeGeneros)
 	aux=''
 	if listaDeGeneros.Bodegon==True :
 		print('Es Bodegon')
-		aux=aux+'Bodegon '
+		aux=aux+'Bodegón '
 	if listaDeGeneros.Vanitas==True :
 		aux=aux+'Vanitas '
 	if listaDeGeneros.Retrato==True :
@@ -549,15 +551,13 @@ def mostrarManualidad(request,primaryKey):
 	if listaDeGeneros.Religioso==True :
 		aux=aux+'Religioso '
 	if listaDeGeneros.Historico==True :
-		aux=aux+'Historico '
+		aux=aux+'Histórico '
 	if listaDeGeneros.Mitologico==True :
-		aux=aux+'Mitologico '
+		aux=aux+'Mitológico '
 	if listaDeGeneros.Paisaje==True :
 		aux=aux+'Paisaje '
 	if listaDeGeneros.Funeraria==True :
 		aux=aux+'Funeraria '
-	if listaDeGeneros.Retrato==True :
-		aux=aux+'Retrato '
 	if listaDeGeneros.Monumento==True :
 		aux=aux+'Monumento '
 	if listaDeGeneros.Estatuilla==True :
@@ -589,7 +589,7 @@ def editarManualidades_view(request,primaryKey):
 			producto.save()
 			print("\n***********Formulario valido")
 			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
-				
+
 			return HttpResponse("Submited")
 		else:
 			Form = EmpleadoForm(instance=Manualidad)
@@ -598,7 +598,7 @@ def editarManualidades_view(request,primaryKey):
 	else:
 		Form2=GeneroManualidadForm(instance=Manualidad.genero)
 		Form=contenidoManualForm(instance=Manualidad)
-	
+
 	return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
 @login_required(login_url='/')
 def comentarios_calificacionManu(request,primaryKey):
@@ -613,7 +613,7 @@ def comentarios_calificacionManu(request,primaryKey):
 			if com.is_valid():
 				data= com.cleaned_data
 				calif=data.get("califi")
-		
+
 				suma=Manualidad.puntaje*Manualidad.canticomp
 				suma=suma+calif
 				print("sum")
@@ -628,10 +628,10 @@ def comentarios_calificacionManu(request,primaryKey):
 				cc=Comentario.objects.create(manu=Manualidad,califi=calif,comentario=comentar,usuarioComentador=usu)
 				print("\n***********Formulario valido")
 				return HttpResponse("Comentario enviado")
-			#return redirect('/') 
+			#return redirect('/')
 	else:
 		com =comenycaliForm()
-		
+
 	return render(request,'comentarManu.html',{'com':com,'Manualidad':Manualidad})
 
 @login_required(login_url='/')
@@ -650,9 +650,9 @@ def editarContenidoLiterario_view(request,primaryKey):
 				producto.user= request.user
 				producto.genero=generos
 				producto.save()
-			
+
 				print("Obra",producto.Titulo," subida, y le quedo una llave primaria de:", producto.pk)
-					
+
 				return HttpResponse("Submited")
 			else:
 				print("\n***********Formulario no valido")
@@ -660,12 +660,12 @@ def editarContenidoLiterario_view(request,primaryKey):
 		else:
 			Form=contenidoLiterarioForm(instance=Libro)
 			Form2=generoLiterarioForm(instance=Libro.genero)
-		
+
 		return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
 
 @login_required(login_url='/')
 def editarUsuarioInfo(request):
-	#asegurarse que el usuario sea el mismo 
+	#asegurarse que el usuario sea el mismo
 	usuario=infousuario.objects.get(user=request.user)
 	if request.method =='POST':
 		Form=RegistroForm(request.POST,instance=usuario.user)
@@ -688,3 +688,24 @@ def editarUsuarioInfo(request):
 		Form2=competenciasForm(instance=usuario.aficiones)
 		Form3=infoForm(instance=usuario)
 	return render(request,'Registro2.html',{'user_form':Form,'competencias_Form':Form2,'profile_form':Form3})
+
+@login_required(login_url='/')
+def busquedaObraGeneral_view(request):
+	user = infousuario.objects.get(user=request.user)
+	obras =  contenidoManualidad
+
+	return render(request, 'BusquedaEspecifica.html', {'user':user})
+
+@login_required(login_url='/')
+def busquedaObraLiteraria_view(request):
+	user = infousuario.objects.get(user=request.user)
+
+	return render(request, 'BusquedaObraLiteraria.html', {'user':user})
+
+@login_required(login_url='/')
+def busquedaObraGeneral(request):
+
+	manualidad = contenidoManualidad.objects.get(manualidad = contenidoManualidad.Titulo)
+	print(manualidad)
+
+	return render(request ,'BusquedaEspecifica.html', {'user':user})

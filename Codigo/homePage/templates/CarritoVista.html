@@ -23,7 +23,7 @@
       		<li class="nav-item active">
         		<a class="nav-link" href="/HomePage"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
       		</li>
-      		<li class="nav-item active"> 
+      		<li class="nav-item active">
         		<a class="nav-link" href="Perfil"><i class="fas fa-user"></i> Perfil</a>
       		</li>
       		<li class="nav-item active">
@@ -35,14 +35,20 @@
           <li class="nav-item active">
             <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
           </li>
+					<li class="nav-item active">
+						<a class="nav-link" href=""><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
+          </li>
+					<li class="nav-item active">
+            <a class="nav-link" href="BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
+          </li>
     	</ul>
     	<form class="form-inline my-2 my-lg-2">
     		<div class="col-12">
-      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar" id="input-search">
+      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search">
       			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-      			<button class="btn btn-dark my-5 my-sm-0" type="submit" name='Salir' value='Salir' id="Salir">Salir</a></button>
-      		
-      			
+      			<button class="btn btn-dark my-5 my-sm-0" type="submit" name='Salir' value="Salir" id="Salir">Salir</a></button>
+
+
       		</div>
     	</form>
   	</div>
@@ -50,7 +56,7 @@
 
 <div>
 	<div class="modal-dialog text-center">
-		<div class="col-sm-10 incio-section">		
+		<div class="col-sm-10 incio-section">
 				<font size="6" color="E7E6E3" face="Trebuchet MS"><i class="fas fa-shopping-bag"></i><h1>  Articulos Seleccionados</h1></font>
 		</div>
 	</div>
@@ -64,12 +70,12 @@
 						<p><font face="Trebuchet MS" size="4">Precio:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Libro.PrecioLibro}}</font>
             <form method="get">
               <input type="submit" value="Eliminar del carrito" name="Libro{{Libro.pk}}">
-  
+
             </form>
             </p>
 						{%endfor%}
 						<form>
-							
+
 						</form>
               <h2><em><font face="Trebuchet MS" size="5"> Obras Manuales</font></em></h2>
             {% for Manual in manualidades %}
@@ -77,12 +83,12 @@
             <p><font face="Trebuchet MS" size="4">Precio:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Manual.precioV}}</font>
             <form method="get">
               <input type="submit" value="Eliminar del carrito" name="Manual{{Manual.pk}}">
-  
+
             </form>
             </p>
             {%endfor%}
             <form>
-              
+
             </form>
 						<p><font face="Trebuchet MS" size="4">Total:  </font><font face="Trebuchet MS"  color="046C4F" size="3">{{Subtotal}}</font></p>
 						<form method="get">

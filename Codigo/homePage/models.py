@@ -56,9 +56,9 @@ class GeneroManualidad(models.Model):
 	Estatuilla =models.BooleanField(default=False)
 	Figura =models.BooleanField(default=False)
 	Relieve =models.BooleanField(default=False)
-   
 
-class contenidoManualidad(models.Model): 
+
+class contenidoManualidad(models.Model):
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	title=models.CharField(max_length=50)
 	existencias=models.IntegerField(default=0)
@@ -133,14 +133,14 @@ class ArticulosComprados(models.Model):
 		manualidad = models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
 		#multimedia=NULL
 		usuario=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
-	
+
 class Compradores(models.Model):
 		libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
 		manualidad = models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
 		usuarioDuenio=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDuenio')
 		usuarioComprador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioComprador')
 
-class contenidoMultimedia(models.Model): 
+class contenidoMultimedia(models.Model):
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	title=models.CharField(max_length=50)
 	descripcion=models.TextField(max_length=150)
@@ -148,7 +148,7 @@ class contenidoMultimedia(models.Model):
 	precioV=models.IntegerField(default=0)
 	clip=models.FileField(upload_to='media/video')
 	fecha=models.DateTimeField(default=timezone.now)
-	
+
 class Donacion(models.Model):
 		usuarioDonante=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDonante')
 		usuarioBen=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioBen')

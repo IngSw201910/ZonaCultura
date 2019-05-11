@@ -33,7 +33,7 @@ class RegistroForm(UserCreationForm):
 		model= User
 		fields=[
 		'username',
-		'first_name', 
+		'first_name',
 		'last_name',
 		'email',
 		]
@@ -73,7 +73,7 @@ class GeneroManualidadForm(forms.ModelForm):
 	    'Desnudo',
 	    'Religioso',
 	    'Historico',
-	    'Mitologico', 
+	    'Mitologico',
 	    'Paisaje',
 	    'Funeraria',
 	    'Retrato',
@@ -114,15 +114,15 @@ class infoForm(forms.ModelForm):
  		model=infousuario
  		fields=[
  		'es_CreadorDeContenido',
- 		'profile_img' 		
+ 		'profile_img'
  		 ]
 
  		labels={
  		'es_CreadorDeContenido' : 'Quiere ser creador de contenido',
- 		'profile_img': 'Imagen de Perfil' 	
+ 		'profile_img': 'Imagen de Perfil'
  		   }
  		widgets={
- 	    
+
  		}
 class contenidoTarjetaForm(forms.ModelForm):
 	class Meta:

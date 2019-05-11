@@ -23,7 +23,7 @@
       		<li class="nav-item active">
         		<a class="nav-link" href="/HomePage"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
       		</li>
-      		<li class="nav-item active"> 
+      		<li class="nav-item active">
         		<a class="nav-link" href="Perfil"><i class="fas fa-user"></i> Perfil</a>
       		</li>
       		<li class="nav-item active">
@@ -35,14 +35,20 @@
           <li class="nav-item active">
             <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
           </li>
+					<li class="nav-item active">
+						<a class="nav-link" href=""><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
+          </li>
+					<li class="nav-item active">
+            <a class="nav-link" href="BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
+          </li>
     	</ul>
     	<form class="form-inline my-2 my-lg-2">
     		<div class="col-12">
-      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar" id="input-search">
+      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search">
       			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-      			<button class="btn btn-dark my-5 my-sm-0" type="submit" id="Salir"><a href="">Salir</a></button>
-      		
-      			
+      						<button class="btn btn-dark my-5 my-sm-0" type="submit" name="Salir" value="Salir" id="Salir">Salir</button>
+
+
       		</div>
     	</form>
   	</div>
@@ -59,8 +65,8 @@
             {% csrf_token %}
             <h1 id="Credito"><i class="fas fa-money-bill-alt"></i>  {{user.balance}}</h1>
           </form>
-          
-      </div>   
+
+      </div>
       <div class="col col-6">
         <div class="container-2 conteiner">
 

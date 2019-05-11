@@ -22,6 +22,8 @@ urlpatterns=[
 	url(r'^SubirObra/SubirContenidoLiterario$', views.subirObraLiteraria_view, name='Subir contenido literario'),
 	url(r'^SubirContenidoMultimedia$',views.SubirContenidoMultimedia_view,name='Subir contenido multimedia'),
 	url(r'^SubirManualidad$', views.subirManualidades_view, name='Subir contenido Manual'),
+	url(r'^BusquedaEspecifica$', views.busquedaObraGeneral_view, name='Búsqueda general de obras'),
+	url(r'^BusquedaObraLiteraria$', views.busquedaObraLiteraria_view, name='Búsqueda de obra literaria'),
 	path('EditarUsuario', views.editarUsuarioInfo),
 	path('Producto/ContenidoManualidad/Editar/<int:primaryKey>', views.editarManualidades_view),
 	path('Producto/ContenidoLiterario/Editar/<int:primaryKey>', views.editarContenidoLiterario_view),
