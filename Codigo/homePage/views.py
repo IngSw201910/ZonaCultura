@@ -234,10 +234,17 @@ def comprarCredito_view(request):
 							if mesExpiracion==numTarj.mesExpiracion:
 								if anoExpiracion==numTarj.anoExpiracion:
 									if codigoSeguridad==numTarj.codigoSeguridad:
-										if(mesExpiracion>date.today().month and anoExpiracion==date.today().year):
-											existe=existe+1
+										anoExpiracion=anoExpiracion+2000
+										if(anoExpiracion==date.today().year):
+											if(mesExpiracion<date.today().month):
+												print("ano",date.today().year)
+												print("vergas")
+												return HttpResponse("La tarjeta es valida pero ya esta vencida")
+											else:
+												existe=existe+1
 										else:
-											return HttpResponse("La tarjeta es valida pero ya esta vencida")
+											existe=existe+1
+											
 
 			if existe==1:	
 
