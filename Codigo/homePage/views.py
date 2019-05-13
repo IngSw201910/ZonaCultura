@@ -421,26 +421,32 @@ def Donacion_view(request,primaryKey):
 	if request.method =='POST':
 		Donacion_Form =DonacionForm(request.POST)
 		if Donacion_Form.is_valid():
+
 			Usuario=infousuario.objects.get(pk=primaryKey)
 			Usua=infousuario.objects.get(user=request.user)
-			data= Donacion_Form.cleaned_data
-			cantida=data.get("cantidad")
-			msj=data.get("mensaje")
-			print(cantida)
+			if Usuario.es_CreadorDeContenido :
+				data= Donacion_Form.cleaned_data
+				cantida=data.get("cantidad")
+				msj=data.get("mensaje")
+				print(cantida)
+				
 
-			#print(Usu)
-			if Usua.balance>=cantida:
-				Doni=Donacion.objects.create( usuarioDonante=Usua,usuarioBen=Usuario,cantidad=cantida,mensaje=msj)
-				usu=infousuario.objects.get(user=request.user)
-				usu.balance=usu.balance - cantida
-				usu.save()
-				Usuario.balance=Usuario.balance+cantida
-				Usuario.save()
-				print("donit")
-				print(Usuario.balance)
-				return HttpResponse("Donacion satisfactoria")
+				#print(Usu)
+				if Usua.balance>=cantida:
+					Doni=Donacion.objects.create( usuarioDonante=Usua,usuarioBen=Usuario,cantidad=cantida,mensaje=msj)
+					usu=infousuario.objects.get(user=request.user)
+					usu.balance=usu.balance - cantida
+					usu.save()
+					Usuario.balance=Usuario.balance+cantida
+					Usuario.save()
+					print("donit")
+					print(Usuario.balance)
+					return HttpResponse("Donacion satisfactoria")
+				else:
+					return redirect('/CompraCredito')
 			else:
-				return redirect('/CompraCredito')
+				return HttpResponse("El usuario al que desea donar no es creador de contenido, si desea donar por favor busque un creador de contenido")
+
 
 
 
