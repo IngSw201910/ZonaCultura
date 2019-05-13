@@ -15,6 +15,7 @@ from homePage.models import GeneroManualidad
 from django.forms import ModelForm
 
 
+
 class logInForm (forms.Form):
 	nombreUsuario=forms.CharField(max_length=150, required=True, label ="Nombre de Usuario",widget=(forms.TextInput()))
 	contraseniaUsuario= forms.CharField(max_length=150, required=True, label= "Contraseña",widget=(forms.PasswordInput()))
@@ -210,7 +211,9 @@ class contenidoManualForm(forms.ModelForm):
 		'precioV',
 		'imagen',
 		'imagen2',
-		'imagen3'
+		'imagen3',
+		'tipo'
+
 		]
 		labels={
 		'title':'Titulo',
@@ -219,13 +222,10 @@ class contenidoManualForm(forms.ModelForm):
 		'precioV':'Precio de la manualidad',
 		'imagen':'Imagen del contenido manual',
 		'imagen2':'Imagen del contenido manual',
-		'imagen3':'Imagen del contenido manual'
+		'imagen3':'Imagen del contenido manual',
+		'tipo':'Tipo de manualidad'
 		}
-		widgets={
- 			#'formato':forms.CheckboxSelectMultiple(),
- 			#'genero': forms.CheckboxSelectMultiple(),
- 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
- 		}
+		
 
 class comenycaliForm(ModelForm):
 	class Meta:

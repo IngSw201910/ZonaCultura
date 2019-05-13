@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 from multiselectfield import MultiSelectField
+
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -57,7 +58,6 @@ class GeneroManualidad(models.Model):
 	Figura =models.BooleanField(default=False)
 	Relieve =models.BooleanField(default=False)
 
-
 class contenidoManualidad(models.Model):
 	user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
 	title=models.CharField(max_length=50)
@@ -70,6 +70,14 @@ class contenidoManualidad(models.Model):
 	imagen3=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
 	puntaje=models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0.00)
 	canticomp=models.IntegerField(default=0)
+	escultura='es'
+	pintura='pi'
+	TipoMan= (
+        (escultura, 'escultura'),
+        (pintura, 'pintura'),
+        
+    )
+	tipo=models.CharField(max_length=2,choices=TipoMan, null=True)
 	def __str__(self):
 		return'{}'.format(self.title)
 class infoLibro(models.Model):

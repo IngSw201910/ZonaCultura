@@ -490,11 +490,19 @@ def subirManualidades_view(request):
 	if request.method =='POST':
 		Form=contenidoManualForm(request.POST, request.FILES)
 		Form2=GeneroManualidadForm(request.POST)
+		
 		if Form.is_valid():
+
 			generos=Form2.save()
+
+			
+
 			producto=Form.save(commit=False)
 			producto.user= request.user
 			producto.genero=generos
+
+			
+
 			producto.save()
 			print("\n***********Formulario valido")
 			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
@@ -504,6 +512,7 @@ def subirManualidades_view(request):
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
+		
 		Form2=GeneroManualidadForm()
 		Form=contenidoManualForm()
 	return render(request,'SubirManualidad.html',{'Form':Form,'Form2':Form2})
