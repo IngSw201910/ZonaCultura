@@ -70,14 +70,14 @@ class contenidoManualidad(models.Model):
 	imagen3=models.ImageField(upload_to='images/manualidades/covers/',default='images/manualidades/covers/default.jpg', null=True,blank=True )
 	puntaje=models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0.00)
 	canticomp=models.IntegerField(default=0)
-	escultura='es'
-	pintura='pi'
+	escultura='escultura'
+	pintura='pintura'
 	TipoMan= (
         (escultura, 'escultura'),
         (pintura, 'pintura'),
         
     )
-	tipo=models.CharField(max_length=2,choices=TipoMan, null=True)
+	tipo=models.CharField(max_length=9,choices=TipoMan, null=True)
 	def __str__(self):
 		return'{}'.format(self.title)
 class infoLibro(models.Model):
