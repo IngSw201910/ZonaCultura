@@ -689,23 +689,42 @@ def editarUsuarioInfo(request):
 		Form3=infoForm(instance=usuario)
 	return render(request,'Registro2.html',{'user_form':Form,'competencias_Form':Form2,'profile_form':Form3})
 
+
 @login_required(login_url='/')
 def busquedaObraGeneral_view(request):
-	user = infousuario.objects.get(user=request.user)
-	obras =  contenidoManualidad
 
-	return render(request, 'BusquedaEspecifica.html', {'user':user})
+	libros = infoLibro.objects.all()
+	manualidades = contenidoManualidad.objects.all()
+
+	librosPasan=[]
+	manualidadesPasan=[]
+
+	for libro in libros:
+		if "q" in libro.Titulo:
+				librosPasan.append(libro)
+
+	for manualidad in manualidades:
+		if "q" in manualidad.title:
+				manualidadesPasan.append(manualidad)
+
+	context = {
+		'librosPasan':librosPasan,
+		'manualidadesPasan':manualidadesPasan
+	}
+
+	return render(request,'BusquedaGeneral.html',context)
+
+@login_required(login_url='/')
+def busquedaObraEspecifica_view(request):
+
+	return render(request,'BusquedaEspecifica.html')
 
 @login_required(login_url='/')
 def busquedaObraLiteraria_view(request):
-	user = infousuario.objects.get(user=request.user)
 
-	return render(request, 'BusquedaObraLiteraria.html', {'user':user})
+	return render(request, 'BusquedaObraLiteraria.html')
 
 @login_required(login_url='/')
-def busquedaObraGeneral(request):
+def busquedaObraManualidad_view(request):
 
-	manualidad = contenidoManualidad.objects.get(manualidad = contenidoManualidad.Titulo)
-	print(manualidad)
-
-	return render(request ,'BusquedaEspecifica.html', {'user':user})
+	return render(request, 'BusquedaObraManualidad.html')

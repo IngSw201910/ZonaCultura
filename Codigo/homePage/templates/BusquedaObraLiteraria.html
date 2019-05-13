@@ -10,11 +10,13 @@
   <form class="site-form" method="post"  enctype="multipart/form-data">
     <input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search">
     <div class="btn-group-vertical" data-toggle="buttons">
-      <button type="button" class="btn btn-secondary"><a href="">Buscar obras literarias</a></button>
-      <button type="button" class="btn btn-secondary"><a href="">Buscar manualidades</a></button>
-      <button type="button" class="btn btn-secondary"><a href="">Buscar obra audiovisual</a></button>
+      <input type="radio" name="tag1" value="1"> Comedia
+      <input type="radio" name="tag2" value="2"> Drama
+      <input type="radio" name="tag3" value="3"> Tragicomédia
+      <input type="radio" name="tag4" value="4"> Terror
+      <input type="radio" name="tag5" value="5"> Ciencia Ficción
     </div>
-    <input type="submit" value="Buscar">
+    <button class="btn btn-success" type="submit" id="Buscar"><a href="">Buscar</a></button>
     <br>
     <br>
   </form>
