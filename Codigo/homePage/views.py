@@ -116,7 +116,7 @@ def libros_view(request):
 def multimedia_view(request):
 	videos=contenidoMultimedia.objects.all()
 	contexto={'videos':videos}
-	return render(request,'catalogoMultimedia.html',contexto)
+	return render(request,'catalogoVideos.html',contexto)
 
 @login_required(login_url='/')
 def subirObra_view (request):
@@ -211,7 +211,7 @@ def mostrarObraLiteraria(request,primaryKey):
 @login_required(login_url='/')
 def mostrarMultimedia(request,primaryKey):
 	video=contenidoMultimedia.objects.get(pk=primaryKey)
-	return render(request,'mostrarContentidoMultimedia.html',{'video':video})
+	return render(request,'mostrarContenidoMultimedia.html',{'video':video})
 
 @login_required(login_url='/')
 def comprarCredito_view(request):
