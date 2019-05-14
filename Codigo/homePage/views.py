@@ -103,9 +103,6 @@ def perfil_view(request):
 	if request.GET.get('Salir'):
 		logout(request)
 		return redirect('/')
-	if(user.es_CreadorDeContenido==True):
-		return render(request, 'PerfilCreadorDeContenidoPropio.html',{'user':user})
-	if(user.es_CreadorDeContenido==False):
 		return render(request, 'PerfilPropio.html',{'user':user})
 
 @login_required(login_url='/')
