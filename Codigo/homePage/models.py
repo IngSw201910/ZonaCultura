@@ -167,3 +167,7 @@ class Comentario(models.Model):
 		califi=models.PositiveIntegerField(default=0)
 		comentario=models.TextField(max_length=150,default="")
 		usuarioComentador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
+
+class BusquedaString (models.Model):
+		generoBusqueda=models.CharField(max_length=30,blank=True)
+		usuarioBuscador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)

@@ -19,6 +19,7 @@ from homePage.models import GeneroManualidad
 from homePage.models import ArticulosComprados
 from homePage.models import contenidoMultimedia
 from homePage.models import  cuentaPorCobrar
+from homePage.models import  BusquedaString
 from homePage.forms import comenycaliForm
 from homePage.forms import RegistroForm
 from homePage.forms import logInForm
@@ -30,6 +31,7 @@ from homePage.forms import contenidoManualForm
 from homePage.forms import  competenciasForm
 from homePage.forms import  generoLiterarioForm
 from homePage.forms import  GeneroManualidadForm
+from homePage.forms import  BusquedaStringForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -743,3 +745,29 @@ def busquedaObraLiteraria_view(request):
 def busquedaObraManualidad_view(request):
 
 	return render(request, 'BusquedaObraManualidad.html')
+@login_required(login_url='/')
+def BuscarString(request):
+	#asegurarse que el usuario sea el mismo
+	manualidadex=[]
+	usuario=infousuario.objects.get(user=request.user)
+	if request.method =='POST':
+		Form=BusquedaStringForm(request.POST)
+		if Form.is_valid():
+			busqueda=Form.save()
+			busqueda.generoBusqueda=busqueda.generoBusqueda
+
+
+			Mani=contenidoManualidad.objects.all()
+			for m in Mani:
+				print("aca")
+				print(m.genero)
+				if m.genero==busqueda.generoBusqueda:
+
+					manualidadex.append(m)
+					print ("hola"+manualidadex.genero)
+		else:
+			
+			return HttpResponse("Fallo")
+	else:
+		Form=BusquedaStringForm()
+	return render(request,'vistaBusquedaS.html',{'Form':Form,'manualidadex':manualidadex})

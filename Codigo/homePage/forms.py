@@ -12,6 +12,7 @@ from homePage.models import Comentario
 from homePage.models import competencias
 from homePage.models import GeneroLiterario
 from homePage.models import GeneroManualidad
+from homePage.models import BusquedaString
 from django.forms import ModelForm
 
 
@@ -84,6 +85,32 @@ class GeneroManualidadForm(forms.ModelForm):
 	    'Relieve'
 		]
 class contenidoLiterarioForm(forms.ModelForm):
+	class Meta:
+		model=infoLibro
+		fields=[
+		'Titulo',
+		'imagen',
+		'archivo',
+		'Descripcion',
+		'ISBN',
+		'CantidadPaginas',
+		'Idioma'
+		]
+		labels={
+		'archivo':'Archivo del contenido literario (Solo acepta formato pdf)',
+		'Titulo':'Titulo',
+		'imagen':'Imagen del contenido literario',
+		'Descripcion':'Descripcion',
+		'ISBN':'Numero ISBN',
+		'CantidadPaginas':'Numero de paginas del producto',
+		'Idioma':'Idioma en el que esta escrito el contenido literario'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+class BusquedaStringForm(forms.ModelForm):
 	class Meta:
 		model=infoLibro
 		fields=[
@@ -243,3 +270,13 @@ class comenycaliForm(ModelForm):
  			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
  		}
+class BusquedaStringForm(forms.ModelForm):
+	class Meta:
+		model=BusquedaString
+		fields=[
+		'generoBusqueda'
+
+		]
+		labels={
+		'generoBusqueda': 'Buscar'
+		}

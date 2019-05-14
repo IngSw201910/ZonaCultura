@@ -26,6 +26,7 @@ urlpatterns=[
 	url(r'^BusquedaEspecifica$', views.busquedaObraEspecifica_view, name='Busqueda especifica de obras'),
 	url(r'^BusquedaObraLiteraria$', views.busquedaObraLiteraria_view, name='Busqueda de obra literaria'),
 	url(r'^BusquedaObraManualidad$', views.busquedaObraManualidad_view, name='Busqueda de manualidad'),
+	url(r'^vistaBusquedasS$', views.BuscarString, name='Busqueda de strings'),
 	path('EditarUsuario', views.editarUsuarioInfo),
 	path('Producto/ContenidoManualidad/Editar/<int:primaryKey>', views.editarManualidades_view),
 	path('Producto/ContenidoLiterario/Editar/<int:primaryKey>', views.editarContenidoLiterario_view),

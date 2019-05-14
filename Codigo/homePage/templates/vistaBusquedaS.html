@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Catalogo Libros</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap1.min.css' %}">
+
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%"></script>
+  <script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <link rel="stylesheet" href="static/css/paginahome.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand"><em><font size="6" color="#0F4030" face="Trebuchet MS">ZonaCultura  <i class="fas fa-book"></i></font></em></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/HomePage"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="Perfil"><i class="fas fa-user"></i> Perfil</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="CarritoVista"><i class="fas fa-shopping-cart"></i> Compra</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="CompraCredito"><i class="fas fa-money-bill-alt"></i> Comprar Credito</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
+          </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-2">
+        <div class="col-12">
+            <input class="form-control mr-sm-0" type="text" placeholder="Buscar" id="input-search">
+            <button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
+            <button class="btn btn-dark my-5 my-sm-0" type="submit" id="Salir"><a href="">Salir</a></button>
+
+
+          </div>
+      </form>
+    </div>
+  </nav>
+<div>
+<form class="site-form" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+  {{ Form}}
+  <input type="submit" value="Buscar">
+</form>
+    <div class="row">
+      <div class="col col-3">
+        <h1><i class="fas fa-university" id="lll"></i></h1>
+          <div class="btn-group-vertical" data-toggle="buttons">
+            <button type="button" class="btn btn-primary"><a href="CatalogoLibros">Obras Literarias</a></button>
+            <button type="button" class="btn btn-primary">Pinturas</button>
+            <button type="button" class="btn btn-primary">Esculturas</button>
+            <button type="button" class="btn btn-primary"><a href="CatalogoMultimedia">Multimedia</a></button>
+            <button type="button" class="btn btn-primary">Artistas</button>
+          </div>
+      </div>
+      <div class="col col-6">
+        <div class="container-lit conteiner">
+          <h1 align="center">Obras Literarias</h1>
+          <form class="site-form" method="post">
+            <table class="table table-hover">
+              <thead>
+                <tr class="table-primary">
+                  <th scope="row">ID</th>
+                  <td>Titulo</td>
+                  <td>Generos</td>
+                  <td>Autor</td>
+                  <td>Precio</td>
+                  <td>Imagen</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if manualidadex %}
+                {% for manu in manualidadex %}
+                <tr>
+                  <td><a href="Producto/ContenidoLiterario/{{manualidadex.pk}}">{{manu.pk}}</td>
+                  <td>{{manu.title}}</a></td>
+                  <td>
+                  {% for genero in manualidadex.genero.all %}
+                  {{genero}}
+                  {% endfor %}
+                  </td>
+                  <td>{{manualidadex.user}}</td>
+                  <td>{{manualidadex.precioV}}</td>
+                  <td><img src="{{manualidadex.imagen.url}}"></td>
+                </tr>
+                {% endfor %}
+
+                {% else %}
+                <h1>No hay registros de manualidades</h1>
+                {% endif %}
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+      <div class="col col-3"></div>
+    </div>
+  </div>
