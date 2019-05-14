@@ -1,0 +1,73 @@
+#input-search{
+	width: 300px;
+	height: 30px;
+	text-indent: 10px;
+}
+#Salir{
+	width: 70px;
+	margin-left: 20px;
+	margin-right: 0 auto;
+	background-color: #F59251;
+}
+#Buscar{
+	height: 30px;
+}
+.table{
+	margin-top: 50px;
+	border-color: #000;
+	background-color: #9F977A;
+	color: black;
+
+}
+.btn-group-vertical{
+	margin-top: 0px;
+	padding-top: 50px;
+	margin-left: 50px;
+}
+
+#lll{
+	margin-top: 50px;
+	margin-left: 90px;
+	margin-bottom: 0px;
+}
+.nav-link{
+	margin-left: 40px;
+}
+.button{
+	color: #000;
+}
+.btn a{
+	color: black;
+}
+td a{
+	color: black;
+}
+.container-3{
+
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	margin-right: 0px;
+	margin-bottom: 50px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
+	border-radius: 4px;
+	color: #000;
+	background-color: #D5D5D5;
+	
+}
+#ii2{
+	margin-left: 150px;
+	border-color: #0C144E;
+	background-color: #A5FFE6;
+}
+#ii1{
+	margin-left: 50px;
+	border-color: #0C144E;
+	background-color: #FEBEBE;
+}
+#Credito{
+	margin-left: 70px;
+	margin-top: 40px;
+}
