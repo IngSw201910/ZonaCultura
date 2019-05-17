@@ -34,6 +34,25 @@ class FormatoLiterario(models.Model):
 	def __str__(self):
 		return'{}'.format(self.nombre)
 
+class GeneroMultimedia(models.Model):
+	Comedia=models.BooleanField(default=False)
+	Drama=models.BooleanField(default=False)
+	Retrato=models.BooleanField(default=False)
+	Terror=models.BooleanField(default=False)
+	Accion=models.BooleanField(default=False)
+	Belico=models.BooleanField(default=False)
+	CienciaFiccion =models.BooleanField(default=False)
+	Aventura =models.BooleanField(default=False)
+	DelOeste=models.BooleanField(default=False)
+	ArtesMarciales=models.BooleanField(default=False)
+	Fantastico=models.BooleanField(default=False)
+	Suspenso=models.BooleanField(default=False)
+	Historico =models.BooleanField(default=False)
+	Adolescente =models.BooleanField(default=False)
+	Infantil =models.BooleanField(default=False)
+	Político_Social=models.BooleanField(default=False)
+	Animacion=models.BooleanField(default=False)
+
 class GeneroLiterario(models.Model):
 	Comedia=models.BooleanField(default=False)
 	Drama=models.BooleanField(default=False)
@@ -156,6 +175,7 @@ class contenidoMultimedia(models.Model):
 	precioV=models.IntegerField(default=0)
 	clip=models.FileField(upload_to='media/video')
 	fecha=models.DateTimeField(default=timezone.now)
+	genero=models.ForeignKey(GeneroMultimedia, on_delete=models.SET_NULL, null=True)
 
 class Donacion(models.Model):
 		usuarioDonante=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioDonante')
