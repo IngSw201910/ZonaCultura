@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Resultado de búsqueda de obra literaria</title>
+</head>
+<body>
+
+  <div class="col col-6">
+    <div class="container-lit conteiner">
+      <h1 align="center">Libros Encontrados</h1>
+      <form class="site-form" method="post">
+        <table class="table table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="row">ID</th>
+              <td>Título</td>
+              <td>Género</td>
+              <td>Descripción</td>
+              <td>Autor</td>
+              <td>Cantidad Páginas</td>
+              <td>Idioma</td>
+              <td>Precio</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if librosPasan %}
+            {% for libro in librosPasan %}
+            <tr>
+              <td><a href="Producto/ContenidoLiterario/{{libro.pk}}">{{libro.pk}}</td>
+              <td>{{libro.Titulo}}</a></td>
+              <td>
+              	{% for genero in libro.genero.all %}
+              		{{genero.nombre}}
+              	{% endfor %}
+              </td>
+              <td>{{libro.Descripcion}}</td>
+              <td>{{libro.user.username}}</td>
+              <td>{{libro.CantidadPaginas}}</td>
+              <td>{{libro.Idioma}}</td>
+              <td>{{libro.PrecioLibro}}</td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <h1>No hay registros de libros que cumplan con ese nombre</h1>
+            {% endif %}
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+	<a href="BusquedaObraLiteraria">Regresar</a>
+</body>
+</html>

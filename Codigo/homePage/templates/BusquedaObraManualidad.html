@@ -8,26 +8,28 @@
     títulos y/o acorde a las etiquetas asociadas a ellos. Se le recuerda que debe contactar al vendedor usted mismo para
     adquirir cualquier manualidad que llege a comprar.</p>
 
-  <form class="site-form" method="post"  enctype="multipart/form-data">
-    <input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search">
+  <form class="site-form" enctype="multipart/form-data" method = "POST" action="/BusquedaObraManualidadResultado">
+		{% csrf_token %}
+		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search" name="buscarstring">
     <div class="btn-group-vertical" data-toggle="buttons">
-      <input type="radio" name="tag1" value="1"> Bodegón
-      <input type="radio" name="tag2" value="2"> Vanitas
-      <input type="radio" name="tag3" value="3"> Retrato
-      <input type="radio" name="tag4" value="4"> Terror
-      <input type="radio" name="tag5" value="5"> Desnudo
-      <input type="radio" name="tag6" value="6"> Religioso
-      <input type="radio" name="tag7" value="7"> Histórico
-      <input type="radio" name="tag8" value="8"> Mitológico
-      <input type="radio" name="tag9" value="9"> Paisaje
-      <input type="radio" name="tag10" value="10"> Funeraria
-      <input type="radio" name="tag11" value="11"> Retrato
-      <input type="radio" name="tag12" value="12"> Monumento
-      <input type="radio" name="tag13" value="13"> Estatuilla
-      <input type="radio" name="tag14" value="14"> Figura
-      <input type="radio" name="tag15" value="15"> Relieve
+
+      <input type="checkbox" id = "cb1" name="check1" value="bodegon" ><label id = "c1">Bodegón </label>
+			<input type="checkbox" id = "cb2" name="check2" value="vanitas" ><label id = "c2">Vanitas </label>
+			<input type="checkbox" id = "cb3" name="check3" value="retrato" ><label id = "c3">Retrato </label>
+			<input type="checkbox" id = "cb4" name="check4" value="terror" ><label id = "c4">Terror </label>
+			<input type="checkbox" id = "cb5" name="check5" value="desnudo" ><label id = "c5">Desnudo </label>
+			<input type="checkbox" id = "cb6" name="check6" value="religioso" ><label id = "c6">Religioso </label>
+			<input type="checkbox" id = "cb7" name="check7" value="historico" ><label id = "c7">Histórico </label>
+			<input type="checkbox" id = "cb8" name="check8" value="mitologico" ><label id = "c8">Mitológico </label>
+			<input type="checkbox" id = "cb9" name="check9" value="paisaje" ><label id = "c9">Paisaje </label>
+			<input type="checkbox" id = "cb10" name="check10" value="funeraria" ><label id = "c10">Funeraria </label>
+			<input type="checkbox" id = "cb11" name="check11" value="monumento" ><label id = "c11">Monumento </label>
+			<input type="checkbox" id = "cb12" name="check12" value="estatuilla" ><label id = "c12">Estatuilla </label>
+			<input type="checkbox" id = "cb13" name="check13" value="figura" ><label id = "c13">Figura </label>
+			<input type="checkbox" id = "cb14" name="check14" value="relieve" ><label id = "c14">Relieve </label>
+
     </div>
-    <button class="btn btn-success" type="submit" id="Buscar"><a href="">Buscar</a></button>
+    <button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
     <br>
     <br>
   </form>

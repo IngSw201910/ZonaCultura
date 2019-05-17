@@ -38,6 +38,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.http import Http404
 from django.conf import settings
+from collections import Counter
 import os
 
 #from django.core.urlresolvers import reverse_lazy
@@ -428,7 +429,7 @@ def Donacion_view(request,primaryKey):
 				cantida=data.get("cantidad")
 				msj=data.get("mensaje")
 				print(cantida)
-				
+
 
 				#print(Usu)
 				if Usua.balance>=cantida:
@@ -489,18 +490,18 @@ def subirManualidades_view(request):
 	if request.method =='POST':
 		Form=contenidoManualForm(request.POST, request.FILES)
 		Form2=GeneroManualidadForm(request.POST)
-		
+
 		if Form.is_valid():
 
 			generos=Form2.save()
 
-			
+
 
 			producto=Form.save(commit=False)
 			producto.user= request.user
 			producto.genero=generos
 
-			
+
 
 			producto.save()
 			print("\n***********Formulario valido")
@@ -511,7 +512,7 @@ def subirManualidades_view(request):
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
-		
+
 		Form2=GeneroManualidadForm()
 		Form=contenidoManualForm()
 	return render(request,'SubirManualidad.html',{'Form':Form,'Form2':Form2})
@@ -707,18 +708,30 @@ def editarUsuarioInfo(request):
 @login_required(login_url='/')
 def busquedaObraGeneral_view(request):
 
+	usuario=infousuario.objects.get(user=request.user)
+
 	libros = infoLibro.objects.all()
 	manualidades = contenidoManualidad.objects.all()
+
+	#if request.method =='POST':
+		#print('*'*50)
+		#print(request.POST)
+		#print('*'*50)
+
+	palabra = request.POST.get('buscarstring')
+	print(palabra)
 
 	librosPasan=[]
 	manualidadesPasan=[]
 
+	if palabra is None:
+		return HttpResponse("Fallo")
 	for libro in libros:
-		if "q" in libro.Titulo:
+		if palabra in libro.Titulo:
 				librosPasan.append(libro)
 
 	for manualidad in manualidades:
-		if "q" in manualidad.title:
+		if palabra in manualidad.title:
 				manualidadesPasan.append(manualidad)
 
 	context = {
@@ -730,41 +743,143 @@ def busquedaObraGeneral_view(request):
 
 @login_required(login_url='/')
 def busquedaObraEspecifica_view(request):
+	usuario=infousuario.objects.get(user=request.user)
 
 	return render(request,'BusquedaEspecifica.html')
 
 @login_required(login_url='/')
 def busquedaObraLiteraria_view(request):
+	usuario=infousuario.objects.get(user=request.user)
 
-	return render(request, 'BusquedaObraLiteraria.html')
+	return render(request,'BusquedaObraLiteraria.html')
+
+@login_required(login_url='/')
+def busquedaObraLiterariaResultado_view(request):
+	usuario=infousuario.objects.get(user=request.user)
+
+	libros = infoLibro.objects.all()
+
+	palabra = request.POST.get('buscarstring')
+	print(palabra)
+
+	librosPasan=[]
+
+	if palabra is None:
+		return HttpResponse("Fallo")
+
+	for libro in libros:
+		if palabra in libro.Titulo:
+			if 'check1' in request.POST:
+				if libro.genero.Comedia:
+					librosPasan.append(libro)
+			if 'check2' in request.POST:
+				if libro.genero.Drama:
+					librosPasan.append(libro)
+			if 'check3' in request.POST:
+				if libro.genero.Tragicomedia:
+					librosPasan.append(libro)
+			if 'check4' in request.POST:
+				if libro.genero.Terror:
+					librosPasan.append(libro)
+			if 'check5' in request.POST:
+				if libro.genero.Ciencia_Ficción:
+					librosPasan.append(libro)
+		else:
+			if 'check1' in request.POST:
+				if libro.genero.Comedia:
+					librosPasan.append(libro)
+			if 'check2' in request.POST:
+				if libro.genero.Drama:
+					librosPasan.append(libro)
+			if 'check3' in request.POST:
+				if libro.genero.Tragicomedia:
+					librosPasan.append(libro)
+			if 'check4' in request.POST:
+				if libro.genero.Terror:
+					librosPasan.append(libro)
+			if 'check5' in request.POST:
+				if libro.genero.Ciencia_Ficción:
+					librosPasan.append(libro)
+
+	count = Counter(librosPasan)
+	count.most_common(1)[0][0]
+
+	context = {
+		'librosPasan':count
+	}
+
+	return render(request, 'BusquedaObraLiterariaResultado.html', context)
 
 @login_required(login_url='/')
 def busquedaObraManualidad_view(request):
-
-	return render(request, 'BusquedaObraManualidad.html')
-@login_required(login_url='/')
-def BuscarString(request):
-	#asegurarse que el usuario sea el mismo
-	manualidadex=[]
 	usuario=infousuario.objects.get(user=request.user)
-	if request.method =='POST':
-		Form=BusquedaStringForm(request.POST)
-		if Form.is_valid():
-			busqueda=Form.save()
-			busqueda.generoBusqueda=busqueda.generoBusqueda
 
+	return render(request,'BusquedaObraManualidad.html')
 
-			Mani=contenidoManualidad.objects.all()
-			for m in Mani:
-				print("aca")
-				print(m.genero)
-				if m.genero==busqueda.generoBusqueda:
+@login_required(login_url='/')
+def busquedaObraManualidadResultado_view(request):
+	usuario=infousuario.objects.get(user=request.user)
 
-					manualidadex.append(m)
-					print ("hola"+manualidadex.genero)
-		else:
-			
-			return HttpResponse("Fallo")
-	else:
-		Form=BusquedaStringForm()
-	return render(request,'vistaBusquedaS.html',{'Form':Form,'manualidadex':manualidadex})
+	manualidades = contenidoManualidad.objects.all()
+
+	palabra = request.POST.get('buscarstring')
+	print(palabra)
+
+	manualidadesPasan=[]
+
+	#if palabra is None:
+	#	return HttpResponse("Fallo")
+
+	for manualidad in manualidades:
+		#if palabra in libro.Titulo:
+			if 'check1' in request.POST:
+				if manualidad.genero.Bodegon:
+					manualidadessPasan.append(manualidad)
+			if 'check2' in request.POST:
+				if manualidad.genero.Vanitas:
+					manualidadesPasan.append(manualidad)
+			if 'check3' in request.POST:
+				if manualidad.genero.Retrato:
+					manualidadesPasan.append(manualidad)
+			if 'check4' in request.POST:
+				if manualidad.genero.Terror:
+					manualidadesPasan.append(manualidad)
+			if 'check5' in request.POST:
+				if manualidad.genero.Desnudo:
+					manualidadesPasan.append(manualidad)
+			if 'check6' in request.POST:
+				if manualidad.genero.Religioso:
+					manualidadessPasan.append(manualidad)
+			if 'check7' in request.POST:
+				if manualidad.genero.Historico:
+					manualidadesPasan.append(manualidad)
+			if 'check8' in request.POST:
+				if manualidad.genero.Mitologico:
+					manualidadesPasan.append(manualidad)
+			if 'check9' in request.POST:
+				if manualidad.genero.Paisaje:
+					manualidadesPasan.append(manualidad)
+			if 'check10' in request.POST:
+				if manualidad.genero.Funeraria:
+					manualidadesPasan.append(manualidad)
+			if 'check11' in request.POST:
+				if manualidad.genero.Monumento:
+					manualidadessPasan.append(manualidad)
+			if 'check12' in request.POST:
+				if manualidad.genero.Estatuilla:
+					manualidadesPasan.append(manualidad)
+			if 'check13' in request.POST:
+				if manualidad.genero.Figura:
+					manualidadesPasan.append(manualidad)
+			if 'check14' in request.POST:
+				if manualidad.genero.Relieve:
+					manualidadesPasan.append(manualidad)
+
+	count = Counter(manualidadesPasan)
+	count.most_common(1)[0][0]
+
+	context = {
+		'manualidadesPasan':manualidadesPasan
+	}
+
+	return render(request, 'BusquedaObraManualidadResultado.html', context)

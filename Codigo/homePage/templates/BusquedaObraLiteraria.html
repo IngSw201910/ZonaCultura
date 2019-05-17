@@ -7,19 +7,27 @@
   <p>Bienvenido al buscador de obras literarias. Aquí podrá buscar obras literarias acorde a sus títulos y/o acorde al
   género (o géneros) al que pertenescan.</p>
 
-  <form class="site-form" method="post"  enctype="multipart/form-data">
-    <input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search">
+  <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaObraLiterariaResultado">
+		{% csrf_token %}
+		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search" name="buscarstring">
+
+		<br>
+
     <div class="btn-group-vertical" data-toggle="buttons">
-      <input type="radio" name="tag1" value="1"> Comedia
-      <input type="radio" name="tag2" value="2"> Drama
-      <input type="radio" name="tag3" value="3"> Tragicomédia
-      <input type="radio" name="tag4" value="4"> Terror
-      <input type="radio" name="tag5" value="5"> Ciencia Ficción
+			<input type="checkbox" id = "cb1" name="check1" value="comedia" ><label id = "c1"> Comedia </label>
+			<input type="checkbox" id = "cb2" name="check2" value="drama" ><label id = "c2"> Drama</label>
+			<input type="checkbox" id = "cb3" name="check3" value="tragicomedia" ><label id = "c3"> Tragicomedia</label>
+			<input type="checkbox" id = "cb4" name="check4" value="terror" ><label id = "c4"> Terror</label>
+			<input type="checkbox" id = "cb5" name="check5" value="ciencia ficcion" ><label id = "c5"> Ciencia Ficción</label>
     </div>
-    <button class="btn btn-success" type="submit" id="Buscar"><a href="">Buscar</a></button>
+
+		<br>
+
+		<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
     <br>
     <br>
   </form>
    <a href="BusquedaEspecifica">Regresar</a>
+
 </body>
 </html>

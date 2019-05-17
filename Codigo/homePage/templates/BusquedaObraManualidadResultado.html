@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Resultado de búsqueda de obra literaria</title>
+</head>
+<body>
+
+  <div class="col col-6">
+    <div class="container-lit conteiner">
+      <h1 align="center">Manualidades Encontradas</h1>
+      <form class="site-form" method="post">
+        <table class="table table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="row">ID</th>
+              <td>Título</td>
+              <td>Género</td>
+              <td>Descripción</td>
+              <td>Autor</td>
+              <td>Existencias</td>
+              <td>Precio</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if manualidadesPasan %}
+            {% for manualidad in manualidadesPasan %}
+            <tr>
+              <td><a href="Producto/ContenidoManualidad/{{manualidad.pk}}">{{manualidad.pk}}</td>
+              <td>{{manualidad.title}}</a></td>
+              <td>
+              {% for genero in manualidad.genero.all %}
+              {{genero.nombre}}
+              {% endfor %}
+              </td>
+              <td>{{manualidad.Descripcion}}</td>
+              <td>{{manualidad.user.username}}</td>
+              <td>{{manualidad.existencias}}</td>
+              <td>{{manualidad.precioV}}</td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <h1>No hay registros de manualidades que cumplan con ese nombre</h1>
+            {% endif %}
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+	<a href="BusquedaObraManualidad">Regresar</a>
+</body>
+</html>

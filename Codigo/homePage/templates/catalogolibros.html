@@ -85,7 +85,9 @@
                   <td>{{libro.Titulo}}</a></td>
                   <td>
                   {% for genero in libro.genero.all %}
-                  {{genero.nombre}}
+                    {% if genero.Comedia %}
+                      {{Comedia}}
+                    {% endif %}
                   {% endfor %}
                   </td>
                   <td>{{libro.Descripcion}}</td>
