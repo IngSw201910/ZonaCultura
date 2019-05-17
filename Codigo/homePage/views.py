@@ -103,7 +103,7 @@ def perfil_view(request):
 	if request.GET.get('Salir'):
 		logout(request)
 		return redirect('/')
-		return render(request, 'PerfilPropio.html',{'user':user})
+	return render(request, 'PerfilPropio.html',{'user':user})
 
 @login_required(login_url='/')
 def libros_view(request):
