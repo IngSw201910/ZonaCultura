@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lista de Contactos</title>
+</head>
+<body>
+
+<p>Lista de Contactos</p>
+
+{% if hayContactos == False%}
+<p>No hay contactos</p>
+{% endif %}
+
+{% if hayContactos == True%}
+
+	{% for infoContacto in infoContactos %} 
+		<p> {{infoContacto.user.first_name}} {{infoContacto.user.last_name}} {{infoContacto.user.username}}</p> 
+		<form method="get">
+              <input type="submit" value="Enviar Mensaje" name="{{infoContacto.user.pk}}">
+        </form>
+	{%endfor%}
+
+{% endif %}
+</body>
+</html>

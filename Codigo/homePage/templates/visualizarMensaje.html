@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visulizar Mensaje</title>
+</head>
+<body>
+<p>Titulo del Mensaje: {{Mensaje.Titulo}}</p>
+<p>De: {{Mensaje.Emisor.first_name}} {{Mensaje.Emisor.last_name}} ({{Mensaje.Emisor.username}})</p>
+<p>
+	Contenido del Mensaje:
+	{{Mensaje.Cuerpo}}
+</p>
+
+
+		<form method="get">
+              <input type="submit" value="Responder Mensaje" name="responder">
+        </form>
+</body>
+</html>

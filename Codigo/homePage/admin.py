@@ -12,8 +12,11 @@ from homePage.models import Donacion
 from homePage.models import Comentario
 from homePage.models import competencias
 from homePage.models import infoTarjeta
-
+from homePage.models import Contactos
+from homePage.models import Mensajes
 # Register your models here.
+
+admin.site.register(Contactos)
 admin.site.register(infousuario)
 admin.site.register(FormatoLiterario)
 admin.site.register(GeneroLiterario)
@@ -27,3 +30,4 @@ admin.site.register(Donacion)
 admin.site.register(Comentario)
 admin.site.register(competencias)
 admin.site.register(infoTarjeta)
+admin.site.register(Mensajes)

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Enviar Mensaje</title>
+</head>
+<body>
+
+<p>Enviar Mensaje</p>
+
+	<form class="site-form" method="post"  enctype="multipart/form-data">
+  		{% csrf_token %}
+  		{{Form}}	
+		<input type="submit" value="Enviar Mensaje">
+	</form>
+</body>
+</html>

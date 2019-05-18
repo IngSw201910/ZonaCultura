@@ -14,6 +14,15 @@ from django.core.validators import MinValueValidator
 def validate_file_extension(value):
     if not value.name.endswith('.pdf'):
         raise ValidationError('Error message')
+class Mensajes (models.Model):
+	Emisor=models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name='%(class)s_Emisor')
+	Receptor=models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name='%(class)s_Pasivo')
+	Titulo=models.CharField(max_length=50)
+	Cuerpo=models.TextField(max_length=150)
+	fecha=models.DateTimeField(default=timezone.now)
+class Contactos(models.Model):
+	Activo=models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name='%(class)s_Activo')
+	Pasivo=models.ForeignKey(User,on_delete=models.SET_NULL, null=True,  related_name='%(class)s_Pasivo')
 class competencias (models.Model):
 	Escritor=models.BooleanField(default=False)
 	Pintor=models.BooleanField(default=False)

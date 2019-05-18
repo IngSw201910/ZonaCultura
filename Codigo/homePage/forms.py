@@ -13,6 +13,7 @@ from homePage.models import competencias
 from homePage.models import GeneroLiterario
 from homePage.models import GeneroManualidad
 from homePage.models import BusquedaString
+from homePage.models import Mensajes
 from django.forms import ModelForm
 
 
@@ -44,6 +45,17 @@ class RegistroForm(UserCreationForm):
 		'first_name':'Nombres',
 		'last_name': 'Apellidos',
 		'email':'Correo electronico',
+		}
+class MensajeForm (forms.ModelForm):
+	class Meta:
+		model=Mensajes
+		fields=[
+		'Titulo',
+		'Cuerpo',
+		]
+		labels={
+		'Titulo':'Digitar Titulo del Mensaje',
+		'Cuerpo': 'Digitar Cuerpo del Mensaje',
 		}
 class competenciasForm(forms.ModelForm):
 	class Meta:

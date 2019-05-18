@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from datetime import date
+from homePage.models import Mensajes
+from homePage.models import Contactos
+from homePage.forms import MensajeForm
 from homePage.forms import infoForm
 from homePage.forms import infoLibro
 from homePage.forms import contenidoTarjetaForm
@@ -13,6 +15,7 @@ from homePage.models import Comentario
 from homePage.models import Donacion
 from homePage.models import Compradores
 from homePage.models import infousuario
+from django.utils import timezone
 from homePage.models import infoTarjeta
 from homePage.models import GeneroLiterario
 from homePage.models import GeneroManualidad
@@ -39,7 +42,90 @@ from django.shortcuts import redirect
 from django.http import Http404
 from django.conf import settings
 from collections import Counter
+from datetime import datetime
 import os
+
+def establecerContacto(usuario1, usuario2):
+	Contactos.objects.create(Pasivo=usuario2, Activo=usuario1)
+	Contactos.objects.create(Activo=usuario2, Pasivo=usuario1)
+@login_required(login_url='/')
+
+def vistaContactos(request):
+	infoContactos=[]
+	hayContactos=True;
+	listaContactos=Contactos.objects.filter(Activo=request.user)
+	for q in listaContactos:
+		p=infousuario.objects.get(user = q.Pasivo)
+		infoContactos.append(p)
+	if len(listaContactos) ==0 :
+		print("no hay Contactos")
+		hayContactos=False
+	for contactos in infoContactos:
+			aux1=""+str(contactos.user.pk)
+			aux1=aux1.strip()
+			#print(aux1)
+			if request.GET.get(aux1) is not None:
+				print('Encontro articulo')
+				url= '/EnviarMensaje/'+aux1
+				print(url)
+				return redirect(url)
+	return render(request,'verContactos.html',{'infoContactos':infoContactos,'hayContactos':hayContactos})
+
+@login_required(login_url='/')
+def EnviarMensaje(request, primaryKey):
+	esContato=False
+	listaContactos=Contactos.objects.filter(Activo=request.user)
+	for q in listaContactos:
+		if q.Pasivo.pk == primaryKey:
+			esContato=True
+	if esContato ==False:
+		raise Http404
+	if request.method =='POST':
+		form=MensajeForm(request.POST or None)
+		if form.is_valid():
+			mensaje=form.save(commit=False)
+			mensaje.Emisor=request.user
+			mensaje.Receptor=User.objects.get(id=primaryKey)
+			mensaje.fecha=datetime.now()
+			mensaje.save()
+			return HttpResponse("Mensaje Enviado")
+		#end if
+	else:
+		form=MensajeForm()
+	#end else
+	return render(request,'EnviarMensaje.html',{'Form':form})
+
+
+@login_required(login_url='/')
+def bandejaView (request):
+	hayMensajes=True
+	listaMensajes=Mensajes.objects.order_by('-fecha').filter(Receptor=request.user)
+	for Mensaje in listaMensajes:
+			aux1=str(Mensaje.pk)
+			aux1=aux1.strip()
+			if request.GET.get(aux1) is not None:
+				Mensaje.delete()
+				return redirect('/BandejaEntrada')
+	if len(listaMensajes)==0:
+		hayMensajes=False
+	return render(request, 'Bandeja.html',{'listaMensajes':listaMensajes, 'hayMensajes':hayMensajes})
+
+
+
+
+
+@login_required(login_url='/')
+def mensajeView(request, primaryKey):
+	Mensaje=Mensajes.objects.get(pk=primaryKey, Receptor=request.user)
+	if request.GET.get('responder'):
+		return redirect('/EnviarMensaje/'+str(Mensaje.Emisor.pk))
+	if Mensaje is not None:
+		return render(request, 'visualizarMensaje.html',{'Mensaje':Mensaje})
+	else:
+		raise Http404
+
+
+
 
 #from django.core.urlresolvers import reverse_lazy
 def index(request):

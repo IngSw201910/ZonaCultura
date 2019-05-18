@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bandeja De Mensaje</title>
+</head>
+<body>
+
+<p>Bandeja de Mensajes</p>
+
+{% if hayMensajes == False%}
+<p>No hay mensajes</p>
+{% endif %}
+
+{% if hayMensajes == True%}
+
+	{% for Mensaje in listaMensajes %} 
+		<p> <a href="/BandejaEntrada/{{Mensaje.pk}}">  {{Mensaje.Titulo}} </a> de {{Mensaje.Emisor.first_name}} {{Mensaje.Emisor.last_name}} ({{Mensaje.Emisor.username}}) </p> 
+		<form method="get">
+              <input type="submit" value="Eliminar Mensaje" name="{{Mensaje.pk}}">
+        </form>
+	{%endfor%}
+{%endif%}
+</body>
+</html>
