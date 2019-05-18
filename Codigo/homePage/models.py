@@ -191,6 +191,13 @@ class Donacion(models.Model):
 		usuarioBen=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True,related_name='usuarioBen')
 		cantidad =models.PositiveIntegerField(default=0)
 		mensaje=models.TextField(max_length=150,default="")
+
+class ComentarioObraLiteraria(models.Model):
+	libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
+	califi=models.PositiveIntegerField(default=0)
+	comentario=models.TextField(max_length=150,default="")
+	usuarioComentador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
+
 class Comentario(models.Model):
 		manu = models.ForeignKey(contenidoManualidad, on_delete=models.SET_NULL,null=True)
 		califi=models.PositiveIntegerField(default=0)

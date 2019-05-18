@@ -32,6 +32,7 @@ urlpatterns=[
 	url(r'^BusquedaObraManualidadResultado$', views.busquedaObraManualidadResultado_view, name='Busqueda de manualidadR'),
 	path('EditarUsuario', views.editarUsuarioInfo),
 	path ('Contacto', views.vistaContactos),
+	path('Producto/ContenidoLiterario/Comentar/<int:primaryKey>', views.comentarios_calificacionLibro),
 	path('Producto/ContenidoManualidad/Editar/<int:primaryKey>', views.editarManualidades_view),
 	path('Producto/ContenidoLiterario/Editar/<int:primaryKey>', views.editarContenidoLiterario_view),
 	path('VistaUsuario/Usuario/<int:primaryKey>', views.mostrarUsuario),
@@ -43,7 +44,7 @@ urlpatterns=[
 	path('EnviarMensaje/<int:primaryKey>', views.EnviarMensaje),
 	path('BandejaEntrada', views.bandejaView),
 	path('BandejaEntrada/<int:primaryKey>', views.mensajeView),
-	path('Producto/ContenidoManualidad/Comentar/<int:primaryKey>', views.comentarios_calificacionManu)
+	path('Producto/ContenidoManualidad/Comentar/<int:primaryKey>', views.comentarios_calificacionManu),
 # Create your views here.
 		]
 urlpatterns += staticfiles_urlpatterns()

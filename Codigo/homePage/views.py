@@ -3,38 +3,9 @@ from django.http import HttpResponse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from homePage.models import Mensajes
-from homePage.models import Contactos
-from homePage.forms import MensajeForm
-from homePage.forms import infoForm
-from homePage.forms import infoLibro
-from homePage.forms import contenidoTarjetaForm
-from homePage.forms import contenidoCreditForm
-from homePage.models import Carrito
-from homePage.models import Comentario
-from homePage.models import Donacion
-from homePage.models import Compradores
-from homePage.models import infousuario
 from django.utils import timezone
-from homePage.models import infoTarjeta
-from homePage.models import GeneroLiterario
-from homePage.models import GeneroManualidad
-from homePage.models import ArticulosComprados
-from homePage.models import contenidoMultimedia
-from homePage.models import  cuentaPorCobrar
-from homePage.models import  BusquedaString
-from homePage.forms import comenycaliForm
-from homePage.forms import RegistroForm
-from homePage.forms import logInForm
-from homePage.forms import contenidoLiterarioForm
-from homePage.forms import contenidoMultimediaForm
-from homePage.forms import DonacionForm
-from homePage.forms import contenidoManualidad
-from homePage.forms import contenidoManualForm
-from homePage.forms import  competenciasForm
-from homePage.forms import  generoLiterarioForm
-from homePage.forms import  GeneroManualidadForm
-from homePage.forms import  BusquedaStringForm
+from homePage.models import *
+from homePage.forms import *
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -45,11 +16,12 @@ from collections import Counter
 from datetime import datetime
 import os
 
+
+
 def establecerContacto(usuario1, usuario2):
 	Contactos.objects.create(Pasivo=usuario2, Activo=usuario1)
 	Contactos.objects.create(Activo=usuario2, Pasivo=usuario1)
 @login_required(login_url='/')
-
 def vistaContactos(request):
 	infoContactos=[]
 	hayContactos=True;
@@ -271,8 +243,6 @@ def mostrarObraLiteraria(request,primaryKey):
 				return HttpResponse("Usted ya tiene este elemento en el carrito")
 			#carro.usuario=infousuario.objects.get(user=request.user)
 			#print("Usuario:",infousuario.objects.get(user=request.user).id)
-
-
 	except:
 		raise Http404
 	listaDeGeneros= Libro.genero
@@ -289,10 +259,17 @@ def mostrarObraLiteraria(request,primaryKey):
 		aux=aux+'Terror '
 	if listaDeGeneros.Ciencia_Ficción==True :
 		aux=aux+'Ciencia Ficción '
-	if permitir:
-		return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro,'generos':aux})
+	comentarios=ComentarioObraLiteraria.objects.filter(libro=Libro)
+	hayComentarios=True
+	if len(comentarios)== 0:
+		hayComentarios=False
 	else:
-		return render(request, 'mostrarContentidoLiterarioSiYaLoTieneComprado.html',{'Libro':Libro,'generos':aux})
+		promedioCalificacion=0
+		for comentario in comentarios:
+			promedioCalificacion=promedioCalificacion+comentario.califi
+		promedioCalificacion=promedioCalificacion/len(comentarios)
+	return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion})
+	
 
 @login_required(login_url='/')
 def mostrarMultimedia(request,primaryKey):
@@ -701,6 +678,38 @@ def editarManualidades_view(request,primaryKey):
 		Form=contenidoManualForm(instance=Manualidad)
 
 	return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
+
+	
+@login_required(login_url='/')
+def comentarios_calificacionLibro(request,primaryKey):
+	Libro=infoLibro.objects.get(pk=primaryKey)
+	usu = infousuario.objects.get(user = request.user)
+	
+	aux=ArticulosComprados.objects.filter(usuario=usu, libro=Libro)
+	aux2= ComentarioObraLiteraria.objects.filter(usuarioComentador=usu, libro=Libro)
+	if len(aux2)==0:
+		if  len(aux) >0:
+			if request.method =='POST':
+				if(Libro.user.username==usu.user.username):
+					return HttpResponse("No puede comentar su propia obra")
+				else:
+					com= comenycaliFormLibro(request.POST)
+					if com.is_valid():
+						comentario=com.save(commit=False)
+						comentario.libro=Libro
+						comentario.usuarioComentador=usu
+						comentario.save()
+						print("\n***********Formulario valido")
+						return HttpResponse("Comentario enviado")
+					#return redirect('/')
+			else:
+				com = comenycaliFormLibro()
+		else:
+			raise Http404
+	else:
+		raise Http404
+	return render(request,'comentarLibro.html',{'com':com,'Libro':Libro})
+
 @login_required(login_url='/')
 def comentarios_calificacionManu(request,primaryKey):
 	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)

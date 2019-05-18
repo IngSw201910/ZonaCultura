@@ -14,6 +14,7 @@ from homePage.models import GeneroLiterario
 from homePage.models import GeneroManualidad
 from homePage.models import BusquedaString
 from homePage.models import Mensajes
+from homePage.models import ComentarioObraLiteraria
 from django.forms import ModelForm
 
 
@@ -269,6 +270,22 @@ class contenidoManualForm(forms.ModelForm):
 class comenycaliForm(ModelForm):
 	class Meta:
 		model=Comentario
+		fields= [
+		'califi',
+		'comentario'
+		]
+		labels={
+		'califi': 'Puntaje de 1-5',
+		'comentario':'Comentarios acerca de la obra'
+		}
+		widgets={
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+class comenycaliFormLibro(ModelForm):
+	class Meta:
+		model=ComentarioObraLiteraria
 		fields= [
 		'califi',
 		'comentario'

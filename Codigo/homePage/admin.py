@@ -1,19 +1,5 @@
 from django.contrib import admin
-from homePage.models import infousuario
-from homePage.models import FormatoLiterario
-from homePage.models import GeneroLiterario
-from homePage.models import infoLibro
-from homePage.models import Carrito
-from homePage.models import ArticulosComprados
-from homePage.models import contenidoMultimedia
-from homePage.models import GeneroManualidad
-from homePage.models import contenidoManualidad
-from homePage.models import Donacion
-from homePage.models import Comentario
-from homePage.models import competencias
-from homePage.models import infoTarjeta
-from homePage.models import Contactos
-from homePage.models import Mensajes
+from homePage.models import *
 # Register your models here.
 
 admin.site.register(Contactos)
@@ -31,3 +17,4 @@ admin.site.register(Comentario)
 admin.site.register(competencias)
 admin.site.register(infoTarjeta)
 admin.site.register(Mensajes)
+admin.site.register(ComentarioObraLiteraria)

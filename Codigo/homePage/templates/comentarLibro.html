@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Comentar Contenido Literario</title>
+</head>
+<body>
+
+<h1>Hora de calificar {{Libro.Titulo}}</h1>
+<p>Rellenar los campos del siguiente formulario para calificar {{Libro.Titulo}}</p>
+
+
+<form class="site-form" method="post"  enctype="multipart/form-data">
+  	{% csrf_token %}
+	{{ com }}
+	<input type="submit" value="Comentar">
+</form>
+
+
+
+
+</body>
+</html>

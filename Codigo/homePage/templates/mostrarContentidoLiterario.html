@@ -7,6 +7,9 @@
 
 
 <h1>{{Libro.Titulo}}</h1>
+{%if hayComentarios%}
+<p>Puntaje: {{promedioCalificacion}}</p>
+{%endif%}
 <p>Generos: {{generos}}</p>
 <p>Descripcion del libro: {{Libro.Descripcion}}</p>
 <p>Cantidad de paginas: {{Libro.CantidadPaginas}}</p>
@@ -14,8 +17,13 @@
 <p>Idioma: {{Libro.Idioma}} </p>
 <p> Imagen: </p><img src="{{Libro.imagen.url}}">
 <br/>
-
-
+{%if permitir == False%}
+<p> Descarga:</p>
+<form method="get">
+  	
+	<input type="submit" value="Descargar" name="descarga">
+</form>
+{%endif%}
 <a href="/HomePage">Volver a la Pagina de Inicio</a>
 
 <form method="get">
@@ -23,6 +31,17 @@
 	<input type="submit" value="Añadir al carrito" name="carrito">
 </form>
 
+{%if hayComentarios%}
+<p>Comentarios y calificaciones: </p>
+{% for comentario in comentarios %}
+<p></p>
+<p>Usuario: {{comentario.usuarioComentador}}</p>
+<p>Calificación: {{comentario.califi}}</p>
+<p>Comentario: {{comentario.comentario}} <br/> {% endfor %}</p>
+{%endif%}
 
+{%if hayComentarios == False %}
+ <p>No hay comentarios ni calificaciones en esta obra </p>
+{%endif%}
 </body>
 </html>
