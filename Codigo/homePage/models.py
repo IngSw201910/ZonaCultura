@@ -127,7 +127,7 @@ class infousuario(models.Model):
 	aficiones= models.ForeignKey(competencias,on_delete=models.CASCADE,null=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)
 	profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
-	es_Nada= models.BooleanField(default=False)
+	es_Colaborador= models.BooleanField(default=False)
 
 	def __str__(self):
 		return'{}'.format(self.user.first_name + ' '+self.user.last_name)

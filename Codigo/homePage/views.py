@@ -162,6 +162,18 @@ def perfil_view(request):
 	if request.GET.get('Salir'):
 		logout(request)
 		return redirect('/')
+	if request.GET.get('serColaborador'):
+		print('entro')
+		user.es_Colaborador= True
+		user.save()
+		return redirect('/Perfil')
+	if request.GET.get('NoserColaborador'):
+		user.es_Colaborador= False
+		user.save()
+		return redirect('/Perfil')
+
+
+
 	return render(request, 'PerfilPropio.html',{'user':user})
 
 @login_required(login_url='/')
