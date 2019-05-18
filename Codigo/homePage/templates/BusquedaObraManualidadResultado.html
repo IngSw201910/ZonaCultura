@@ -28,9 +28,48 @@
               <td><a href="Producto/ContenidoManualidad/{{manualidad.pk}}">{{manualidad.pk}}</td>
               <td>{{manualidad.title}}</a></td>
               <td>
-              {% for genero in manualidad.genero.all %}
-              {{genero.nombre}}
-              {% endfor %}
+								{% if manualidad.genero.Bodegon %}
+									Bodegón
+								{% endif %}
+								{% if manualidad.genero.Vanitas %}
+									Vanitas
+								{% endif %}
+								{% if manualidad.genero.Retrato %}
+									Retrato
+								{% endif %}
+								{% if manualidad.genero.Terror %}
+									Terror
+								{% endif %}
+								{% if manualidad.genero.Desnudo %}
+									Desnudo
+								{% endif %}
+								{% if manualidad.genero.Religioso %}
+									Religioso
+								{% endif %}
+								{% if manualidad.genero.Historico %}
+									Histórico
+								{% endif %}
+								{% if manualidad.genero.Mitologico %}
+									Mitológico
+								{% endif %}
+								{% if manualidad.genero.Paisaje %}
+									Paisaje
+								{% endif %}
+								{% if manualidad.genero.Funeraria %}
+									Funeraria
+								{% endif %}
+								{% if manualidad.genero.Monumento %}
+									Monumento
+								{% endif %}
+								{% if manualidad.genero.Estatuilla %}
+									Estatuilla
+								{% endif %}
+								{% if manualidad.genero.Figura %}
+									Figura
+								{% endif %}
+								{% if manualidad.genero.Relieve %}
+									Relieve
+								{% endif %}
               </td>
               <td>{{manualidad.Descripcion}}</td>
               <td>{{manualidad.user.username}}</td>
@@ -40,7 +79,7 @@
             {% endfor %}
 
             {% else %}
-            <h1>No hay registros de manualidades que cumplan con ese nombre</h1>
+            <h1>No hay registros de manualidades que cumplan con esas características</h1>
             {% endif %}
           </tbody>
         </table>

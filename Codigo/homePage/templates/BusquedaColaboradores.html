@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Búsqueda de colaboradores</title>
+</head>
+<body>
+  <p>Bienvenido al buscador de colaboradores. Aquí podrá buscar a diferentes usuarios de ZonaCultura
+    acorde a su nombre de perfil y/o acorde a diversas competencias, para proponerle un proyecto. El
+    grupo JaveCultura espera que sus usuarios puedan utilizar la plataforma para comunicarse entre sí
+    y realizar alguna actividad juntos, como buscar a algún baterista para tocar música.</p>
+
+  <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaColaboradoresResultado">
+		{% csrf_token %}
+		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del nombre de usuario" id="input-search" name="buscarstring">
+
+		<br>
+
+    <div class="btn-group-vertical" data-toggle="buttons">
+      <input type="checkbox" id = "cb1" name="check1" value="escritor" ><label id = "c1">Escritor </label>
+			<input type="checkbox" id = "cb2" name="check2" value="pintor" ><label id = "c2">Pintor </label>
+			<input type="checkbox" id = "cb3" name="check3" value="escultor" ><label id = "c3">Escultor </label>
+			<input type="checkbox" id = "cb4" name="check4" value="cantante" ><label id = "c4">Cantante </label>
+			<input type="checkbox" id = "cb5" name="check5" value="guitarrista" ><label id = "c5">Guitarrista </label>
+			<input type="checkbox" id = "cb6" name="check6" value="bajista" ><label id = "c6">Bajista </label>
+			<input type="checkbox" id = "cb7" name="check7" value="pianista" ><label id = "c7">Pianista </label>
+			<input type="checkbox" id = "cb8" name="check8" value="baterista" ><label id = "c8">Baterista </label>
+			<input type="checkbox" id = "cb9" name="check9" value="violinista" ><label id = "c9">Violinista </label>
+			<input type="checkbox" id = "cb10" name="check10" value="saxofonista" ><label id = "c10">Saxofonista </label>
+			<input type="checkbox" id = "cb11" name="check11" value="acordeonista" ><label id = "c11">Acordeonista </label>
+			<input type="checkbox" id = "cb12" name="check12" value="trompetista" ><label id = "c12">Trompetista </label>
+			<input type="checkbox" id = "cb13" name="check13" value="fotografo" ><label id = "c13">Fotografo </label>
+			<input type="checkbox" id = "cb14" name="check14" value="actor" ><label id = "c14">Actor </label>
+    </div>
+
+		<br>
+
+		<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
+    <br>
+    <br>
+  </form>
+   <a href="BusquedaEspecifica">Regresar</a>
+
+</body>
+</html>

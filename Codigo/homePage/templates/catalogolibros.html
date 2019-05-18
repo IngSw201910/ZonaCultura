@@ -35,16 +35,26 @@
           <li class="nav-item active">
             <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
           </li>
+          <li class="nav-item active">
+						<a class="nav-link" href="BusquedaColaboradores"><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
+          </li>
+					<li class="nav-item active">
+            <a class="nav-link" href="BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
+          </li>
       </ul>
-      <form class="form-inline my-2 my-lg-2">
-        <div class="col-12">
-            <input class="form-control mr-sm-0" type="text" placeholder="Buscar" id="input-search">
-            <button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-            <button class="btn btn-dark my-5 my-sm-0" type="submit" id="Salir"><a href="">Salir</a></button>
-
-
-          </div>
-      </form>
+      <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaGeneral">
+    		<div class="col-12">
+						{% csrf_token %}
+      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search" name = "buscarstring">
+      			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
+    		</div>
+    	</form>
+			<form class="form-inline my-2 my-lg-2" method = "GET">
+    		<div class="col-12">
+						{% csrf_token %}
+      			<button class="btn btn-dark my-5 my-sm-0" type="submit"  value="Salir" name='Salir'id="Salir">Salir</a></button>
+    		</div>
+    	</form>
     </div>
   </nav>
 <div>
@@ -73,7 +83,6 @@
                   <td>Autor</td>
                   <td>Cantidad Paginas</td>
                   <td>Idioma</td>
-                  <td>Formato</td>
                   <td>Precio</td>
                 </tr>
               </thead>
@@ -84,21 +93,26 @@
                   <td><a href="Producto/ContenidoLiterario/{{libro.pk}}">{{libro.pk}}</td>
                   <td>{{libro.Titulo}}</a></td>
                   <td>
-                  {% for genero in libro.genero.all %}
-                    {% if genero.Comedia %}
-                      {{Comedia}}
+                    {% if libro.genero.Comedia %}
+                      Comedia
                     {% endif %}
-                  {% endfor %}
+                    {% if libro.genero.Drama %}
+                      Drama
+                    {% endif %}
+                    {% if libro.genero.Tragicomedia %}
+                      Tragicomedia
+                    {% endif %}
+                    {% if libro.genero.Terror %}
+                      Terror
+                    {% endif %}
+                    {% if libro.genero.Ciencia_Ficción %}
+                      Ciencia_Ficción
+                    {% endif %}
                   </td>
                   <td>{{libro.Descripcion}}</td>
                   <td>{{libro.user.username}}</td>
                   <td>{{libro.CantidadPaginas}}</td>
                   <td>{{libro.Idioma}}</td>
-                  <td>
-                  {% for formato in libro.formato.all %}
-                  {{formato.nombre}}
-                  {% endfor %}
-                  </td>
                   <td>{{libro.PrecioLibro}}</td>
                 </tr>
                 {% endfor %}

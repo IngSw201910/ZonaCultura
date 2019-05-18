@@ -704,6 +704,80 @@ def editarUsuarioInfo(request):
 		Form3=infoForm(instance=usuario)
 	return render(request,'Registro2.html',{'user_form':Form,'competencias_Form':Form2,'profile_form':Form3})
 
+@login_required(login_url='/')
+def busquedaColaboradores_view(request):
+	usuario=infousuario.objects.get(user=request.user)
+
+	return render(request,'BusquedaColaboradores.html')
+
+@login_required(login_url='/')
+def busquedaColaboradoresResultado_view(request):
+	usuario=infousuario.objects.get(user=request.user)
+
+	colaboradores = infousuario.objects.all()
+
+	palabra = request.POST.get('buscarstring')
+	print(palabra)
+
+	colaboradoresPasan=[]
+
+	for colaborador in colaboradores:
+		#if palabra in libro.Titulo:
+			if 'check1' in request.POST:
+				if colaborador.aficiones.Escritor:
+					colaboradoresPasan.append(colaborador)
+			if 'check2' in request.POST:
+				if colaborador.aficiones.Pintor:
+					colaboradoresPasan.append(colaborador)
+			if 'check3' in request.POST:
+				if colaborador.aficiones.Escultor:
+					colaboradoresPasan.append(colaborador)
+			if 'check4' in request.POST:
+				if colaborador.aficiones.Cantante:
+					colaboradoresPasan.append(colaborador)
+			if 'check5' in request.POST:
+				if colaborador.aficiones.Guitarrista:
+					colaboradoresPasan.append(colaborador)
+			if 'check6' in request.POST:
+				if colaborador.aficiones.Bajista:
+					colaboradoresPasan.append(colaborador)
+			if 'check7' in request.POST:
+				if colaborador.aficiones.Pianista:
+					colaboradoresPasan.append(colaborador)
+			if 'check8' in request.POST:
+				if colaborador.aficiones.Baterista:
+					colaboradoresPasan.append(colaborador)
+			if 'check9' in request.POST:
+				if colaborador.aficiones.Violinista:
+					colaboradoresPasan.append(colaborador)
+			if 'check10' in request.POST:
+				if colaborador.aficiones.Saxofonista:
+					colaboradoresPasan.append(colaborador)
+			if 'check11' in request.POST:
+				if colaborador.aficiones.Acordeonista:
+					colaboradoresPasan.append(colaborador)
+			if 'check12' in request.POST:
+				if colaborador.aficiones.Trompetista:
+					colaboradoresPasan.append(colaborador)
+			if 'check13' in request.POST:
+				if colaborador.aficiones.Fotografo:
+					colaboradoresPasan.append(colaborador)
+			if 'check14' in request.POST:
+				if colaborador.aficiones.Actor:
+					colaboradoresPasan.append(colaborador)
+
+	if not colaboradoresPasan:
+		context = {
+			'colaboradoresPasan': colaboradoresPasan
+		}
+	else:
+		count = Counter(colaboradoresPasan)
+		count.most_common(1)[0][0]
+		context = {
+			'colaboradoresPasan': count
+		}
+
+	return render(request, 'BusquedaColaboradoresResultado.html', context)
 
 @login_required(login_url='/')
 def busquedaObraGeneral_view(request):
@@ -726,6 +800,7 @@ def busquedaObraGeneral_view(request):
 
 	if palabra is None:
 		return HttpResponse("Fallo")
+
 	for libro in libros:
 		if palabra in libro.Titulo:
 				librosPasan.append(libro)
@@ -801,13 +876,16 @@ def busquedaObraLiterariaResultado_view(request):
 				if libro.genero.Ciencia_Ficción:
 					librosPasan.append(libro)
 
-	count = Counter(librosPasan)
-	count.most_common(1)[0][0]
-
-	context = {
-		'librosPasan':count
-	}
-
+	if not librosPasan:
+		context = {
+			'librosPasan': librosPasan
+		}
+	else:
+		count = Counter(librosPasan)
+		count.most_common(1)[0][0]
+		context = {
+			'librosPasan': count
+		}
 	return render(request, 'BusquedaObraLiterariaResultado.html', context)
 
 @login_required(login_url='/')
@@ -834,7 +912,7 @@ def busquedaObraManualidadResultado_view(request):
 		#if palabra in libro.Titulo:
 			if 'check1' in request.POST:
 				if manualidad.genero.Bodegon:
-					manualidadessPasan.append(manualidad)
+					manualidadesPasan.append(manualidad)
 			if 'check2' in request.POST:
 				if manualidad.genero.Vanitas:
 					manualidadesPasan.append(manualidad)
@@ -849,7 +927,7 @@ def busquedaObraManualidadResultado_view(request):
 					manualidadesPasan.append(manualidad)
 			if 'check6' in request.POST:
 				if manualidad.genero.Religioso:
-					manualidadessPasan.append(manualidad)
+					manualidadesPasan.append(manualidad)
 			if 'check7' in request.POST:
 				if manualidad.genero.Historico:
 					manualidadesPasan.append(manualidad)
@@ -864,7 +942,7 @@ def busquedaObraManualidadResultado_view(request):
 					manualidadesPasan.append(manualidad)
 			if 'check11' in request.POST:
 				if manualidad.genero.Monumento:
-					manualidadessPasan.append(manualidad)
+					manualidadesPasan.append(manualidad)
 			if 'check12' in request.POST:
 				if manualidad.genero.Estatuilla:
 					manualidadesPasan.append(manualidad)
@@ -875,11 +953,15 @@ def busquedaObraManualidadResultado_view(request):
 				if manualidad.genero.Relieve:
 					manualidadesPasan.append(manualidad)
 
-	count = Counter(manualidadesPasan)
-	count.most_common(1)[0][0]
-
-	context = {
-		'manualidadesPasan':manualidadesPasan
-	}
+	if not manualidadesPasan:
+		context = {
+			'manualidadesPasan': manualidadesPasan
+		}
+	else:
+		count = Counter(manualidadesPasan)
+		count.most_common(1)[0][0]
+		context = {
+			'manualidadesPasan': count
+		}
 
 	return render(request, 'BusquedaObraManualidadResultado.html', context)

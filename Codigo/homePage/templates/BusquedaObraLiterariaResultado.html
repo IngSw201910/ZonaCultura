@@ -29,9 +29,21 @@
               <td><a href="Producto/ContenidoLiterario/{{libro.pk}}">{{libro.pk}}</td>
               <td>{{libro.Titulo}}</a></td>
               <td>
-              	{% for genero in libro.genero.all %}
-              		{{genero.nombre}}
-              	{% endfor %}
+								{% if libro.genero.Comedia %}
+									Comedia
+								{% endif %}
+								{% if libro.genero.Drama %}
+									Drama
+								{% endif %}
+								{% if libro.genero.Tragicomedia %}
+									Tragicomedia
+								{% endif %}
+								{% if libro.genero.Terror %}
+									Terror
+								{% endif %}
+								{% if libro.genero.Ciencia_Ficción %}
+									Ciencia_Ficción
+								{% endif %}
               </td>
               <td>{{libro.Descripcion}}</td>
               <td>{{libro.user.username}}</td>
@@ -42,7 +54,7 @@
             {% endfor %}
 
             {% else %}
-            <h1>No hay registros de libros que cumplan con ese nombre</h1>
+            <h1>No hay registros de libros que cumplan con esas características</h1>
             {% endif %}
           </tbody>
         </table>

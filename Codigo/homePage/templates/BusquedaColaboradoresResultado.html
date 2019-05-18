@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Resultado de búsqueda de colaboradores</title>
+</head>
+<body>
+
+  <div class="col col-6">
+    <div class="container-lit conteiner">
+      <h1 align="center">Colaboradores Encontrados</h1>
+      <form class="site-form" method="post">
+        <table class="table table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="row">ID</th>
+              <td>Nombre de usuario</td>
+              <td>Competencias</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if colaboradoresPasan %}
+            {% for colaborador in colaboradoresPasan %}
+            <tr>
+              <td><a href="VistaUsuario/Usuario/{{colaborador.pk}}">{{colaborador.pk}}</td>
+              <td>{{colaborador.user.username}}</a></td>
+              <td>
+								{% if colaborador.aficiones.Escritor %}
+									Escritor
+								{% endif %}
+								{% if colaborador.aficiones.Pintor %}
+									Pintor
+								{% endif %}
+								{% if colaborador.aficiones.Escultor %}
+									Escultor
+								{% endif %}
+								{% if colaborador.aficiones.Cantante %}
+									Cantante
+								{% endif %}
+								{% if colaborador.aficiones.Guitarrista %}
+									Guitarrista
+								{% endif %}
+								{% if colaborador.aficiones.Bajista %}
+									Bajista
+								{% endif %}
+								{% if colaborador.aficiones.Pianista %}
+									Pianista
+								{% endif %}
+								{% if colaborador.aficiones.Baterista %}
+									Baterista
+								{% endif %}
+								{% if colaborador.aficiones.Violinista %}
+									Violinista
+								{% endif %}
+								{% if colaborador.aficiones.Saxofonista %}
+									Saxofonista
+								{% endif %}
+								{% if colaborador.aficiones.Acordeonista %}
+									Acordeonista
+								{% endif %}
+								{% if colaborador.aficiones.Trompetista %}
+									Trompetista
+								{% endif %}
+								{% if colaborador.aficiones.Fotografo %}
+									Fotografo
+								{% endif %}
+								{% if colaborador.aficiones.Actor %}
+									Actor
+								{% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <h1>No hay registros de usuarios que cumplan con esas características</h1>
+            {% endif %}
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+	<a href="BusquedaColaboradores">Regresar</a>
+</body>
+</html>
