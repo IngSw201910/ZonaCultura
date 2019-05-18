@@ -720,9 +720,13 @@ def busquedaColaboradoresResultado_view(request):
 	print(palabra)
 
 	colaboradoresPasan=[]
+	pasanCombo = []
 
-	for colaborador in colaboradores:
-		#if palabra in libro.Titulo:
+	if palabra is "" and not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST and not 'check6' in request.POST and not 'check7'in request.POST and not 'check8'in request.POST and not 'check9'in request.POST and not 'check10'in request.POST and not 'check11' in request.POST and not 'check12'in request.POST and not 'check13'in request.POST and not 'check14'in request.POST:
+		return HttpResponse("No utilizó ninguna forma de búsqueda. Por favor vuelva a intentarlo.")
+
+	if palabra is "":
+		for colaborador in colaboradores:
 			if 'check1' in request.POST:
 				if colaborador.aficiones.Escritor:
 					colaboradoresPasan.append(colaborador)
@@ -766,12 +770,87 @@ def busquedaColaboradoresResultado_view(request):
 				if colaborador.aficiones.Actor:
 					colaboradoresPasan.append(colaborador)
 
-	if not colaboradoresPasan:
+		if not colaboradoresPasan:
+			context = {
+				'colaboradoresPasan': colaboradoresPasan
+			}
+		else:
+			count = Counter(colaboradoresPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'colaboradoresPasan': count
+			}
+
+		return render(request, 'BusquedaColaboradoresResultado.html', context)
+
+	for colaborador in colaboradores:
+		if palabra in colaborador.user.username:
+				colaboradoresPasan.append(colaborador)
+
+	if not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST and not 'check6' in request.POST and not 'check7'in request.POST and not 'check8'in request.POST and not 'check9'in request.POST and not 'check10'in request.POST and not 'check11' in request.POST and not 'check12'in request.POST and not 'check13'in request.POST and not 'check14'in request.POST:
+		if not colaboradoresPasan:
+			context = {
+				'colaboradoresPasan': colaboradoresPasan
+			}
+		else:
+			count = Counter(colaboradoresPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'colaboradoresPasan': count
+			}
+
+		return render(request, 'BusquedaColaboradoresResultado.html', context)
+
+	for colaborador in colaboradoresPasan:
+		if 'check1' in request.POST:
+			if colaborador.aficiones.Escritor:
+				pasanCombo.append(colaborador)
+		if 'check2' in request.POST:
+			if colaborador.aficiones.Pintor:
+				pasanCombo.append(colaborador)
+		if 'check3' in request.POST:
+			if colaborador.aficiones.Escultor:
+				pasanCombo.append(colaborador)
+		if 'check4' in request.POST:
+			if colaborador.aficiones.Cantante:
+				pasanCombo.append(colaborador)
+		if 'check5' in request.POST:
+			if colaborador.aficiones.Guitarrista:
+				pasanCombo.append(colaborador)
+		if 'check6' in request.POST:
+			if colaborador.aficiones.Bajista:
+				pasanCombo.append(colaborador)
+		if 'check7' in request.POST:
+			if colaborador.aficiones.Pianista:
+				pasanCombo.append(colaborador)
+		if 'check8' in request.POST:
+			if colaborador.aficiones.Baterista:
+				pasanCombo.append(colaborador)
+		if 'check9' in request.POST:
+			if colaborador.aficiones.Violinista:
+				pasanCombo.append(colaborador)
+		if 'check10' in request.POST:
+			if colaborador.aficiones.Saxofonista:
+				pasanCombo.append(colaborador)
+		if 'check11' in request.POST:
+			if colaborador.aficiones.Acordeonista:
+				pasanCombo.append(colaborador)
+		if 'check12' in request.POST:
+			if colaborador.aficiones.Trompetista:
+				pasanCombo.append(colaborador)
+		if 'check13' in request.POST:
+			if colaborador.aficiones.Fotografo:
+				pasanCombo.append(colaborador)
+		if 'check14' in request.POST:
+			if colaborador.aficiones.Actor:
+				pasanCombo.append(colaborador)
+
+	if not pasanCombo:
 		context = {
-			'colaboradoresPasan': colaboradoresPasan
+			'colaboradoresPasan': pasanCombo
 		}
 	else:
-		count = Counter(colaboradoresPasan)
+		count = Counter(pasanCombo)
 		count.most_common(1)[0][0]
 		context = {
 			'colaboradoresPasan': count
@@ -838,50 +917,81 @@ def busquedaObraLiterariaResultado_view(request):
 	print(palabra)
 
 	librosPasan=[]
+	pasanCombo = []
 
-	if palabra is None:
-		return HttpResponse("Fallo")
+	if palabra is "" and not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST:
+		return HttpResponse("No utilizó ninguna forma de búsqueda. Por favor vuelva a intentarlo.")
+
+	if palabra is "":
+		for libro in libros:
+			if 'check1' in request.POST:
+				if libro.genero.Comedia:
+					librosPasan.append(libro)
+			if 'check2' in request.POST:
+				if libro.genero.Drama:
+					librosPasan.append(libro)
+			if 'check3' in request.POST:
+				if libro.genero.Tragicomedia:
+					librosPasan.append(libro)
+			if 'check4' in request.POST:
+				if libro.genero.Terror:
+					librosPasan.append(libro)
+			if 'check5' in request.POST:
+				if libro.genero.Ciencia_Ficción:
+					librosPasan.append(libro)
+
+		if not librosPasan:
+			context = {
+				'librosPasan': librosPasan
+			}
+		else:
+			count = Counter(librosPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'librosPasan': count
+			}
+		return render(request, 'BusquedaObraLiterariaResultado.html', context)
 
 	for libro in libros:
 		if palabra in libro.Titulo:
-			if 'check1' in request.POST:
-				if libro.genero.Comedia:
-					librosPasan.append(libro)
-			if 'check2' in request.POST:
-				if libro.genero.Drama:
-					librosPasan.append(libro)
-			if 'check3' in request.POST:
-				if libro.genero.Tragicomedia:
-					librosPasan.append(libro)
-			if 'check4' in request.POST:
-				if libro.genero.Terror:
-					librosPasan.append(libro)
-			if 'check5' in request.POST:
-				if libro.genero.Ciencia_Ficción:
-					librosPasan.append(libro)
-		else:
-			if 'check1' in request.POST:
-				if libro.genero.Comedia:
-					librosPasan.append(libro)
-			if 'check2' in request.POST:
-				if libro.genero.Drama:
-					librosPasan.append(libro)
-			if 'check3' in request.POST:
-				if libro.genero.Tragicomedia:
-					librosPasan.append(libro)
-			if 'check4' in request.POST:
-				if libro.genero.Terror:
-					librosPasan.append(libro)
-			if 'check5' in request.POST:
-				if libro.genero.Ciencia_Ficción:
-					librosPasan.append(libro)
+			librosPasan.append(libro)
 
-	if not librosPasan:
+	if not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST:
+		if not librosPasan:
+			context = {
+				'librosPasan': librosPasan
+			}
+		else:
+			count = Counter(librosPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'librosPasan': count
+			}
+		return render(request, 'BusquedaObraLiterariaResultado.html', context)
+
+	for libro in librosPasan:
+		if 'check1' in request.POST:
+			if libro.genero.Comedia:
+				pasanCombo.append(libro)
+		if 'check2' in request.POST:
+			if libro.genero.Drama:
+				pasanCombo.append(libro)
+		if 'check3' in request.POST:
+			if libro.genero.Tragicomedia:
+				pasanCombo.append(libro)
+		if 'check4' in request.POST:
+			if libro.genero.Terror:
+				pasanCombo.append(libro)
+		if 'check5' in request.POST:
+			if libro.genero.Ciencia_Ficción:
+				pasanCombo.append(libro)
+
+	if not pasanCombo:
 		context = {
-			'librosPasan': librosPasan
+			'librosPasan': pasanCombo
 		}
 	else:
-		count = Counter(librosPasan)
+		count = Counter(pasanCombo)
 		count.most_common(1)[0][0]
 		context = {
 			'librosPasan': count
@@ -904,12 +1014,13 @@ def busquedaObraManualidadResultado_view(request):
 	print(palabra)
 
 	manualidadesPasan=[]
+	pasanCombo = []
 
-	#if palabra is None:
-	#	return HttpResponse("Fallo")
+	if palabra is "" and not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST and not 'check6' in request.POST and not 'check7'in request.POST and not 'check8'in request.POST and not 'check9'in request.POST and not 'check10'in request.POST and not 'check11' in request.POST and not 'check12'in request.POST and not 'check13'in request.POST and not 'check14'in request.POST:
+		return HttpResponse("No utilizó ninguna forma de búsqueda. Por favor vuelva a intentarlo.")
 
-	for manualidad in manualidades:
-		#if palabra in libro.Titulo:
+	if palabra is "":
+		for manualidad in manualidades:
 			if 'check1' in request.POST:
 				if manualidad.genero.Bodegon:
 					manualidadesPasan.append(manualidad)
@@ -953,12 +1064,87 @@ def busquedaObraManualidadResultado_view(request):
 				if manualidad.genero.Relieve:
 					manualidadesPasan.append(manualidad)
 
-	if not manualidadesPasan:
+		if not manualidadesPasan:
+			context = {
+				'manualidadesPasan': manualidadesPasan
+			}
+		else:
+			count = Counter(manualidadesPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'manualidadesPasan': count
+			}
+
+		return render(request, 'BusquedaObraManualidadResultado.html', context)
+
+	for manualidad in manualidades:
+		if palabra in manualidad.title:
+				manualidadesPasan.append(manualidad)
+
+	if not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST and not 'check6' in request.POST and not 'check7'in request.POST and not 'check8'in request.POST and not 'check9'in request.POST and not 'check10'in request.POST and not 'check11' in request.POST and not 'check12'in request.POST and not 'check13'in request.POST and not 'check14'in request.POST:
+		if not manualidadesPasan:
+			context = {
+				'manualidadesPasan': manualidadesPasan
+			}
+		else:
+			count = Counter(manualidadesPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'manualidadesPasan': count
+			}
+
+		return render(request, 'BusquedaObraManualidadResultado.html', context)
+
+	for manualidad in manualidadesPasan:
+		if 'check1' in request.POST:
+			if manualidad.genero.Bodegon:
+				pasanCombo.append(manualidad)
+		if 'check2' in request.POST:
+			if manualidad.genero.Vanitas:
+				pasanCombo.append(manualidad)
+		if 'check3' in request.POST:
+			if manualidad.genero.Retrato:
+				pasanCombo.append(manualidad)
+		if 'check4' in request.POST:
+			if manualidad.genero.Terror:
+				pasanCombo.append(manualidad)
+		if 'check5' in request.POST:
+			if manualidad.genero.Desnudo:
+				pasanCombo.append(manualidad)
+		if 'check6' in request.POST:
+			if manualidad.genero.Religioso:
+				pasanCombo.append(manualidad)
+		if 'check7' in request.POST:
+			if manualidad.genero.Historico:
+				pasanCombo.append(manualidad)
+		if 'check8' in request.POST:
+			if manualidad.genero.Mitologico:
+				pasanCombo.append(manualidad)
+		if 'check9' in request.POST:
+			if manualidad.genero.Paisaje:
+				pasanCombo.append(manualidad)
+		if 'check10' in request.POST:
+			if manualidad.genero.Funeraria:
+				pasanCombo.append(manualidad)
+		if 'check11' in request.POST:
+			if manualidad.genero.Monumento:
+				pasanCombo.append(manualidad)
+		if 'check12' in request.POST:
+			if manualidad.genero.Estatuilla:
+				pasanCombo.append(manualidad)
+		if 'check13' in request.POST:
+			if manualidad.genero.Figura:
+				pasanCombo.append(manualidad)
+		if 'check14' in request.POST:
+			if manualidad.genero.Relieve:
+				pasanCombo.append(manualidad)
+
+	if not pasanCombo:
 		context = {
-			'manualidadesPasan': manualidadesPasan
+			'manualidadesPasan': pasanCombo
 		}
 	else:
-		count = Counter(manualidadesPasan)
+		count = Counter(pasanCombo)
 		count.most_common(1)[0][0]
 		context = {
 			'manualidadesPasan': count
