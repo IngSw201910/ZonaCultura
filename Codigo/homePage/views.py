@@ -261,10 +261,10 @@ def mostrarObraLiteraria(request,primaryKey):
 		aux=aux+'Ciencia Ficción '
 	comentarios=ComentarioObraLiteraria.objects.filter(libro=Libro)
 	hayComentarios=True
+	promedioCalificacion=0
 	if len(comentarios)== 0:
 		hayComentarios=False
 	else:
-		promedioCalificacion=0
 		for comentario in comentarios:
 			promedioCalificacion=promedioCalificacion+comentario.califi
 		promedioCalificacion=promedioCalificacion/len(comentarios)

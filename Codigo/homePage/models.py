@@ -194,7 +194,7 @@ class Donacion(models.Model):
 
 class ComentarioObraLiteraria(models.Model):
 	libro = models.ForeignKey(infoLibro, on_delete=models.SET_NULL,null=True)
-	califi=models.PositiveIntegerField(default=0)
+	califi=models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5.0),MinValueValidator(0,0)])
 	comentario=models.TextField(max_length=150,default="")
 	usuarioComentador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
 
