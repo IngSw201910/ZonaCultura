@@ -1,5 +1,6 @@
 {% extends 'plantillaGeneral.html' %}
 <link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
 {% block title %}
 Usuario {{Usu.user.first_name}}
 {% endblock %}
@@ -15,17 +16,68 @@ Usuario {{Usu.user.first_name}}
 				
 			</div>
 			<div class="col col-6">
-				<div class="container-3 conteiner">
+				<div class="container-info conteiner">
+					<h2><em><i>Nombre:</i></em> {{Usu.user.first_name}}</h2>
+					<h2><em><i>Apelido: </i></em>{{Usu.user.last_name}}</h2>
+					<h2><em><i>Talentos:</i></em></h2>
+						<font face="Trebuchet MS" size="5"><p>
+								{% if Usu.aficiones.Escritor %}
+						
+								Escritor |
+								{% endif %}
+								{% if Usu.aficiones.Pintor %}
+									Pintor |
+								{% endif %}
+								{% if Usu.aficiones.Escultor %}
+									Escultor |
+								{% endif %}
+								{% if Usu.aficiones.Cantante %}
+									Cantante |
+								{% endif %}
+								{% if Usu.aficiones.Guitarrista %}
+									Guitarrista |
+								{% endif %}
+								{% if Usu.aficiones.Bajista %}
+									Bajista |
+								{% endif %}
+								{% if Usu.aficiones.Pianista %}
+									Pianista |
+								{% endif %}
+								{% if Usu.aficiones.Baterista %}
+									Baterista |
+								{% endif %}
+								{% if Usu.aficiones.Violinista %}
+									Violinista |
+								{% endif %}
+								{% if Usu.aficiones.Saxofonista %}
+									Saxofonista |
+								{% endif %}
+								{% if Usu.aficiones.Acordeonista %}
+									Acordeonista |
+								{% endif %}
+								{% if Usu.aficiones.Trompetista %}
+									Trompetista |
+								{% endif %}
+								{% if Usu.aficiones.Fotografo %}
+									Fotografo |
+								{% endif %}
+								{% if Usu.aficiones.Actor %}
+									Actor |
+								{% endif %}
+					</p></font>
 				</div>
 			</div>
 			<div class="col col-3">
+				<div class="bottom-c">
 				<form method="get">
-
-				<td><a href="Donacion/{{Usu.pk}}">donar</td>
+					{% csrf_token %}
+				 <button class="btn btn-success"><a href="Donacion/{{Usu.pk}}">donar</a></button>
 	  				{%if Usu.es_Colaborador %}
-	   			 <button type="submit" class="btn btn-secondary" value="Ofrecer Contrato" name="contratar"> Ofrecer 		Contrato </button>
+	   			 <button type="submit" class="btn btn-secondary" value="Ofrecer Contrato" name="contratar"> Ofrecer Contrato </button>
 	 			 {%endif%}
 			</form>
+				</div>
+				
 			</div>
 		</div>
 	</div>

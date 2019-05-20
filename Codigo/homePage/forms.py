@@ -259,6 +259,8 @@ class DonacionForm(ModelForm):
 		'mensaje':'Mensaje para el usuario a donar'
 		}
 		widgets={
+		'cantidad':forms.TextInput(attrs={'class':'form-control'}),
+		'mensaje':forms.TextInput(attrs={'class':'form-control'})
  			#'formato':forms.CheckboxSelectMultiple(),
  			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
