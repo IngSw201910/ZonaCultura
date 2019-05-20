@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Búsqueda de obra literaria</title>
-</head>
-<body>
-  <p>Bienvenido al buscador de obras literarias. Aquí podrá buscar obras literarias acorde a sus títulos y/o acorde al
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="static/css/diseño.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Busqueda Literaria
+{% endblock %}
+{% block content %}
+  <p id="p2">Bienvenido al buscador de obras literarias. Aquí podrá buscar obras literarias acorde a sus títulos y/o acorde al
   género (o géneros) al que pertenesca(n).</p>
 
   <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaObraLiterariaResultado">
 		{% csrf_token %}
 		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search" name="buscarstring">
 
-		<br>
 
     <div class="btn-group-vertical" data-toggle="buttons">
 			<input type="checkbox" id = "cb1" name="check1" value="comedia" ><label id = "c1"> Comedia </label>
@@ -23,11 +25,9 @@
 
 		<br>
 
-		<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-    <br>
-    <br>
+		<button class="btn btn-success" type="submit" id="Buscar2">Buscar</button>
+ 
   </form>
-   <a href="BusquedaEspecifica">Regresar</a>
 
-</body>
-</html>
+
+{% endblock %}

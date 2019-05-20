@@ -1,99 +1,42 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Perfil</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap1.min.css' %}">
-
-	<script type="text/javascript" src="{% static 'js/bootstrap.min.js'%"></script>
-	<script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <link rel="stylesheet" href="static/css/paginahome.css">
-</head>
-<body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  		<a class="navbar-brand"><em><font size="6" color="#0F4030" face="Trebuchet MS">ZonaCultura  <i class="fas fa-book"></i></font></em></a>
-  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    		<span class="navbar-toggler-icon"></span>
-  		</button>
-
-  	<div class="collapse navbar-collapse" id="navbarColor01">
-    	<ul class="navbar-nav mr-auto">
-      		<li class="nav-item active">
-        		<a class="nav-link" href="/HomePage"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
-      		</li>
-      		<li class="nav-item active">
-        		<a class="nav-link" href="Perfil"><i class="fas fa-user"></i> Perfil</a>
-      		</li>
-      		<li class="nav-item active">
-        		<a class="nav-link" href="CarritoVista"><i class="fas fa-shopping-cart"></i> Compra</a>
-      		</li>
-          <li class="nav-item active">
-            <a class="nav-link" href="CompraCredito"><i class="fas fa-money-bill-alt"></i> Comprar Credito</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
-          </li>
-					<li class="nav-item active">
-						<a class="nav-link" href="BusquedaColaboradores"><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
-          </li>
-					<li class="nav-item active">
-            <a class="nav-link" href="BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
-          </li>
-    	</ul>
-			<form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaGeneral">
-    		<div class="col-12">
-						{% csrf_token %}
-      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search" name = "buscarstring">
-      			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-    		</div>
-    	</form>
-			<form class="form-inline my-2 my-lg-2" method = "GET">
-    		<div class="col-12">
-						{% csrf_token %}
-      			<button class="btn btn-dark my-5 my-sm-0" type="submit"  value="Salir" name='Salir'id="Salir">Salir</a></button>
-    		</div>
-    	</form>
-  	</div>
-  </nav>
-  <div>
-    <div class="row">
+{% extends 'plantillaGeneral.html' %}
+<link rel="stylesheet" href="static/css/perfil.css">
+{% block title %}
+Catalogo Libros
+{% endblock %}
+{% block content %}
+<div class="row">
       <div class="col col-3">
-          <h1><i class="fas fa-university" id="lll"></i></h1>
-          <div  data-toggle="buttons">
+         <h1><i class="fas fa-university" id="lll"></i></h1>
+          <div class="btn-group-vertical" data-toggle="buttons">
+            <button type="button" class="btn btn-secondary"><a href="VistaComprados">Articulos Comprados</a></button>
+            {% if user.es_CreadorDeContenido%}
+            <button type="button" class="btn btn-secondary"><a href="SubirObra">Subir Obras</a></button>
+            <button type="button" class="btn btn-secondary"><a href="VistaCompradores">Articulos Vendidos</a></button>
+            <button type="button" class="btn btn-secondary"><a href="VistaDonantes">Mis donaciones</a></button>
 
-            <form  class="btn-group-vertical" method = "GET">
-              <button type="button" class="btn btn-secondary"><a href="VistaComprados">Articulos Comprados</a></button>
-              {% if user.es_CreadorDeContenido%}
-              <button type="button" class="btn btn-secondary"><a href="SubirObra">Subir Obras</a></button>
-              <button type="button" class="btn btn-secondary"><a href="VistaCompradores">Articulos Vendidos</a></button>
-              <button type="button" class="btn btn-secondary"><a href="VistaDonantes">Mis donaciones</a></button>
-              {% endif %}
-              {% if user.es_Colaborador == True%}
-                  <button class="btn btn-secondary" type="submit"  value="Dejar de ser Colaborador" name='NoserColaborador'>Dejar de ser Colaborador</button>
-              {%endif%}
-              {% if user.es_Colaborador == False%}
-                  <button class="btn btn-secondary" type="submit"  value="Convertirse En Colaborador" name='serColaborador'>Convertirse En Colaborador</button>
-              {%endif%}
-          </form>
+            {% endif %}
           </div>
           <form class="site-form" method="post">
-
             {% csrf_token %}
             <h1 id="Credito"><i class="fas fa-money-bill-alt"></i>  {{user.balance}}</h1>
           </form>
-
       </div>
       <div class="col col-6">
-        <div class="container-2 conteiner">
-
-        </div>
+        <div class="modal-dialog text-center">
+            <div class="col-sm-10 incio-section">
+              <h1><em><font face="Trebuchet MS" size="7" color="38578B">{{user.user}}</font></em></h1>
+              <div class="modal-content">
+                <div class="col-12 user-img">
+                  <img src="{{user.profile_img.url}}" id="imgp" width="300" height="300">
+                </div>
+              </div>
+            </div>
       </div>
-      <div class="col col-3"></div>
+      <div class="col col-3">
+     
+      </div>
     </div>
   </div>
 
-</body>
 
-</html>
+{% endblock %}

@@ -1,33 +1,102 @@
 #input-search{
-	width: 300px;
+	width: 600px;
 	height: 30px;
 	text-indent: 10px;
+	margin-left: 130px;
 }
 #Salir{
 	width: 70px;
-	margin-left: 20px;
+	margin-left: 200px;
 	margin-right: 0 auto;
-	background-color: #F59251;
+	background-color: #C459F6;
+}
+
+body{
+	background-color: #BBB8BE;
+}
+
+#logo{
+	margin-top: 50px;
+	margin-left: 50px;
 }
 #Buscar{
 	height: 30px;
 }
+#navbarColor01{
+	margin-left: 100px;
+
+}
 .table{
 	margin-top: 50px;
 	border-color: #000;
-	background-color: #9F977A;
+	background-color: #8B81D3;
 	color: black;
+	border-collapse: collapse;
+	padding: 20px; 
 
 }
-.btn-group-vertical{
+
+.maint{
+	font-family: 'Quicksand', sans-serif;
+}
+#image{
+	margin-left: 100px;
+	border-color: black;
+	border-radius: 4px;
+	border-width: 3px;
+}
+
+.section{
+	margin-top: 50px;
+	margin-left: 100px;
+	padding-left: 100px;
+	background-color: #38578B;
+	border-color: #000;
+	border-radius: 4px;
+	border-width: 4px;
+	padding-bottom: 20px;
+}
+.section h4{
+	color: #97B7EB;
+}
+.section h1{
+	color: #fff;
+	font-family: 'Quicksand', sans-serif;
+	margin-bottom: 20px;
+}
+.section p{
+	line-height: 150%;
+	font: oblique bold 120% cursive;
+	color: #fff;
+}
+#article{
+	color: #fff;
+}
+.section h2,h3{
+	color: #fff;
+}
+
+#prim{
+    margin-left: 100px;
+	margin-top: 30px;	
+	margin-bottom: 60px;
+	position: relative;
+	font-family: 'Fjalla One', sans-serif;
+	color: #38578B;
+	font-size: 4em;
+
+}
+.btn-group-vertical {
 	margin-top: 0px;
 	padding-top: 50px;
-	margin-left: 50px;
+	margin-left: 150px; 
+	font-family: 'Fjalla One', sans-serif;
+	font-size: 10px;
 }
 
 #lll{
 	margin-top: 50px;
-	margin-left: 90px;
+	margin-left: 200px;
 	margin-bottom: 0px;
 }
 .nav-link{
@@ -36,11 +105,15 @@
 .button{
 	color: #000;
 }
+
 .btn a{
 	color: black;
 }
 td a{
 	color: black;
+}
+.container-2{
+	margin-top: 100px;
 }
 .container-3{
 
@@ -68,6 +141,6 @@ td a{
 	background-color: #FEBEBE;
 }
 #Credito{
-	margin-left: 70px;
+	margin-left: 200px;
 	margin-top: 40px;
 }

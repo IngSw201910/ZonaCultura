@@ -1,63 +1,9 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Catalogo Libros</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap1.min.css' %}">
-
-  <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%"></script>
-  <script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <link rel="stylesheet" href="static/css/paginahome.css">
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand"><em><font size="6" color="#0F4030" face="Trebuchet MS">ZonaCultura  <i class="fas fa-book"></i></font></em></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/HomePage"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="Perfil"><i class="fas fa-user"></i> Perfil</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="CarritoVista"><i class="fas fa-shopping-cart"></i> Compra</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="CompraCredito"><i class="fas fa-money-bill-alt"></i> Comprar Credito</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
-          </li>
-          <li class="nav-item active">
-						<a class="nav-link" href="BusquedaColaboradores"><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
-          </li>
-					<li class="nav-item active">
-            <a class="nav-link" href="BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
-          </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaGeneral">
-    		<div class="col-12">
-						{% csrf_token %}
-      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search" name = "buscarstring">
-      			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-    		</div>
-    	</form>
-			<form class="form-inline my-2 my-lg-2" method = "GET">
-    		<div class="col-12">
-						{% csrf_token %}
-      			<button class="btn btn-dark my-5 my-sm-0" type="submit"  value="Salir" name='Salir'id="Salir">Salir</a></button>
-    		</div>
-    	</form>
-    </div>
-  </nav>
-<div>
+{% extends 'plantillaGeneral.html' %}
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% block title %}
+Catalogo Videos
+{% endblock %}
+{% block content %}
     <div class="row">
       <div class="col col-3">
         <h1><i class="fas fa-university" id="lll"></i></h1>
@@ -71,7 +17,7 @@
       </div>
       <div class="col col-6">
         <div class="container-lit conteiner">
-          <h1 align="center">Videos</h1>
+          <h1 align="center" id="prim">Videos</h1>
           <form class="site-form" method="post">
             <table class="table table-hover">
               <thead>
@@ -80,7 +26,6 @@
                   <td>Titulo</td>
                   <td>Descripcion</td>
                   <td>Autor</td>
-                  <td>Cantidad Paginas</td>
                   <td>Precio</td>
                 </tr>
               </thead>
@@ -90,13 +35,8 @@
                 <tr>
                   <td><a href="Producto/ContenidoMultimedia/{{video.pk}}">{{video.pk}}</td>
                   <td>{{video.title}}</a></td>
-                  <td>
-                  {% for genero in libro.genero.all %}
-                  {{genero.nombre}}
-                  {% endfor %}
-                  </td>
                   <td>{{video.descripcion}}</td>
-
+                  <td>{{video.user.username}}</td>
                   <td>{{video.precioV}}</td>
                 </tr>
                 {% endfor %}
@@ -112,3 +52,4 @@
       <div class="col col-3"></div>
     </div>
   </div>
+{% endblock %}

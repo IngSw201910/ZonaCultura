@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Búsqueda de manualidades</title>
-</head>
-<body>
-  <p>Bienvenido al buscador de manualidades. Aquí podrá buscar información sobre pinturas y esculturas en venta acorde a sus
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="static/css/diseño.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Busqueda Obras
+{% endblock %}
+{% block content %}
+  <p id="p2">Bienvenido al buscador de manualidades. Aquí podrá buscar información sobre pinturas y esculturas en venta acorde a sus
     títulos y/o acorde a las etiquetas asociadas a ellos. Se le recuerda que debe contactar al vendedor usted mismo para
     adquirir cualquier manualidad que llege a comprar.</p>
 
-  <form class="site-form" enctype="multipart/form-data" method = "POST" action="/BusquedaObraManualidadResultado">
+  <form class="form-inline my-2 my-lg-2" enctype="multipart/form-data" method = "POST" action="/BusquedaObraManualidadResultado">
 		{% csrf_token %}
 		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search" name="buscarstring">
     <div class="btn-group-vertical" data-toggle="buttons">
@@ -29,10 +32,8 @@
 			<input type="checkbox" id = "cb14" name="check14" value="relieve" ><label id = "c14">Relieve </label>
 
     </div>
-    <button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-    <br>
-    <br>
+    <button class="btn btn-success" type="submit" id="Buscar2">Buscar</button>
+   
   </form>
-   <a href="BusquedaEspecifica">Regresar</a>
-</body>
-</html>
+
+{% endblock %}

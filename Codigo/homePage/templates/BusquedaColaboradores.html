@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Búsqueda de colaboradores</title>
-</head>
-<body>
-  <p>Bienvenido al buscador de colaboradores. Aquí podrá buscar a diferentes usuarios de ZonaCultura
-    acorde a su nombre de perfil y/o acorde a diversas competencias, para proponerle un proyecto. El
-    grupo JaveCultura espera que sus usuarios puedan utilizar la plataforma para comunicarse entre sí
-    y realizar alguna actividad juntos, como buscar a algún baterista para tocar música.</p>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="static/css/diseño.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Busqueda colaboradores
+{% endblock %}
+{% block content %}
+<div class="content">
+	<h1 class="heading">Busqueda de colaboradores</h1>
+	<p>Bienvenido al buscador de colaboradores. Aquí podrá buscar diferentes artistas pertenecientes a la comundidad de ZonaCultura, acorde a su nombre de perfil o a sus diversas competencias.</p>
+</div>
+  
 
-  <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaColaboradoresResultado">
+  	<form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaColaboradoresResultado">
 		{% csrf_token %}
 		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del nombre de usuario" id="input-search" name="buscarstring">
 
-		<br>
+		
+
 
     <div class="btn-group-vertical" data-toggle="buttons">
       <input type="checkbox" id = "cb1" name="check1" value="escritor" ><label id = "c1">Escritor </label>
@@ -32,13 +37,10 @@
 			<input type="checkbox" id = "cb14" name="check14" value="actor" ><label id = "c14">Actor </label>
     </div>
 
-		<br>
 
-		<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-    <br>
-    <br>
+		<button class="btn btn-success" type="submit" id="Buscar2">Buscar</button>
+
   </form>
-   <a href="HomePage">Regresar</a>
 
-</body>
-</html>
+   <a href="BusquedaEspecifica">Regresar</a>
+{% endblock 	%}

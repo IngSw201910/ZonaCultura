@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Vista de los usuarios a quien done</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+<link rel="stylesheet" href="static/css/diseño.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% block title %}
+Donaciones Realizadas
+{% endblock %}
+{% block content %}
 
 
-<h1>Lista de usuarios a quien done</h1>
+<h1 class="heading">Lista de usuarios a quien done</h1>
 
-<a href="/HomePage">Volver a la Pagina de Inicio</a>
+
 
 <p>Usuarios </p>
 
@@ -21,5 +22,4 @@
 
 
 {%endfor%}
-</body>
-</html>
+{% endblock %}

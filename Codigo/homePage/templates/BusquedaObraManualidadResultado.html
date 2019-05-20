@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Resultado de búsqueda de obra literaria</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="static/css/diseño.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Resultado Busqueda
+{% endblock %}
+{% block content %}
+	 <h1 class="heading">Manualidades</h1>
 
-  <div class="col col-6">
     <div class="container-lit conteiner">
-      <h1 align="center">Manualidades Encontradas</h1>
       <form class="site-form" method="post">
-        <table class="table table-hover">
+ 
+            {% if manualidadesPasan %}
+         <table class="table table-hover">
           <thead>
             <tr class="table-primary">
               <th scope="row">ID</th>
@@ -22,7 +26,6 @@
             </tr>
           </thead>
           <tbody>
-            {% if manualidadesPasan %}
             {% for manualidad in manualidadesPasan %}
             <tr>
               <td><a href="Producto/ContenidoManualidad/{{manualidad.pk}}">{{manualidad.pk}}</td>
@@ -79,13 +82,11 @@
             {% endfor %}
 
             {% else %}
-            <h1>No hay registros de manualidades que cumplan con esas características</h1>
+            <h1 align="center">No hay registros de manualidades que cumplan con esas características</h1>
             {% endif %}
           </tbody>
         </table>
       </form>
     </div>
-  </div>
-	<a href="BusquedaObraManualidad">Regresar</a>
-</body>
-</html>
+
+{% endblock %}
