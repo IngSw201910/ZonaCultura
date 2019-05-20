@@ -33,8 +33,8 @@ Catalogo Videos
                 {% if videos %}
                 {% for video in videos %}
                 <tr>
-                  <td><a href="Producto/ContenidoMultimedia/{{video.pk}}">{{video.pk}}</td>
-                  <td>{{video.title}}</a></td>
+                  <td><a href="Producto/ContenidoMultimedia/{{video.pk}}">{{video.pk}}</a></td>
+                  <td>{{video.title}}</td>
                   <td>{{video.descripcion}}</td>
                   <td>{{video.user.username}}</td>
                   <td>{{video.precioV}}</td>

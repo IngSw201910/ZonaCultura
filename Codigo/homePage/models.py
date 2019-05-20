@@ -103,7 +103,7 @@ class contenidoManualidad(models.Model):
 	TipoMan= (
         (escultura, 'escultura'),
         (pintura, 'pintura'),
-        
+
     )
 	tipo=models.CharField(max_length=9,choices=TipoMan, null=True)
 	def __str__(self):
@@ -203,6 +203,14 @@ class Comentario(models.Model):
 		califi=models.PositiveIntegerField(default=0)
 		comentario=models.TextField(max_length=150,default="")
 		usuarioComentador=models.ForeignKey (infousuario,on_delete=models.SET_NULL, null=True)
+
+class Contrato(models.Model):
+    valorOfrecido=models.PositiveIntegerField(default=0)
+    Emisor=models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name='%(class)s_Emisor')
+    Receptor=models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name='%(class)s_Pasivo')
+    Titulo=models.CharField(max_length=50)
+    Cuerpo=models.TextField(max_length=150)
+    fecha=models.DateTimeField(default=timezone.now)
 
 class BusquedaString (models.Model):
 		generoBusqueda=models.CharField(max_length=30,blank=True)

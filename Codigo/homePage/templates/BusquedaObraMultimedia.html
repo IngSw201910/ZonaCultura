@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Búsqueda de obras multimedia</title>
+</head>
+<body>
+  <p>Bienvenido al buscador de obras multimedia Aquí podrá buscar obras literarias acorde a sus títulos y/o acorde al
+  género (o géneros) al que pertenesca(n).</p>
+
+  <form class="site-form" enctype="multipart/form-data" method = "POST" action="/BusquedaObraMultimediaResultado">
+		{% csrf_token %}
+		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search" name="buscarstring">
+    <div class="btn-group-vertical" data-toggle="buttons">
+
+      <input type="checkbox" id = "cb1" name="check1" value="comedia" ><label id = "c1">Comedia </label>
+			<input type="checkbox" id = "cb2" name="check2" value="drama" ><label id = "c2">Drama </label>
+			<input type="checkbox" id = "cb3" name="check3" value="retrato" ><label id = "c3">Retrato </label>
+			<input type="checkbox" id = "cb4" name="check4" value="terror" ><label id = "c4">Terror </label>
+			<input type="checkbox" id = "cb5" name="check5" value="accion" ><label id = "c5">Acción </label>
+			<input type="checkbox" id = "cb6" name="check6" value="belico" ><label id = "c6">Bélico </label>
+			<input type="checkbox" id = "cb7" name="check7" value="cienciaficcion" ><label id = "c7">Ciencía_ficción </label>
+			<input type="checkbox" id = "cb8" name="check8" value="aventura" ><label id = "c8">Aventura </label>
+			<input type="checkbox" id = "cb9" name="check9" value="deloeste" ><label id = "c9">Del_Oeste </label>
+			<input type="checkbox" id = "cb10" name="check10" value="artesmarciales" ><label id = "c10">Artes_marciales </label>
+			<input type="checkbox" id = "cb11" name="check11" value="fantastico" ><label id = "c11">Fantástico </label>
+			<input type="checkbox" id = "cb12" name="check12" value="suspenso" ><label id = "c12">Suspenso </label>
+			<input type="checkbox" id = "cb13" name="check13" value="historico" ><label id = "c13">Histórico </label>
+			<input type="checkbox" id = "cb14" name="check14" value="adolescente" ><label id = "c14">Adolescente </label>
+			<input type="checkbox" id = "cb15" name="check15" value="infantil" ><label id = "c15">Infantil </label>
+			<input type="checkbox" id = "cb16" name="check16" value="sociopolitico" ><label id = "c16">Sociopolítico </label>
+			<input type="checkbox" id = "cb17" name="check17" value="animacion" ><label id = "c17">Animación </label>
+
+    </div>
+    <button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
+    <br>
+    <br>
+  </form>
+   <a href="BusquedaEspecifica">Regresar</a>
+</body>
+</html>
