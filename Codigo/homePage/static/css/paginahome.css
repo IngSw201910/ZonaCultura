@@ -2,11 +2,11 @@
 	width: 600px;
 	height: 30px;
 	text-indent: 10px;
-	margin-left: 130px;
+	margin-left: 100px;
 }
 #Salir{
 	width: 70px;
-	margin-left: 200px;
+	margin-left: 100px;
 	margin-right: 0 auto;
 	background-color: #C459F6;
 }
@@ -20,7 +20,7 @@ body{
 	margin-left: 50px;
 }
 #Buscar{
-	height: 30px;
+  	margin-left: 10px;
 }
 #navbarColor01{
 	margin-left: 100px;

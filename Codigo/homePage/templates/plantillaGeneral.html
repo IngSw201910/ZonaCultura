@@ -1,4 +1,4 @@
-{% load staticfiles %}
+	{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +11,7 @@
 	<script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <link rel="stylesheet" href="static/css/paginahome.css">
+    <link rel="stylesheet" href="/static/css/paginahome.css">
 	<title>{% block title %} Document {% endblock %}</title>
 </head>
 <body>
@@ -23,9 +23,10 @@
 			<form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaGeneral">
 			    		<div class="col-12">
 									{% csrf_token %}
-			      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search" name = "buscarstring">
-			      			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
+			      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search" name = "buscarstring">	
+			      			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>		      			
 			    		</div>
+			    		
 			    	</form>
 						<form class="form-inline my-2 my-lg-2" method = "GET">
 			    		<div class="col-12">
@@ -42,22 +43,22 @@
 			        		<a class="nav-link" href="/HomePage"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
 			      		</li>
 			      		<li class="nav-item active">
-			        		<a class="nav-link" href="Perfil"><i class="fas fa-user"></i> Perfil</a>
+			        		<a class="nav-link" href="/Perfil"><i class="fas fa-user"></i> Perfil</a>
 			      		</li>
 			      		<li class="nav-item active">
 			        		<a class="nav-link" href="/CarritoVista"><i class="fas fa-shopping-cart"></i> Compra</a>
 			      		</li>
 			          <li class="nav-item active">
-			            <a class="nav-link" href="CompraCredito"><i class="fas fa-money-bill-alt"></i> Comprar Credito</a>
+			            <a class="nav-link" href="/CompraCredito"><i class="fas fa-money-bill-alt"></i> Comprar Credito</a>
 			          </li>
 			          <li class="nav-item active">
 			            <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
 			          </li>
 								<li class="nav-item active">
-									<a class="nav-link" href="BusquedaColaboradores"><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
+									<a class="nav-link" href="/BusquedaColaboradores"><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
 			          </li>
 								<li class="nav-item active">
-			            <a class="nav-link" href="BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
+			            <a class="nav-link" href="/BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
 			          </li>
 			    	</ul>
 		</nav>

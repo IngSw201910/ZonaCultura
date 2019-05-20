@@ -1,38 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Libro {{Libro.Titulo}}</title>
-</head>
-<body>
-
-
-<h1>{{Libro.Titulo}}</h1>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/diseño.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Home Page
+{% endblock %}
+{% block content %}
+<h1 class="heading">{{Libro.Titulo}}</h1>
 {%if hayComentarios%}
-<p>Puntaje: {{promedioCalificacion}}</p>
+<p><em><b>Puntaje:</b></em>{{promedioCalificacion}}</p>
 {%endif%}
-<p>Generos: {{generos}}</p>
-<p>Descripcion del libro: {{Libro.Descripcion}}</p>
-<p>Cantidad de paginas: {{Libro.CantidadPaginas}}</p>
-<p>Numero ISBN: {{Libro.ISBN}}</p>
-<p>Idioma: {{Libro.Idioma}} </p>
-<p> Imagen: </p><img src="{{Libro.imagen.url}}">
-<br/>
-{%if permitir == False%}
-<p> Descarga:</p>
-<form method="get">
-  	
-	<input type="submit" value="Descargar" name="descarga">
-</form>
-{%endif%}
-<a href="/HomePage">Volver a la Pagina de Inicio</a>
+<p><em><b>Generos:</b></em> {{generos}}</p>
+<p><em><b>Descripcion del libro:</b></em> {{Libro.Descripcion}}</p>
+<p><em><b>Cantidad de paginas:</b></em> {{Libro.CantidadPaginas}}</p>
+<p><em><b>Numero ISBN:</b></em> {{Libro.ISBN}}</p>
+<p></em><b>Idioma:</b></em> {{Libro.Idioma}} </p>
+	<center>
+			<img class="center-block" src="{{Libro.imagen.url}}" width="300" height="300" id="imgl">
+			{%if permitir == False%}
+	<p> Descarga:</p>
+	<form method="get">  	
+	<input type="submit" value="Descargar" name="descarga" align="center">
+	</form>
+	{%endif%}
 
-<form method="get">
-  	
-	<input type="submit" value="Añadir al carrito" name="carrito">
+
+	<form method="get">  	
+	<input type="submit" value="Añadir al carrito" name="carrito" align="center">
 </form>
+	</center>
+
+	
+	
+
+
 
 {%if hayComentarios%}
-<p>Comentarios y calificaciones: </p>
+<h2>Comentarios y calificaciones: </h2>
 {% for comentario in comentarios %}
 <p></p>
 <p>Usuario: {{comentario.usuarioComentador}}</p>
@@ -42,6 +47,5 @@
 
 {%if hayComentarios == False %}
  <p>No hay comentarios ni calificaciones en esta obra </p>
-{%endif%}
-</body>
-</html>
+{%	endif	%}
+{% endblock %}

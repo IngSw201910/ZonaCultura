@@ -9,7 +9,14 @@
 	font-size: 4em;
 	
 }
-
+#imgl{
+	margin-left: 100px;
+}
+.centrado{
+	display: block;
+	margin:10px auto;
+	
+}
 .container-6{
 	margin-top: 50px;
 	padding-top: 50px;
