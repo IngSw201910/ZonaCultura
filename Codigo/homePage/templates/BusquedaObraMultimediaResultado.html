@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Resultado de búsqueda de obras multimedia</title>
+</head>
+<body>
+
+  <div class="col col-6">
+    <div class="container-lit conteiner">
+      <h1 align="center">Obras Multimedia Encontradas</h1>
+      <form class="site-form" method="post">
+        <table class="table table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="row">ID</th>
+              <td>Título</td>
+              <td>Género</td>
+              <td>Descripción</td>
+              <td>Autor</td>
+              <td>Formato</td>
+              <td>Precio</td>
+              <td>Fecha</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if videosPasan %}
+            {% for video in videosPasan %}
+            <tr>
+              <td><a href="Producto/ContenidoMultimedia/{{video.pk}}">{{video.pk}}</a></td>
+              <td>{{video.title}}</td>
+              <td>
+								{% if video.genero.Comedia %}
+									Comedia
+								{% endif %}
+								{% if video.genero.Drama %}
+									Drama
+								{% endif %}
+								{% if video.genero.Retrato %}
+									Retrato
+								{% endif %}
+								{% if video.genero.Terror %}
+									Terror
+								{% endif %}
+								{% if video.genero.Accion %}
+									Acción
+								{% endif %}
+								{% if video.genero.Belico %}
+									Bélico
+								{% endif %}
+								{% if video.genero.CienciaFiccion %}
+									Ciencia_ficción
+								{% endif %}
+								{% if video.genero.Aventura %}
+									Aventura
+								{% endif %}
+								{% if video.genero.DelOeste %}
+									Del_Oeste
+								{% endif %}
+								{% if video.genero.ArtesMarciales %}
+									Artes_marciales
+								{% endif %}
+								{% if video.genero.Fantastico %}
+									Fantástico
+								{% endif %}
+								{% if video.genero.Suspenso %}
+									Suspenso
+								{% endif %}
+                {% if video.genero.Historico %}
+									Histórico
+								{% endif %}
+								{% if video.genero.Adolescente %}
+									Adolescente
+								{% endif %}
+								{% if video.genero.Infantil %}
+									Infantil
+								{% endif %}
+								{% if video.genero.Político_Social %}
+									Sociopolítico
+								{% endif %}
+								{% if video.genero.Animacion %}
+									Animación
+								{% endif %}
+              </td>
+              <td>{{video.descripcion}}</td>
+              <td>{{video.user.username}}</td>
+              <td>{{video.formato}}</td>
+              <td>{{video.precioV}}</td>
+              <td>{{video.fecha}}</td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <h1>No hay registros de obras multimedia que cumplan con esas características</h1>
+            {% endif %}
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+	<a href="BusquedaObraMultimedia">Regresar</a>
+</body>
+</html>

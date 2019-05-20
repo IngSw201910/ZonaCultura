@@ -9,11 +9,11 @@ Busqueda Obras
 {% block content %}
   <h1 class="heading">Busqueda de obras</h1>
 
-  <form class="site-form" method="post"  enctype="multipart/form-data">
+  <form class="site-form" method="GET"  enctype="multipart/form-data">
     <div class="btn2-group-vertical" data-toggle="buttons">
-      <button type="submit" class="btn btn-secondary"><a href="BusquedaObraLiteraria">Buscar obras literarias</a></button>
-      <button type="submit" class="btn btn-secondary"><a href="BusquedaObraManualidad">Buscar manualidades</a></button>
-      <button type="submit" class="btn btn-secondary"><a href="">Buscar obra audiovisual</a></button>
+      <button type="submit" class="btn btn-secondary" value="BusquedaObraLiteraria" name="busqueda1">Buscar obras literarias</button>
+      <button type="submit" class="btn btn-secondary" value="BusquedaObraManualidad" name="busqueda2">Buscar manualidades</button>
+      <button type="submit" class="btn btn-secondary" value="BusquedaObraMultimedia" name="busqueda3">Buscar obra audiovisual</button>
     </div>
   </form>
 

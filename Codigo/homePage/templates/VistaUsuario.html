@@ -10,8 +10,11 @@
 <a href="/HomePage">Volver a la Pagina de Inicio</a>
 
 <form method="get">
-  	
+
 	<td><a href="Donacion/{{Usu.pk}}">donar</td>
+  {%if Usu.es_Colaborador %}
+    <button type="submit" class="btn btn-secondary" value="Ofrecer Contrato" name="contratar"> Ofrecer Contrato </button>
+  {%endif%}
 </form>
 
 </body>

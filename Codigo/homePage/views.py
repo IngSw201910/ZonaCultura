@@ -281,7 +281,7 @@ def mostrarObraLiteraria(request,primaryKey):
 			promedioCalificacion=promedioCalificacion+comentario.califi
 		promedioCalificacion=promedioCalificacion/len(comentarios)
 	return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion})
-	
+
 
 @login_required(login_url='/')
 def mostrarMultimedia(request,primaryKey):
@@ -533,10 +533,13 @@ def Donacion_view(request,primaryKey):
 def mostrarUsuario(request,primaryKey):
 	try:
 		Usu=infousuario.objects.get(pk=primaryKey)
+		if request.GET.get('contratar'):
+			return redirect('/')
 		print("hola1")
 	except:
 		raise Http404
 	return render(request, 'VistaUsuario.html' ,{'Usu':Usu})
+
 @login_required(login_url='/')
 def donadores_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -691,12 +694,12 @@ def editarManualidades_view(request,primaryKey):
 
 	return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
 
-	
+
 @login_required(login_url='/')
 def comentarios_calificacionLibro(request,primaryKey):
 	Libro=infoLibro.objects.get(pk=primaryKey)
 	usu = infousuario.objects.get(user = request.user)
-	
+
 	aux=ArticulosComprados.objects.filter(usuario=usu, libro=Libro)
 	aux2= ComentarioObraLiteraria.objects.filter(usuarioComentador=usu, libro=Libro)
 	if len(aux2)==0:
@@ -814,12 +817,17 @@ def editarUsuarioInfo(request):
 @login_required(login_url='/')
 def busquedaColaboradores_view(request):
 	usuario=infousuario.objects.get(user=request.user)
-
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
 	return render(request,'BusquedaColaboradores.html')
 
 @login_required(login_url='/')
 def busquedaColaboradoresResultado_view(request):
 	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
 
 	colaboradores = infousuario.objects.all()
 
@@ -967,11 +975,14 @@ def busquedaColaboradoresResultado_view(request):
 
 @login_required(login_url='/')
 def busquedaObraGeneral_view(request):
-
 	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
 
 	libros = infoLibro.objects.all()
 	manualidades = contenidoManualidad.objects.all()
+	videos = contenidoMultimedia.objects.all()
 
 	#if request.method =='POST':
 		#print('*'*50)
@@ -983,6 +994,7 @@ def busquedaObraGeneral_view(request):
 
 	librosPasan=[]
 	manualidadesPasan=[]
+	videosPasan=[]
 
 	if palabra is None:
 		return HttpResponse("Fallo")
@@ -995,9 +1007,14 @@ def busquedaObraGeneral_view(request):
 		if palabra in manualidad.title:
 				manualidadesPasan.append(manualidad)
 
+	for video in videos:
+		if palabra in video.title:
+			videosPasan.append(video)
+
 	context = {
 		'librosPasan':librosPasan,
-		'manualidadesPasan':manualidadesPasan
+		'manualidadesPasan':manualidadesPasan,
+		'videosPasan':videosPasan
 	}
 
 	return render(request,'BusquedaGeneral.html',context)
@@ -1005,18 +1022,36 @@ def busquedaObraGeneral_view(request):
 @login_required(login_url='/')
 def busquedaObraEspecifica_view(request):
 	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
+	if request.GET.get('busqueda1'):
+		return redirect('/BusquedaObraLiteraria')
+
+	if request.GET.get('busqueda2'):
+		return redirect('/BusquedaObraManualidad')
+
+	if request.GET.get('busqueda3'):
+		return redirect('/BusquedaObraMultimedia')
 
 	return render(request,'BusquedaEspecifica.html')
 
 @login_required(login_url='/')
 def busquedaObraLiteraria_view(request):
 	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
 
 	return render(request,'BusquedaObraLiteraria.html')
 
 @login_required(login_url='/')
 def busquedaObraLiterariaResultado_view(request):
 	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
 
 	libros = infoLibro.objects.all()
 
@@ -1108,12 +1143,18 @@ def busquedaObraLiterariaResultado_view(request):
 @login_required(login_url='/')
 def busquedaObraManualidad_view(request):
 	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
 
 	return render(request,'BusquedaObraManualidad.html')
 
 @login_required(login_url='/')
 def busquedaObraManualidadResultado_view(request):
 	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
 
 	manualidades = contenidoManualidad.objects.all()
 
@@ -1255,6 +1296,184 @@ def busquedaObraManualidadResultado_view(request):
 		count.most_common(1)[0][0]
 		context = {
 			'manualidadesPasan': count
+		}
+
+	return render(request, 'BusquedaObraManualidadResultado.html', context)
+
+@login_required(login_url='/')
+def busquedaObraMultimedia_view(request):
+	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
+	return render(request,'BusquedaObraMultimedia.html')
+
+@login_required(login_url='/')
+def busquedaObraMultimediaResultado_view(request):
+	usuario=infousuario.objects.get(user=request.user)
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
+	videos = contenidoMultimedia.objects.all()
+
+	palabra = request.POST.get('buscarstring')
+	print(palabra)
+
+	videosPasan=[]
+	pasanCombo = []
+
+	if palabra is "" and not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST and not 'check6' in request.POST and not 'check7'in request.POST and not 'check8'in request.POST and not 'check9'in request.POST and not 'check10'in request.POST and not 'check11' in request.POST and not 'check12'in request.POST and not 'check13'in request.POST and not 'check14'in request.POST and not 'check15'in request.POST and not 'check16'in request.POST and not 'check17'in request.POST:
+		return HttpResponse("No utilizó ninguna forma de búsqueda. Por favor vuelva a intentarlo.")
+
+	if palabra is "":
+		for video in videos:
+			if 'check1' in request.POST:
+				if video.genero.Comedia:
+					videosPasan.append(video)
+			if 'check2' in request.POST:
+				if video.genero.Drama:
+					videosPasan.append(video)
+			if 'check3' in request.POST:
+				if video.genero.Retrato:
+					videosPasan.append(video)
+			if 'check4' in request.POST:
+				if video.genero.Terror:
+					videoPasan.append(video)
+			if 'check5' in request.POST:
+				if video.genero.Accion:
+					videosPasan.append(video)
+			if 'check6' in request.POST:
+				if video.genero.Belico:
+					videosPasan.append(video)
+			if 'check7' in request.POST:
+				if video.genero.CienciaFiccion:
+					videosPasan.append(video)
+			if 'check8' in request.POST:
+				if video.genero.Aventura:
+					videosPasan.append(video)
+			if 'check9' in request.POST:
+				if video.genero.DelOeste:
+					videosPasan.append(video)
+			if 'check10' in request.POST:
+				if video.genero.ArtesMarciales:
+					videosPasan.append(video)
+			if 'check11' in request.POST:
+				if video.genero.Fantastico:
+					videosPasan.append(video)
+			if 'check12' in request.POST:
+				if video.genero.Suspenso:
+					videosPasan.append(video)
+			if 'check13' in request.POST:
+				if videos.genero.Historico:
+					videosPasan.append(video)
+			if 'check14' in request.POST:
+				if video.genero.Adolescente:
+					videosPasan.append(video)
+			if 'check15' in request.POST:
+				if video.genero.Infantil:
+					videosPasan.append(video)
+			if 'check16' in request.POST:
+				if video.genero.Político_Social:
+					videosPasan.append(video)
+			if 'check17' in request.POST:
+				if video.genero.Animacion:
+					videosPasan.append(video)
+
+		if not videosPasan:
+			context = {
+				'videosPasan': videosPasan
+			}
+		else:
+			count = Counter(videosPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'videosPasan': count
+			}
+
+		return render(request, 'BusquedaObraMultimediaResultado.html', context)
+
+	for video in videos:
+		if palabra in video.title:
+				videosPasan.append(video)
+
+	if not 'check1' in request.POST and not 'check2'in request.POST and not 'check3'in request.POST and not 'check4'in request.POST and not 'check5'in request.POST and not 'check6' in request.POST and not 'check7'in request.POST and not 'check8'in request.POST and not 'check9'in request.POST and not 'check10'in request.POST and not 'check11' in request.POST and not 'check12'in request.POST and not 'check13'in request.POST and not 'check14'in request.POST and not 'check15'in request.POST and not 'check16'in request.POST and not 'check17'in request.POST:
+		if not videosPasan:
+			context = {
+				'videosPasan': videosPasan
+			}
+		else:
+			count = Counter(videosPasan)
+			count.most_common(1)[0][0]
+			context = {
+				'videosPasan': count
+			}
+
+		return render(request, 'BusquedaObraMultimediaResultado.html', context)
+
+	for video in videosPasan:
+		if 'check1' in request.POST:
+			if video.genero.Comedia:
+				pasanCombo.append(video)
+		if 'check2' in request.POST:
+			if manualidad.genero.Drama:
+				pasanCombo.append(video)
+		if 'check3' in request.POST:
+			if video.genero.Retrato:
+				pasanCombo.append(video)
+		if 'check4' in request.POST:
+			if video.genero.Terror:
+				pasanCombo.append(video)
+		if 'check5' in request.POST:
+			if video.genero.Accion:
+				pasanCombo.append(video)
+		if 'check6' in request.POST:
+			if video.genero.Belico:
+				pasanCombo.append(video)
+		if 'check7' in request.POST:
+			if video.genero.CienciaFiccion:
+				pasanCombo.append(video)
+		if 'check8' in request.POST:
+			if video.genero.Aventura:
+				pasanCombo.append(video)
+		if 'check9' in request.POST:
+			if video.genero.DelOeste:
+				pasanCombo.append(video)
+		if 'check10' in request.POST:
+			if video.genero.ArtesMarciales:
+				pasanCombo.append(video)
+		if 'check11' in request.POST:
+			if video.genero.Fantastico:
+				pasanCombo.append(video)
+		if 'check12' in request.POST:
+			if video.genero.Suspenso:
+				pasanCombo.append(video)
+		if 'check13' in request.POST:
+			if videos.genero.Historico:
+				pasanCombo.append(video)
+		if 'check14' in request.POST:
+			if video.genero.Adolescente:
+				pasanCombo.append(video)
+		if 'check15' in request.POST:
+			if video.genero.Infantil:
+				pasanCombo.append(video)
+		if 'check16' in request.POST:
+			if video.genero.Político_Social:
+				pasanCombo.append(video)
+		if 'check17' in request.POST:
+			if video.genero.Animacion:
+				pasanCombo.append(video)
+
+	if not pasanCombo:
+		context = {
+			'videosPasan': pasanCombo
+		}
+	else:
+		count = Counter(pasanCombo)
+		count.most_common(1)[0][0]
+		context = {
+			'videosPasan': count
 		}
 
 	return render(request, 'BusquedaObraManualidadResultado.html', context)
