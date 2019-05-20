@@ -3,7 +3,7 @@
 <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
 {% endblock %}
 {% block title %}
-Catalogo Libros
+Catalogo Manualidades
 {% endblock %}
 {% block content %}
 <div class="row">
@@ -13,50 +13,36 @@ Catalogo Libros
             <button type="button" class="btn btn-primary"><a href="CatalogoLibros">Obras Literarias</a></button>
             <button type="button" class="btn btn-primary"><a href="CatalogoManualidades">Manualidades</button>
             <button type="button" class="btn btn-primary"><a href="CatalogoMultimedia">Multimedia</a></button>
-          
+           
           </div>
       </div>
       <div class="col col-6">
         <div class="container-lit conteiner">
-          <h1  align="center" id="prim">Obras Literarias</h1>
+          <h1  align="center" id="prim">Manualidades</h1>
           <form class="site-form" method="post">
             {% csrf_token %}
-              {% if libros %}
-              {% for libro in libros %}
+              {% if manualidad %}
+              {% for manu in manualidad %}
               
               <div class="section">
-                  <h4><a href="Producto/ContenidoLiterario/{{libro.pk}}">Articulo: {{libro.pk}}</a></h4>
-                  <h1><em>{{libro.Titulo}}</em></h1>
-                  <figure><img src="{{libro.imagen.url}}" height="200px" width="200px" align="center" id="image">
+                  <h4><a href="Producto/ContenidoManualidad/{{manu.pk}}">Articulo: {{manu.pk}}</a></h4>
+                  <h1><em>{{manu.title}}</em></h1>
+                  <figure><img src="{{manu.imagen.url}}" height="200px" width="200px" align="center" id="image">
                   </figure>
                   <h2>Descripcion: </h2>
-                  <p>{{libro.Descripcion}}</p>
+                  <p>{{manu.descripcion}}</p>
                   <h3>Autor: </h3>
-                  <p>{{libro.user}}</p>
-                  <h3>Genero: </h3>
+                  <p>{{manu.user}}</p>
+                  <h3>Tipo: </h3>
                   <p> 
-                    {% if libro.genero.Comedia %}
-                      Comedia
-                    {% endif %}
-                    {% if libro.genero.Drama %}
-                      Drama
-                    {% endif %}
-                    {% if libro.genero.Tragicomedia %}
-                      Tragicomedia
-                    {% endif %}
-                    {% if libro.genero.Terror %}
-                      Terror
-                    {% endif %}
-                    {% if libro.genero.Ciencia_Ficción %}
-                      Ciencia_Ficción
-                    {% endif %}
+                    {{manu.tipo}}
                   </p>
                 </div>
            
                 {% endfor %}
 
                 {% else %}
-                <h1>No hay registros de libros</h1>
+                <h1>No hay registros de Manualidades</h1>
                 {% endif %}            
           </form>
         </div>
