@@ -33,6 +33,13 @@ class generoLiterarioForm(forms.ModelForm):
 		'Terror',
 		'Ciencia_Ficción' ,
 		]
+		widgets={
+		'Comedia':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Drama':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Tragicomedia':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Terror':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Ciencia_Ficción':forms.CheckboxInput(attrs={'class':'form-control'}),
+		}
 class RegistroForm(UserCreationForm):
 	class Meta:
 		model= User
@@ -111,6 +118,23 @@ class GeneroManualidadForm(forms.ModelForm):
 	    'Figura',
 	    'Relieve'
 		]
+		widgets={
+		'Bodegon':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Vanitas':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Retrato':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Terror':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Desnudo':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Religioso':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Historico':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Mitologico':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Paisaje':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Funeraria':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Retrato':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Monumento':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Estatuilla':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Figura':forms.CheckboxInput(attrs={'class':'form-control'}),
+	    'Relieve':forms.CheckboxInput(attrs={'class':'form-control'})	
+		}
 class contenidoLiterarioForm(forms.ModelForm):
 	class Meta:
 		model=infoLibro
@@ -133,6 +157,11 @@ class contenidoLiterarioForm(forms.ModelForm):
 		'Idioma':'Idioma en el que esta escrito el contenido literario'
 		}
 		widgets={
+		'Titulo':forms.TextInput(attrs={'class':'form-control'}),
+		'Descripcion':forms.TextInput(attrs={'class':'form-control'}),
+		'ISBN':forms.TextInput(attrs={'class':'form-control'}),
+		'CantidadPaginas':forms.TextInput(attrs={'class':'form-control'}),
+		'Idioma':forms.TextInput(attrs={'class':'form-control'})
  			#'formato':forms.CheckboxSelectMultiple(),
  			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
@@ -277,7 +306,7 @@ class contenidoManualForm(forms.ModelForm):
 		'imagen',
 		'imagen2',
 		'imagen3',
-		'tipo'
+		'tipo',
 
 		]
 		labels={
@@ -288,7 +317,14 @@ class contenidoManualForm(forms.ModelForm):
 		'imagen':'Imagen del contenido manual',
 		'imagen2':'Imagen del contenido manual',
 		'imagen3':'Imagen del contenido manual',
-		'tipo':'Tipo de manualidad'
+		'tipo':'Tipo de manualidad',
+		}
+		widgets={
+		'title':forms.TextInput(attrs={'class':'form-control'}),
+		'existencias':forms.TextInput(attrs={'class':'form-control'}),
+		'descripcion':forms.TextInput(attrs={'class':'form-control'}),
+		'precioV':forms.TextInput(attrs={'class':'form-control'}),
+		
 		}
 
 

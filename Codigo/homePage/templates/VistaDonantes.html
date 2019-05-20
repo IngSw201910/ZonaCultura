@@ -1,25 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Vista de los usuarios que le donaron</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Vista donadores
+{% endblock %}
+{% block content %}
 
 
-<h1>Lista de usuarios que le donaron</h1>
+<h1 class="heading">Lista de usuarios que le donaron</h1>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<h2><em><i>Usuarios:</em></i></h2>
+				{% for  Usuarios in usuariosDonadores %}
 
-<a href="/HomePage">Volver a la Pagina de Inicio</a>
+				<p><em><i>Nombre del usuario :</i> {{Usuarios.usuarioDonante.user.first_name}}</p>
+				<p><em><i>Apellido del usuario : </i>{{Usuarios.usuarioDonante.user.last_name}}</p>
+				<p><em><i>Monto donado :</i> {{Usuarios.cantidad}}</p>
+				<p><em><i>Mensaje:</i> {{Usuarios.mensaje}}</p>
 
-<p>Usuarios </p>
+				{%endfor%}
+	<div class="col col-3"></div>
+	</div>
+<div>
 
-{% for  Usuarios in usuariosDonadores %}
-
-<p>Nombre del usuario : {{Usuarios.usuarioDonante.user.first_name}}</p>
-<p>Apellido del usuario : {{Usuarios.usuarioDonante.user.last_name}}</p>
-<p>Monto donado : {{Usuarios.cantidad}}</p>
-<p>Mensaje: {{Usuarios.mensaje}}</p>
-
-{%endfor%}
-</body>
-</html>
-
+{% endblock %}

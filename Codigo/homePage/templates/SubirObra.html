@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Seleccionar contenido</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/diseño.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Subir obra
+{% endblock %}
+{% block content %}
+<h1 class="heading">Bienvenido a la seccion donde puede subir una obra a la pagina web</h1>
+<h2 align="center">Seleccionar el tipo de obra que desea subir</h2>
 
-<h1>Bienvenido a la seccion donde puede subir una obra a la pagina web</h1>
-<p>Seleccionar el tipo de obra que desea subir</p>
-
-<a href="SubirObra/SubirContenidoLiterario">Subir libro</a>
-
-<a href="SubirManualidad">Subir escultura o pintura</a>
-<a href="SubirContenidoMultimedia">Subir video</a>
+    <div class="btn2-group-vertical" data-toggle="buttons">
+      <button type="submit" class="btn btn-secondary"><a href="SubirObra/SubirContenidoLiterario">Subir libro</a></button>
+      <button type="submit" class="btn btn-secondary"><a href="SubirManualidad">Subir escultura o pintura</a></button>
+      <button type="submit" class="btn btn-secondary"><a href="SubirContenidoMultimedia">Subir video</a></button>
+    </div>
 
 
 
-</body>
-</html>
+
+
+{% endblock %}

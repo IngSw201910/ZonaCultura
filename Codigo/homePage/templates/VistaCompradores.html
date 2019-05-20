@@ -1,30 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Vista de los usuarios que adquirieron artículos</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Vista compradores
+{% endblock %}
+{% block content %}
 
+<h1 class="heading">Lista de usuarios que compraron sus productos</h1>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<h2><em><i>Usuarios:</em></i></h2>
 
-<h1>Lista de usuarios que compraron sus productos</h1>
+				{% for  Usuarios in usuariosCompradores %}
 
-<a href="/HomePage">Volver a la Pagina de Inicio</a>
+				<p><em><i>Nombre del usuario : </i></em>{{Usuarios.usuarioComprador.user.first_name}}</p>
+				<p><em><i>Apellido del usuario :</i></em> {{Usuarios.usuarioComprador.user.last_name}}</p>
+				<p><em><i>Libro comprado : </i></em>{{Usuarios.libro.Titulo}}</p>
+				{%endfor%}
+				{% for  Usuar in usuariosCompraManu %}
 
-<p>Usuarios </p>
+				<p><em><i>Nombre del usuario :</i></em> {{Usuar.usuarioComprador.user.first_name}}</p>
+				<p><em><i>Apellido del usuario :</i></em> {{Usuar.usuarioComprador.user.last_name}}</p>
+				<p><em><i>Manualidad comprada :</i></em> {{Usuar.manualidad.title}}</p>
 
-{% for  Usuarios in usuariosCompradores %}
+				{%endfor%}
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
 
-<p>Nombre del usuario : {{Usuarios.usuarioComprador.user.first_name}}</p>
-<p>Apellido del usuario : {{Usuarios.usuarioComprador.user.last_name}}</p>
-<p>Libro comprado : {{Usuarios.libro.Titulo}}</p>
-{%endfor%}
-{% for  Usuar in usuariosCompraManu %}
-
-<p>Nombre del usuario : {{Usuar.usuarioComprador.user.first_name}}</p>
-<p>Apellido del usuario : {{Usuar.usuarioComprador.user.last_name}}</p>
-<p>Libro comprado : {{Usuar.manualidad.title}}</p>
-
-{%endfor%}
-</body>
-</html>
+{% endblock %}
 
