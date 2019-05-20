@@ -1,7 +1,6 @@
 {% extends 'plantillaGeneral.html' %}
 {% block extrahead %}
 <link rel="stylesheet" href="/static/css/diseño.css">
-<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
 {% endblock %}
 {% block title %}
 Busqueda Literaria
@@ -12,10 +11,10 @@ Busqueda Literaria
 
   <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaObraLiterariaResultado">
 		{% csrf_token %}
-		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search" name="buscarstring">
+		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search2" name="buscarstring">
 
 
-    <div class="btn-group-vertical" data-toggle="buttons">
+    <div class="btn3-group-vertical" data-toggle="buttons">
 			<input type="checkbox" id = "cb1" name="check1" value="comedia" ><label id = "c1"> Comedia </label>
 			<input type="checkbox" id = "cb2" name="check2" value="drama" ><label id = "c2"> Drama</label>
 			<input type="checkbox" id = "cb3" name="check3" value="tragicomedia" ><label id = "c3"> Tragicomedia</label>

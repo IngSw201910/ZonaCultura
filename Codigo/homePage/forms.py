@@ -198,6 +198,14 @@ class contenidoTarjetaForm(forms.ModelForm):
 		'anoExpiracion':'Ano de expiración Formato aa',
 		'codigoSeguridad':'Código de seguridad de la tarjeta'
 		}
+		widgets={
+		'numeroTarjeta': forms.TextInput(attrs={'class':'form-control'}),
+		'nombreTitular':forms.TextInput(attrs={'class':'form-control'}),
+		'apellidoTitular':forms.TextInput(attrs={'class':'form-control'}),
+		'mesExpiracion':forms.TextInput(attrs={'class':'form-control'}),
+		'anoExpiracion':forms.TextInput(attrs={'class':'form-control'}),
+		'codigoSeguridad':forms.TextInput(attrs={'class':'form-control'}),
+		}
 class contenidoCreditForm(forms.ModelForm):
 	class Meta:
 		model=infousuario
@@ -208,6 +216,7 @@ class contenidoCreditForm(forms.ModelForm):
 		'balance':'ingrese el credito'
 		}
 		widgets={
+		'balance': forms.TextInput(attrs={'class':'form-control'}),
  			#'formato':forms.CheckboxSelectMultiple(),
  			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple

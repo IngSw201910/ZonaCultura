@@ -9,6 +9,12 @@
 	font-size: 4em;
 	
 }
+#input-search2{
+	width: 600px;
+	height: 30px;
+	text-indent: 10px;
+	margin-left: 200px;
+}
 #imgl{
 	margin-left: 100px;
 }
@@ -36,10 +42,16 @@ p{
 	border-color: black;
 
 }
-.btn-group-vertical{
+.btn3-group-vertical{
 	font-family: 'Lobster', cursive;
-	padding-left: 100px;
-	margin-left: 20px;
+	padding-left: 80px;
+	margin-top: 20px;
+	padding-top: 10px;
+	margin-left: 100px;
+	text-align: left;
+}
+.btn3-group-vertical input{
+	padding-top: 5px;
 }
 #Buscar2{
 	margin-left: 100px;

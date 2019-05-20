@@ -35,7 +35,6 @@ body{
 	padding: 20px; 
 
 }
-
 .maint{
 	font-family: 'Quicksand', sans-serif;
 }
@@ -119,7 +118,8 @@ td a{
 
 	padding-top: 20px;
 	padding-bottom: 20px;
-	padding-left: 20px;
+	padding-right: 50px;
+	padding-left: 30px;
 	margin-right: 0px;
 	margin-bottom: 50px;
 	border-style: solid;
@@ -129,6 +129,9 @@ td a{
 	color: #000;
 	background-color: #D5D5D5;
 	
+}
+.container-3 h2{
+
 }
 #ii2{
 	margin-left: 150px;

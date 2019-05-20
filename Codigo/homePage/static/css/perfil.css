@@ -1,6 +1,38 @@
 .col-12 img{
 	padding-top: 300px;
 }
-.btn-group-vertical{
-	margin-left: 350px;
+
+
+.heading{
+	text-align: center;
+	margin-top: 30px;	
+	margin-bottom: 60px;
+	position: relative;
+	font-family: 'Lobster', cursive;
+	color: #5C916B;
+	font-size: 4em;
+	
+}
+.container-7{
+
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-right: 50px;
+	padding-left: 30px;
+	margin-right: 0px;
+	margin-bottom: 50px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
+	border-radius: 4px;
+	color: #000;
+	background-color: #D5D5D5;
+	
+}
+#Comprar{
+	margin-left: 300px;
+	margin-top: 20px;
+	background-color: #5C916B;
+	font-weight: 500;
+
 }

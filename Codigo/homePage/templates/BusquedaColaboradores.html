@@ -1,13 +1,14 @@
 {% extends 'plantillaGeneral.html' %}
 {% block extrahead %}
-<link rel="stylesheet" href="static/css/diseño.css">
+<link rel="stylesheet" href="/static/css/diseño.css">
 <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+
 {% endblock %}
 {% block title %}
 Busqueda colaboradores
 {% endblock %}
 {% block content %}
-<div class="content">
+<div class="content">		
 	<h1 class="heading">Busqueda de colaboradores</h1>
 	<p>Bienvenido al buscador de colaboradores. Aquí podrá buscar diferentes artistas pertenecientes a la comundidad de ZonaCultura, acorde a su nombre de perfil o a sus diversas competencias.</p>
 </div>
@@ -15,13 +16,13 @@ Busqueda colaboradores
 
   	<form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaColaboradoresResultado">
 		{% csrf_token %}
-		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del nombre de usuario" id="input-search" name="buscarstring">
+		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del nombre de usuario" id="input-search2" name="buscarstring">
 
 		
 
-
-    <div class="btn-group-vertical" data-toggle="buttons">
-      <input type="checkbox" id = "cb1" name="check1" value="escritor" ><label id = "c1">Escritor </label>
+		
+    <div class="btn3-group-vertical" data-toggle="buttons">
+      <input type="checkbox" id = "cb1" name="check1" value="escritor" size="4"><label id = "c1">Escritor </label>
 			<input type="checkbox" id = "cb2" name="check2" value="pintor" ><label id = "c2">Pintor </label>
 			<input type="checkbox" id = "cb3" name="check3" value="escultor" ><label id = "c3">Escultor </label>
 			<input type="checkbox" id = "cb4" name="check4" value="cantante" ><label id = "c4">Cantante </label>
@@ -36,8 +37,6 @@ Busqueda colaboradores
 			<input type="checkbox" id = "cb13" name="check13" value="fotografo" ><label id = "c13">Fotografo </label>
 			<input type="checkbox" id = "cb14" name="check14" value="actor" ><label id = "c14">Actor </label>
     </div>
-
-
 		<button class="btn btn-success" type="submit" id="Buscar2">Buscar</button>
 
   </form>
