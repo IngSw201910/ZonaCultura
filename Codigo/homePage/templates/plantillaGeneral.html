@@ -1,0 +1,90 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+
+	{% block extrahead %}
+	{% endblock %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrapm.min.css' %}">
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js'%"></script>
+	<script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <link rel="stylesheet" href="static/css/paginahome.css">
+	<title>{% block title %} Document {% endblock %}</title>
+</head>
+<body>
+	
+		{% block navbar %}
+
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<a class="navbar-brand" href="/HomePage.html"><em><font size="6" color="#fff" face="Trebuchet MS" id="logo">ZonaCultura  <i class="fas fa-book"></i></font></em></a>
+			<form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaGeneral">
+			    		<div class="col-12">
+									{% csrf_token %}
+			      			<input class="form-control mr-sm-0" type="text" placeholder="Buscar obra artística por título" id="input-search" name = "buscarstring">
+			      			<button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
+			    		</div>
+			    	</form>
+						<form class="form-inline my-2 my-lg-2" method = "GET">
+			    		<div class="col-12">
+									{% csrf_token %}
+			      			<button class="btn btn-dark my-5 my-sm-0" type="submit"  value="Salir" name='Salir'id="Salir">Salir</a></button>
+			    		</div>
+			    	</form>
+			  	</div>
+		</nav>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="collapse navbar-collapse" id="navbarColor01" align="center">
+			    	<ul class="navbar-nav mr-auto">
+			      		<li class="nav-item active" id="homen">
+			        		<a class="nav-link" href="/HomePage"><i class="fas fa-home"></i> Home<span class="sr-only">(current)</span></a>
+			      		</li>
+			      		<li class="nav-item active">
+			        		<a class="nav-link" href="Perfil"><i class="fas fa-user"></i> Perfil</a>
+			      		</li>
+			      		<li class="nav-item active">
+			        		<a class="nav-link" href="/CarritoVista"><i class="fas fa-shopping-cart"></i> Compra</a>
+			      		</li>
+			          <li class="nav-item active">
+			            <a class="nav-link" href="CompraCredito"><i class="fas fa-money-bill-alt"></i> Comprar Credito</a>
+			          </li>
+			          <li class="nav-item active">
+			            <a class="nav-link" href=""><i class="fas fa-info"></i>  Contacto</a>
+			          </li>
+								<li class="nav-item active">
+									<a class="nav-link" href="BusquedaColaboradores"><i class="fas fa-user" ></i> <i class="fas fa-search"></i> Busqueda de Colaboradores</a>
+			          </li>
+								<li class="nav-item active">
+			            <a class="nav-link" href="BusquedaEspecifica"><i class="fas fa-search"></i> Busqueda Avanzada de Obras</a>
+			          </li>
+			    	</ul>
+		</nav>
+			  	
+						
+	{% endblock %}
+
+	
+	
+
+	{% block header%}
+	
+	{% endblock %}
+
+	{% block content %}
+	
+	{% endblock %}
+
+	{% block footer %}
+	
+	{% endblock %}
+
+	<script type="text/javascript"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js'%"></script>
+	<script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	{% block extrajs %}
+	{% endblock %}
+
+</body>
+</html>

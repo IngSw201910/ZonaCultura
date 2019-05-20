@@ -1,0 +1,67 @@
+
+.heading{
+	text-align: center;
+	margin-top: 30px;	
+	margin-bottom: 60px;
+	position: relative;
+	font-family: 'Lobster', cursive;
+	color: #5C916B;
+	font-size: 4em;
+	
+}
+
+.container-6{
+	margin-top: 50px;
+	padding-top: 50px;
+}
+
+p{
+	text-align: center;
+	margin-left: 200px;
+	margin-right: 200px;
+	border-color: black;
+	border-style: solid;
+	font-size: 1.5em;
+	background-color: #CAD7CE;
+}
+.container-5{
+	border-style: solid;
+	border-color: black;
+
+}
+.btn-group-vertical{
+	font-family: 'Lobster', cursive;
+	padding-left: 100px;
+	margin-left: 20px;
+}
+#Buscar2{
+	margin-left: 100px;
+}
+.container-3{
+	padding-right: 50px;
+	padding-left: 30px;
+}
+.container-3 h2{
+	text-align: center;
+	margin-bottom: 20px; 
+}
+#Comprar{
+	margin-left: 300px;
+	margin-top: 20px;
+	background-color: #5C916B;
+	font-weight: 500;
+
+}
+.btn2-group-vertical{
+	text-align: center;
+	background-image: url(../img/123.png);
+}
+.btn2-group-vertical button{
+	margin-left: 50px;
+	border-color: black;
+	border-width: 0.5em;
+	background-color: 
+}
+#p2{
+	margin-top: 50px;
+}
