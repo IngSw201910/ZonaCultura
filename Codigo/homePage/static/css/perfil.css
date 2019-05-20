@@ -37,3 +37,25 @@
 	font-weight: 500;
 
 }
+#Comprar2{
+	margin-left: 20px;
+	margin-top: 20px;
+	background-color: #5C916B;
+	font-weight: 500;
+
+}
+#Comprar3{
+
+	margin-left: 720px;
+	margin-top: 20px;
+	background-color: #5C916B;
+	font-weight: 500;
+	margin-bottom: 50px;
+
+}
+.center-block{
+	margin-bottom: 30px;
+	margin-top: 20px;
+	border-style: solid;
+	border-color: black;
+}

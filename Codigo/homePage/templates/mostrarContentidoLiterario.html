@@ -1,10 +1,11 @@
 {% extends 'plantillaGeneral.html' %}
 {% block extrahead %}
 <link rel="stylesheet" href="/static/css/diseño.css">
+<link rel="stylesheet" href="/static/css/perfil.css">
 <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
 {% endblock %}
 {% block title %}
-Home Page
+{{Libro.Titulo}}
 {% endblock %}
 {% block content %}
 <h1 class="heading">{{Libro.Titulo}}</h1>
@@ -18,26 +19,27 @@ Home Page
 <p></em><b>Idioma:</b></em> {{Libro.Idioma}} </p>
 	<center>
 			<img class="center-block" src="{{Libro.imagen.url}}" width="300" height="300" id="imgl">
-			{%if permitir == False%}
+	{%if permitir == False%}
 	<p> Descarga:</p>
 	<form method="get">  	
-	<input type="submit" value="Descargar" name="descarga" align="center">
+	<input type="submit" value="Descargar" name="descarga"  id="Comprar2">
 	</form>
-	{%endif%}
 
+	{% endif %}
+		{% if Libro.user.username == usuario.user.username %}
+			<button id="Comprar3"><a href="Editar/{{Libro.pk}}">EDITAR</a></button>
+		{% else %}
+		<form method="get">
 
-	<form method="get">  	
-	<input type="submit" value="Añadir al carrito" name="carrito" align="center">
-</form>
-	</center>
+			<input type="submit" value="Añadir al carrito" name="carrito" id="Comprar2">
+		</form>
+		{% endif %}
 
+	</center>	
 	
-	
-
-
 
 {%if hayComentarios%}
-<h2>Comentarios y calificaciones: </h2>
+<h2 align="center">Comentarios y calificaciones: </h2>
 {% for comentario in comentarios %}
 <p></p>
 <p>Usuario: {{comentario.usuarioComentador}}</p>

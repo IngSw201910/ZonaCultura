@@ -196,7 +196,10 @@ def multimedia_view(request):
 	videos=contenidoMultimedia.objects.all()
 	contexto={'videos':videos}
 	return render(request,'catalogoVideos.html',contexto)
-
+def manualidad_view(request):
+	manualidad=contenidoManualidad.objects.all()
+	contexto={'manualidad':manualidad}
+	return render(request,'catalogoMultimedia.html',contexto)
 @login_required(login_url='/')
 def subirObra_view (request):
 	return render(request,'SubirObra.html');

@@ -11,6 +11,7 @@ urlpatterns=[
 	url(r'^HomePage$', views.homePage_view, name='Home Page'),
 	url(r'^CatalogoLibros$',views.libros_view, name='catalogo libros'),
 	url(r'^CatalogoMultimedia$',views.multimedia_view, name='catalogo Videos'),
+	url(r'^CatalogoManualidades$',views.manualidad_view, name='catalogo Manualidad'),
 	url(r'^Perfil$',views.perfil_view,name='perfil'),
 	url(r'^CompraCredito$', views.comprarCredito_view, name='comprar credito'),
 	url(r'^SubirObra$', views.subirObra_view, name='Seleccion de tipo de Obra'),

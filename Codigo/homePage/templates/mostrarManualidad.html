@@ -1,44 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Manualidad {{Manualidad.title}}</title>
-</head>
-<body>
-
-
-<h1>{{Manualidad.title}}</h1>
-<p>Puntaje: {{Manualidad.puntaje}}</p>
-<p>Generos: {{generos}}</p>
-<p>Descripcion de la manualidad: {{Manualidad.title.Descripcion}}</p>
-<p>Precio: {{Manualidad.precioV}}</p>
-<p>Unidades disponibles: {{Manualidad.existencias}}</p>
-<p> Imagen: </p><img src="{{Manualidad.imagen.url}}">
-<p> Imagen: </p><img src="{{Manualidad.imagen2.url}}">
-<p> Imagen: </p><img src="{{Manualidad.imagen3.url}}">
-<p>Tipo: {{Manualidad.tipo}}</p>
-
-<p>Comentarios y calificaciones: </p>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/diseño.css">
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+{{Manualidad.title}}
+{% endblock %}
+{% block content %}
+<h1 class="heading">{{Manualidad.title}}</h1>
+<p><em><b>Puntaje:</b></em> {{Manualidad.puntaje}}</p>
+<p><em><b>Generos:</b></em> {{generos}}</p>
+<p><em><b>Descripcion de la manualidad:</b></em> {{Manualidad.title.Descripcion}}</p>
+<p><em><b>Precio:</b></em> {{Manualidad.precioV}}</p>
+<p><em><b>Unidades disponibles:</b></em> {{Manualidad.existencias}}</p>
+<p> <em><b>Imagen:</b></em> </p>
+<center>	
+<img class="center-block" src="{{Manualidad.imagen.url}}" width="300" height="300">
+<p> <em><b>Imagen:</b></em> </p>
+<img class="center-block" src="{{Manualidad.imagen2.url}}" width="300" height="300">
+<p> <em><b>Imagen:</b></em> </p>
+<img class="center-block" src="{{Manualidad.imagen3.url}}" width="300" height="300">
+</center>
+<p><em><b>Tipo:</b></em> {{Manualidad.tipo}}</p>
+{% if com %}
+<h2 align="center">Comentarios y calificaciones:</h2>
 {% for comi in com %}
 <p></p>
-<p>Usuario: {{comi.usuarioComentador}}</p>
-<p>Calificación: {{comi.califi}}</p>
-<p>Comemtario: {{comi.comentario}} <br/> {% endfor %}</p>
+<p><em><b>Usuario:</b></em> {{comi.usuarioComentador}}</p>
+<p><em><b>Calificación:</b></em> {{comi.califi}}</p>
+<p><em><b>Comemtario:</b></em> {{comi.comentario}} <br/> {% endfor %}</p>
 
-<br/>
-<a href="/HomePage">Volver a la Pagina de Inicio</a>
-<tbody>
+
+{% endif %}
 {% if Manualidad.user.username == usuario.user.username %}
-	<td><a href="Editar/{{Manualidad.pk}}">editar</td>
+	<button id="Comprar3"><a href="Editar/{{Manualidad.pk}}">EDITAR</a></button>
 {% else %}
-
 <form method="get">
 
-	<input type="submit" value="Añadir al carrito" name="carrito">
+	<input type="submit" value="Añadir al carrito" name="carrito" id="Comprar">
 </form>
 
 </tbody>
 {% endif %}
 
-
-</body>
-</html>
+{% endblock %}

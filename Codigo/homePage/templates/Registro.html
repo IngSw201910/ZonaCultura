@@ -30,7 +30,7 @@
 			<div class="col col-3"><img src="static/img/manchas.png" class="image" width="300" height="300"></div>
 			<div class="col col-6">
 				<div class="container-2 conteiner">
-					<form class="site-form" method="post">
+					<form class="site-form" method="post" enctype="multipart/form-data">
 						{% csrf_token %}
 						{{ user_form.as_ul}}
 						{{profile_form.as_ul}}
