@@ -14,6 +14,7 @@ from homePage.models import GeneroLiterario
 from homePage.models import GeneroManualidad
 from homePage.models import BusquedaString
 from homePage.models import Mensajes
+from homePage.models import Contrato
 from homePage.models import ComentarioObraLiteraria
 from django.forms import ModelForm
 
@@ -57,6 +58,19 @@ class MensajeForm (forms.ModelForm):
 		labels={
 		'Titulo':'Digitar Titulo del Mensaje',
 		'Cuerpo': 'Digitar Cuerpo del Mensaje',
+		}
+class ContratoForm (forms.ModelForm):
+	class Meta:
+		model=Contrato
+		fields=[
+		'Titulo',
+		'Cuerpo',
+		'valorOfrecido'
+		]
+		labels={
+		'Titulo':'Digitar Titulo del Contrato',
+		'Cuerpo': 'Digitar Cuerpo del Contrato',
+		'valorOfrecido': 'Digitar cuánto va a ofrecer por el contrato'
 		}
 class competenciasForm(forms.ModelForm):
 	class Meta:
@@ -265,7 +279,7 @@ class contenidoManualForm(forms.ModelForm):
 		'imagen3':'Imagen del contenido manual',
 		'tipo':'Tipo de manualidad'
 		}
-		
+
 
 class comenycaliForm(ModelForm):
 	class Meta:

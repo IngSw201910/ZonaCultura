@@ -32,9 +32,21 @@ Resultado Busqueda
               <td><a href="Producto/ContenidoLiterario/{{libro.pk}}">{{libro.pk}}</a></td>
               <td>{{libro.Titulo}}</td>
               <td>
-              {% for genero in libro.genero.all %}
-              {{genero.nombre}}
-              {% endfor %}
+                {% if libro.genero.Comedia %}
+                  Comedia
+                {% endif %}
+                {% if libro.genero.Drama %}
+                  Drama
+                {% endif %}
+                {% if libro.genero.Tragicomedia %}
+                  Tragicomedia
+                {% endif %}
+                {% if libro.genero.Terror %}
+                  Terror
+                {% endif %}
+                {% if libro.genero.Ciencia_Ficción %}
+                  Ciencia_Ficción
+                {% endif %}
               </td>
               <td>{{libro.Descripcion}}</td>
               <td>{{libro.user.username}}</td>
@@ -77,9 +89,48 @@ Resultado Busqueda
               <td><a href="Producto/ContenidoMultimedia/{{manualidad.pk}}">{{manualidad.pk}}</a></td>
               <td>{{manualidad.title}}</td>
               <td>
-              {% for genero in manualidad.genero.all %}
-              {{genero.nombre}}
-              {% endfor %}
+                {% if manualidad.genero.Bodegon %}
+                  Bodegón
+                {% endif %}
+                {% if manualidad.genero.Vanitas %}
+                  Vanitas
+                {% endif %}
+                {% if manualidad.genero.Retrato %}
+                  Retrato
+                {% endif %}
+                {% if manualidad.genero.Terror %}
+                  Terror
+                {% endif %}
+                {% if manualidad.genero.Desnudo %}
+                  Desnudo
+                {% endif %}
+                {% if manualidad.genero.Religioso %}
+                  Religioso
+                {% endif %}
+                {% if manualidad.genero.Historico %}
+                  Histórico
+                {% endif %}
+                {% if manualidad.genero.Mitologico %}
+                  Mitológico
+                {% endif %}
+                {% if manualidad.genero.Paisaje %}
+                  Paisaje
+                {% endif %}
+                {% if manualidad.genero.Funeraria %}
+                  Funeraria
+                {% endif %}
+                {% if manualidad.genero.Monumento %}
+                  Monumento
+                {% endif %}
+                {% if manualidad.genero.Estatuilla %}
+                  Estatuilla
+                {% endif %}
+                {% if manualidad.genero.Figura %}
+                  Figura
+                {% endif %}
+                {% if manualidad.genero.Relieve %}
+                  Relieve
+                {% endif %}
               </td>
               <td>{{manualidad.Descripcion}}</td>
               <td>{{manualidad.user.username}}</td>

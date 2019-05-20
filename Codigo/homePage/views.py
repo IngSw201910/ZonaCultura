@@ -96,8 +96,17 @@ def mensajeView(request, primaryKey):
 	else:
 		raise Http404
 
+@login_required(login_url='/')
+def contratoView(request, primaryKey):
+	Contrato = Contrato.objects.get(pk=primaryKey, Receptor=request.user)
 
+	if request.GET.get('responder'):
+		return redirect('/EnviarMensaje/'+str(Mensaje.Emisor.pk))
 
+	if Mensaje is not None:
+		return render(request, 'Contrato.html',{'Contrato':Contrato})
+	else:
+		raise Http404
 
 #from django.core.urlresolvers import reverse_lazy
 def index(request):

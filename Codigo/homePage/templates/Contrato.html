@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contrato</title>
+</head>
+<body>
+  <p>Titulo del Contrato: {{Contrato.Titulo}}</p>
+  <p>De: {{Contrato.Emisor.first_name}} {{Contrato.Emisor.last_name}} ({{Contrato.Emisor.username}})</p>
+  <p>
+  	Contenido del Contrato:
+  	{{Contrato.Cuerpo}}
+  </p>
+
+
+  <form method="get">
+    <input type="submit" value="Aceptar contrato" name="aceptar">
+    <input type="submit" value="Rechazar contrato" name="eliminar">
+  </form>
+</body>
+</html>
