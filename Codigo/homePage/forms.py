@@ -340,6 +340,8 @@ class comenycaliForm(ModelForm):
 		'comentario':'Comentarios acerca de la obra'
 		}
 		widgets={
+		'califi':forms.NumberInput(attrs={'class':'form-control'}),
+		'comentario':forms.TextInput(attrs={'class':'form-control'}),
  			#'formato':forms.CheckboxSelectMultiple(),
  			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
@@ -356,6 +358,8 @@ class comenycaliFormLibro(ModelForm):
 		'comentario':'Comentarios acerca de la obra'
 		}
 		widgets={
+		'califi':forms.NumberInput(attrs={'class':'form-control'}),
+		'comentario':forms.TextInput(attrs={'class':'form-control'}),
  			#'formato':forms.CheckboxSelectMultiple(),
  			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple

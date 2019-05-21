@@ -26,8 +26,8 @@
 	</form>
 
 	{% endif %}
-		{% if Libro.user.username == usuario.user.username %}
-			<button id="Comprar3"><a href="Editar/{{Libro.pk}}">EDITAR</a></button>
+		{% if User.pk == Libro.user.pk %}
+			<button id="Comprar4"><a href="/Producto/ContenidoLiterario/Editar/{{Libro.pk}}">EDITAR</a></button>
 		{% else %}
 		<form method="get">
 
@@ -51,8 +51,6 @@
  <p>No hay comentarios ni calificaciones en esta obra </p>
 {%	endif	%}
 
-{% if User.pk == Libro.user.pk%}
-	 <button id="Comprar3"><a href="/Producto/ContenidoLiterario/Editar/{{Libro.pk}}">EDITAR</a></button>
-{%endif%}
+
 
 {% endblock %}

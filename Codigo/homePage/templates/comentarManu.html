@@ -1,22 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Comentar Contenido Manual</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Comentar Manualidad
+{% endblock %}
+{% block content %}
 
-<h1>Hora de calificar {{Manualidad.title}}</h1>
-<p>Rellenar los campos del siguiente formulario para calificar {{Manualidad.title}}</p>
+<h1 class="heading">Hora de calificar {{Manualidad.title}}</h1>
 
-
-<form class="site-form" method="post"  enctype="multipart/form-data">
-  	{% csrf_token %}
-	{{ com }}
-	<input type="submit" value="Comentar">
-</form>
-
-
-
-
-</body>
-</html>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<h2>Rellenar los campos del siguiente formulario para calificar {{Manualidad.title}}</h2>
+			<form class="site-form" method="post"  enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ com.as_p }}
+				<input type="submit" value="Comentar" id="Comprar2">
+			</form>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
+{% endblock %}

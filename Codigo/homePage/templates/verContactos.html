@@ -1,25 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Lista de Contactos</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Contactos
+{% endblock %}
+{% block content %}
 
-<p>Lista de Contactos</p>
+
+<h1 class="heading">Lista de Contactos</h1>
+
 
 {% if hayContactos == False%}
-<p>No hay contactos</p>
+<h2 align="center">No hay contactos</h2>
 {% endif %}
 
 {% if hayContactos == True%}
-
-	{% for infoContacto in infoContactos %} 
-		<p> {{infoContacto.user.first_name}} {{infoContacto.user.last_name}} {{infoContacto.user.username}}</p> 
-		<form method="get">
-              <input type="submit" value="Enviar Mensaje" name="{{infoContacto.user.pk}}">
-        </form>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<center>
+				{% for infoContacto in infoContactos %} 
+				<font face="Trebuchet MS" size="5"><em><p> {{infoContacto.user.first_name}} {{infoContacto.user.last_name}} -- {{infoContacto.user.username}}</em></p></font> 
+					<form method="get">
+             	 <input type="submit" value="Enviar Mensaje"  name="{{infoContacto.user.pk}}" id="Comprar2">
+        		</form>
 	{%endfor%}
 
+		</center>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
+	
 {% endif %}
-</body>
-</html>
+{% endblock %}

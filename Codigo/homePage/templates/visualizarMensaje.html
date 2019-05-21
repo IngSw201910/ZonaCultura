@@ -1,19 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Visulizar Mensaje</title>
-</head>
-<body>
-<p>Titulo del Mensaje: {{Mensaje.Titulo}}</p>
-<p>De: {{Mensaje.Emisor.first_name}} {{Mensaje.Emisor.last_name}} ({{Mensaje.Emisor.username}})</p>
-<p>
-	Contenido del Mensaje:
-	{{Mensaje.Cuerpo}}
-</p>
-
-
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Visualizar mensaje
+{% endblock %}
+{% block content %}
+<h1 class="heading">Mensaje: </h1>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<center>
+			<h2><em>Titulo del Mensaje: <em> {{Mensaje.Titulo}}</h2>
+			<h3><em>De: </em>{{Mensaje.Emisor.first_name}} {{Mensaje.Emisor.last_name}} ({{Mensaje.Emisor.username}})</h3>
+			<h3>
+			<em>Contenido del Mensaje:</em></h3>
+			<p>
+			{{Mensaje.Cuerpo}}
+			</p>
+			</center>
 		<form method="get">
-              <input type="submit" value="Responder Mensaje" name="responder">
+              <input type="submit" value="Responder Mensaje" name="responder" id="Comprar2">
         </form>
-</body>
-</html>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
+	
+{% endblock %}

@@ -1,16 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Enviar Mensaje</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Enviar mensaje
+{% endblock %}
+{% block content %}
 
-<p>Enviar Mensaje</p>
 
-	<form class="site-form" method="post"  enctype="multipart/form-data">
-  		{% csrf_token %}
-  		{{Form}}	
-		<input type="submit" value="Enviar Mensaje">
-	</form>
-</body>
-</html>
+<h1 class="heading">Enviar Mensaje</h1>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<h2 align="center">Comunicate con respeto</h2>
+			<form class="site-form" method="post"  enctype="multipart/form-data">
+				<em>
+					{% csrf_token %}
+  					{{Form.as_p}}
+  				</em>
+				<input type="submit" value="Enviar Mensaje" id="Comprar">
+			</form>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
+
+{% endblock %}
