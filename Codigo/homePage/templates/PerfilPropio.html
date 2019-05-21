@@ -10,11 +10,22 @@ Catalogo Libros
           <div class="btn-group-vertical" data-toggle="buttons">
             <button type="button" class="btn btn-secondary"><a href="VistaComprados">Articulos Comprados</a></button>
             {% if user.es_CreadorDeContenido%}
-            <button type="button" class="btn btn-secondary"><a href="SubirObra">Subir Obras</a></button>
-            <button type="button" class="btn btn-secondary"><a href="VistaCompradores">Articulos Vendidos</a></button>
-            <button type="button" class="btn btn-secondary"><a href="VistaDonantes">Mis donaciones</a></button>
+            <button  class="btn btn-secondary"><a href="SubirObra">Subir Obras</a></button>
+            <button  class="btn btn-secondary"><a href="VistaCompradores">Articulos Vendidos</a></button>
+            <a href="VistaDonantes"><button  class="btn btn-secondary"><a href="VistaDonantes">Mis donaciones</a></button>
 
             {% endif %}
+            <form method = "GET">
+            {% if user.es_Colaborador == True%}
+                  <button  class="btn btn-secondary" type="submit"  value="Dejar de ser Colaborador" name='NoserColaborador'>Dejar de ser Colaborador</button>
+            {%endif%}
+            {% if user.es_Colaborador == False%}
+                  <button class="btn btn-secondary" type="submit"  value="Convertirse En Colaborador" name='serColaborador'>Convertirse En Colaborador</button>
+            {%endif%}
+                        </form>
+                <button class="btn btn-secondary" type="submit"  value="Contactos" name='Contacto'><a href="/Contacto">Lista de Contactos</a></button>
+                  <button class="btn btn-secondary" type="submit"  value="Bandeja de Mensajes" name='Mensajes'><a href="/BandejaEntrada">Bandeja de Mensajes</a></button>
+
           </div>
           <form class="site-form" method="post">
             {% csrf_token %}

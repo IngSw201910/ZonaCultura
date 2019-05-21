@@ -50,4 +50,9 @@
 {%if hayComentarios == False %}
  <p>No hay comentarios ni calificaciones en esta obra </p>
 {%	endif	%}
+
+{% if User.pk == Libro.user.pk%}
+	 <button id="Comprar3"><a href="/Producto/ContenidoLiterario/Editar/{{Libro.pk}}">EDITAR</a></button>
+{%endif%}
+
 {% endblock %}

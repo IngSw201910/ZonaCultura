@@ -180,9 +180,10 @@ def perfil_view(request):
 		user.es_Colaborador= False
 		user.save()
 		return redirect('/Perfil')
-
-
-
+	if request.GET.get('Mensajes'):
+		return redirect('/Contacto')
+	if request.GET.get('Contacto'):
+		return redirect('/BandejaEntrada')
 	return render(request, 'PerfilPropio.html',{'user':user})
 
 @login_required(login_url='/')
@@ -292,7 +293,7 @@ def mostrarObraLiteraria(request,primaryKey):
 		for comentario in comentarios:
 			promedioCalificacion=promedioCalificacion+comentario.califi
 		promedioCalificacion=promedioCalificacion/len(comentarios)
-	return render(request, 'mostrarContentidoLiterario.html',{'Libro':Libro,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion})
+	return render(request, 'mostrarContentidoLiterario.html',{'User':request.user,'Libro':Libro,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion})
 
 
 @login_required(login_url='/')
