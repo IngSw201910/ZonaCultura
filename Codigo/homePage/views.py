@@ -475,8 +475,8 @@ def comprados_view(request):
 			manualidades.append(item.manualidad)
 			establecerContacto(item.manualidad.user,request.user)
 			print("contacto ok")
-			infoUsu=item.manualidad.user
-			aux1=""+str(infoUsu.pk)	
+			infix=item.manualidad.user
+			aux1=""+str(infix.pk)	
 			aux1=aux1.strip()
 			#print(aux1)
 			if request.GET.get(aux1) is not None:
@@ -488,7 +488,7 @@ def comprados_view(request):
 
 
 
-	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades,'infoUsu':infoUsu})
+	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades,'infix':infix})
 @login_required(login_url='/')
 def compradores_view(request):
 	usuario= infousuario.objects.get(user = request.user)
