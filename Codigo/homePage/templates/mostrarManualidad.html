@@ -43,7 +43,11 @@
 
 	<input type="submit" value="Añadir al carrito" name="carrito" id="Comprar3">
 </form>
-
+<script>
+	{%if mensjj is not None%}
+    	alert('{{ mensjj }}');
+    {%endif%}
+</script>
 
 {% endif %}
 {% endblock %}

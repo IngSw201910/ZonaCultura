@@ -14,8 +14,9 @@ from django.http import Http404
 from django.conf import settings
 from collections import Counter
 from datetime import datetime
+from datetime import date
 import os
-
+from django.contrib import messages
 
 
 def establecerContacto(usuario1, usuario2):
@@ -302,7 +303,9 @@ def mostrarMultimedia(request,primaryKey):
 
 @login_required(login_url='/')
 def comprarCredito_view(request):
+	msj=None
 	if request.method =='POST':
+		
 		Card_Form= contenidoTarjetaForm(request.POST)
 		Credit_Form= contenidoCreditForm(request.POST)
 		if Card_Form.is_valid() and Credit_Form.is_valid():
@@ -327,7 +330,7 @@ def comprarCredito_view(request):
 											if(mesExpiracion<date.today().month):
 												print("ano",date.today().year)
 												print("vergas")
-												return HttpResponse("La tarjeta es valida pero ya esta vencida")
+												msj="La tarjeta es valida pero ya esta vencida"
 											else:
 												existe=existe+1
 										else:
@@ -344,22 +347,23 @@ def comprarCredito_view(request):
 				print("Usuario:",infousuario.objects.get(user=request.user).balance)
 
 				print("\n***********Formulario valido")
-				return HttpResponse("Comprado")
+				msj="Comprado"
 			else:
-				return HttpResponse("La tarjeta no existe o ingreso algún campo erroneo")
+				msj="La tarjeta no existe o ingreso algún campo erroneo"
 
 			#return redirect('/')
 	else:
 		Card_Form =contenidoTarjetaForm()
 		Credit_Form =contenidoCreditForm()
 
-	return render(request,'CompraCredito.html',{'card_Form':Card_Form,'credit_Form':Credit_Form})
+	return render(request,'CompraCredito.html',{'card_Form':Card_Form,'credit_Form':Credit_Form,'msj':msj})
 
 @login_required(login_url='/')
 def carrito_view(request):
 	if request.GET.get('Salir'):
 		logout(request)
 		return redirect('/')
+	mjs=None
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
 	manualidades=[]
@@ -394,6 +398,7 @@ def carrito_view(request):
 
 	if request.GET.get('carrito'):#realizar transacciones
 			#print('Hello! el libro con id: ',Libro.id)
+			
 			if usuario.balance >= total:# realizar transaccion
 				usuario.balance=usuario.balance-total
 				print(usuario.balance)
@@ -429,10 +434,17 @@ def carrito_view(request):
 				if(cantidad!=0):
 					print("hola cantidad")
 					print(cantidad)
-					return HttpResponse("No se pudieron comprar todos los elemntos, verifique quizás las existencias del articulo se agotaron ")
+					mjs="No se pudieron comprar todas las unidades, verifique las existencias del producto"
+					#return HttpResponse("No se pudieron comprar todos los elemntos, verifique quizás las existencias del articulo se agotaron ")
 				else:
-					return redirect('/CarritoVista')
+					
+					auxi=1
+					if(auxi==1):
+						
+						return redirect('/CarritoVista')
 			else:
+				mjs="Usted no posee credito suficiente "
+
 				return redirect('/CompraCredito')#pagina para comprar credito
 	elif request.GET.get('borrar'):
 		for item in carri:
@@ -461,7 +473,7 @@ def carrito_view(request):
 
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
-	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'Subtotal': total,'carrito':carri})
+	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'Subtotal': total,'carrito':carri,'mjs':mjs})
 @login_required(login_url='/')
 def comprados_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -511,6 +523,7 @@ def compradores_view(request):
 
 @login_required(login_url='/')
 def Donacion_view(request,primaryKey):
+	msj=None
 	if request.method =='POST':
 		Donacion_Form =DonacionForm(request.POST)
 		if Donacion_Form.is_valid():
@@ -534,11 +547,11 @@ def Donacion_view(request,primaryKey):
 					Usuario.save()
 					print("donit")
 					print(Usuario.balance)
-					return HttpResponse("Donacion satisfactoria")
+					msj="Donacion satisfactoria"
 				else:
 					return redirect('/CompraCredito')
 			else:
-				return HttpResponse("El usuario al que desea donar no es creador de contenido, si desea donar por favor busque un creador de contenido")
+				msj="El usuario al que desea donar no es creador de contenido, si desea donar por favor busque un creador de contenido"
 
 
 
@@ -546,7 +559,7 @@ def Donacion_view(request,primaryKey):
 	else:
 		Donacion_Form=DonacionForm()
 
-	return render(request,'VistaDonacion.html',{'UsuariBeni':infousuario.objects.get(pk=primaryKey),'Donacion_Form':Donacion_Form})
+	return render(request,'VistaDonacion.html',{'UsuariBeni':infousuario.objects.get(pk=primaryKey),'Donacion_Form':Donacion_Form,'msj':msj})
 @login_required(login_url='/')
 def mostrarUsuario(request,primaryKey):
 	try:
@@ -592,6 +605,7 @@ def SubirContenidoMultimedia_view(request):
     return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form})
 @login_required(login_url='/')
 def subirManualidades_view(request):
+	mens=None
 	if request.method =='POST':
 		Form=contenidoManualForm(request.POST, request.FILES)
 		Form2=GeneroManualidadForm(request.POST)
@@ -612,20 +626,21 @@ def subirManualidades_view(request):
 			print("\n***********Formulario valido")
 			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
 
-			return HttpResponse("Submited")
+			mens="Subida con éxito"
 		else:
 			print("\n***********Formulario no valido")
-			return HttpResponse("Fallo")
+			mens="Fallo"
 	else:
 
 		Form2=GeneroManualidadForm()
 		Form=contenidoManualForm()
-	return render(request,'SubirManualidad.html',{'Form':Form,'Form2':Form2})
+	return render(request,'SubirManualidad.html',{'Form':Form,'Form2':Form2,'mens':mens})
 
 @login_required(login_url='/')
 def mostrarManualidad(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
+	mensjj=None
 	print(primaryKey)
 	try:
 
@@ -649,7 +664,7 @@ def mostrarManualidad(request,primaryKey):
 				print(carro.manualidad.title)
 				return redirect('/CarritoVista')
 			else :
-				return HttpResponse("No se pudo añadir")
+				mensjj="No se pudo añadir"
 
 	except:
 		raise Http404
@@ -687,10 +702,11 @@ def mostrarManualidad(request,primaryKey):
 	if listaDeGeneros.Relieve==True :
 		aux=aux+'Relieve '
 
-	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad,'com':com,'usuario':usuario,'generos':aux})
+	return render(request, 'mostrarManualidad.html' ,{'Manualidad':Manualidad,'com':com,'usuario':usuario,'generos':aux,'mensjj':mensjj})
 
 @login_required(login_url='/')
 def editarManualidades_view(request,primaryKey):
+	mensjj=None
 	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 	print("aca llegue2")
 	if Manualidad.user.pk != request.user.pk: ##LO AGREGO SANTIAGO
@@ -710,20 +726,21 @@ def editarManualidades_view(request,primaryKey):
 			print("\n***********Formulario valido")
 			print("Obra",producto.title," subida, y le quedo una llave primaria de:", producto.id)
 
-			return HttpResponse("Submited")
+			mensjj="Submited"
 		else:
 			Form = EmpleadoForm(instance=Manualidad)
 			print("\n***********Formulario no valido")
-			return HttpResponse("Fallo")
+			mensjj="Fallo"
 	else:
 		Form2=GeneroManualidadForm(instance=Manualidad.genero)
 		Form=contenidoManualForm(instance=Manualidad)
 
-	return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
+	return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2,'mensjj':mensjj})
 
 
 @login_required(login_url='/')
 def comentarios_calificacionLibro(request,primaryKey):
+	mensaje=None
 	Libro=infoLibro.objects.get(pk=primaryKey)
 	usu = infousuario.objects.get(user = request.user)
 
@@ -733,7 +750,7 @@ def comentarios_calificacionLibro(request,primaryKey):
 		if  len(aux) >0:
 			if request.method =='POST':
 				if(Libro.user.username==usu.user.username):
-					return HttpResponse("No puede comentar su propia obra")
+					mensaje="No puede comentar su propia obra"
 				else:
 					com= comenycaliFormLibro(request.POST)
 					if com.is_valid():
@@ -742,7 +759,7 @@ def comentarios_calificacionLibro(request,primaryKey):
 						comentario.usuarioComentador=usu
 						comentario.save()
 						print("\n***********Formulario valido")
-						return HttpResponse("Comentario enviado")
+						mensaje="Comentario enviado"
 					#return redirect('/')
 			else:
 				com = comenycaliFormLibro()
@@ -750,16 +767,19 @@ def comentarios_calificacionLibro(request,primaryKey):
 			raise Http404
 	else:
 		raise Http404
-	return render(request,'comentarLibro.html',{'com':com,'Libro':Libro})
+	return render(request,'comentarLibro.html',{'com':com,'Libro':Libro,'mensaje':mensaje})
 
 @login_required(login_url='/')
 def comentarios_calificacionManu(request,primaryKey):
+	M=None
+	com=None
+
 	Manualidad=contenidoManualidad.objects.get(pk=primaryKey)
 	usu = infousuario.objects.get(user = request.user)
 
 	if request.method =='POST':
 		if(Manualidad.user.username==usu.user.username):
-			return HttpResponse("No puede comentar su propia obra")
+			M="No puede comentar su propia obra"
 		else:
 			com= comenycaliForm(request.POST)
 			if com.is_valid():
@@ -779,12 +799,12 @@ def comentarios_calificacionManu(request,primaryKey):
 				comentar= data.get("comentario")
 				cc=Comentario.objects.create(manu=Manualidad,califi=calif,comentario=comentar,usuarioComentador=usu)
 				print("\n***********Formulario valido")
-				return HttpResponse("Comentario enviado")
+				M="Comentario enviado"
 			#return redirect('/')
 	else:
 		com =comenycaliForm()
 
-	return render(request,'comentarManu.html',{'com':com,'Manualidad':Manualidad})
+	return render(request,'comentarManu.html',{'com':com,'Manualidad':Manualidad,'M':M})
 
 @login_required(login_url='/')
 def editarContenidoLiterario_view(request,primaryKey):

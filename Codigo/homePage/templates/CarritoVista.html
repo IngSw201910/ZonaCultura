@@ -30,7 +30,7 @@ Carrito
               <h2><em><font face="Trebuchet MS" size="5"> Obras Manuales</font></em></h2>
             {% for Manual in manualidades %}
             <p><font face="Trebuchet MS" size="4">Nombre Obra Manualidad:  </font> <font face="Trebuchet MS"  color="046C4F" size="3">{{Manual.title}}</font></p>
-            <p><font face="Trebuchet MS" size="4">Precio:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Manual.precioV}}</font>
+            <p><font face="Trebuchet MS" size="4">Precio:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Manual.precioV}}</font><p><font face="Trebuchet MS" size="4">Existencias:  </font>  <font face="Trebuchet MS" color="046C4F" size="3">{{Manual.existencias}}</font>
             <form method="get">
               <input type="submit" value="Eliminar del carrito" name="Manual{{Manual.pk}}">
 
@@ -53,5 +53,9 @@ Carrito
 	</div>
 </div>
 
-
+<script>
+	{%if mjs is not None%}
+    	alert('{{ mjs }}');
+    {%endif%}
+</script>
 {% endblock %}
