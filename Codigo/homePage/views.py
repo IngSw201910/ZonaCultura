@@ -130,7 +130,12 @@ def index(request):
 		acceso= authenticate(username=nombreUsuario, password=Contrasenia)
 		if acceso is not None:
 		#----------------------------------------------------------------------------------
+
 			sesionPotencial= User.objects.get(username =nombreUsuario)
+			print("Cuenta cerrada? "+ str(infousuario.objects.get(user =sesionPotencial).cuantaCerrada)  )
+			if infousuario.objects.get(user =sesionPotencial).cuantaCerrada:
+			    msj="La cuenta de la que está tratando de acceder esta cerrada"
+			    return render(request, 'paginaInicio.html',{'form':form,"msj":msj})
 			if infousuario.objects.get(user =sesionPotencial).tieneCuentaActivada:
 				login(request,acceso)
 				return redirect('/')#TODO: return pagina de inicio despues de iniciar sesion
@@ -138,6 +143,7 @@ def index(request):
 				msj="La cuenta todavia no ha sido activada, por favor revisar correo"
 				return render(request, 'paginaInicio.html',{'form':form,"msj":msj})
 
+			
 		#-------------------------------------------------------------------------------------n redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
 			return HttpResponse("Usuario o contraseña no coincide/existe")
@@ -228,8 +234,25 @@ def perfil_view(request):
 		return redirect('/Contacto')
 	if request.GET.get('Contacto'):
 		return redirect('/BandejaEntrada')
+	if request.GET.get('cerrarcuenta'):
+		return redirect('/CerrarCuenta')
 	return render(request, 'PerfilPropio.html',{'user':user})
 
+
+
+
+
+@login_required(login_url='/')
+def cerrarCuenta_view(request):
+	if request.GET.get('Si'):
+		aux=infousuario.objects.get(user=request.user)
+		aux.cuantaCerrada=True
+		aux.save()
+		logout(request)
+		return redirect('/')
+	if request.GET.get('No'):
+		return redirect('/Perfil')
+	return render(request,'cerrarcuenta.html')
 @login_required(login_url='/')
 def libros_view(request):
 	libros=infoLibro.objects.all()

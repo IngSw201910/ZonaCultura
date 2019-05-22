@@ -136,7 +136,7 @@ class infousuario(models.Model):
 	tieneCuentaActivada=models.BooleanField(default=True)
 	balance= models.IntegerField(default=0,validators=[MinValueValidator(50)])
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
-	descripcion=models.TextField(max_length=130, default="")
+	descripcion=models.TextField(max_length=130, default="",blank=True, null=True)
 	aficiones= models.ForeignKey(competencias,on_delete=models.CASCADE,null=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)
 	profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
