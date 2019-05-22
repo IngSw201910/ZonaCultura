@@ -103,6 +103,19 @@ class RegistroForm(UserCreationForm):
 		'last_name': 'Apellidos',
 		'email':'Correo electronico',
 		}
+class RegistroForm2(UserCreationForm):
+	class Meta:
+		model= User
+		fields=[
+		'first_name',
+		'last_name',
+		]
+		labels={
+		'username':'Nombre de Usuario',
+		'first_name':'Nombres',
+		'last_name': 'Apellidos',
+		'email':'Correo electronico',
+		}
 class MensajeForm (forms.ModelForm):
 	class Meta:
 		model=Mensajes
@@ -247,17 +260,39 @@ class infoForm(forms.ModelForm):
  	class Meta:
  		model=infousuario
  		fields=[
+ 		'descripcion',
+ 		'numeroTelefono',
  		'es_CreadorDeContenido',
- 		'profile_img'
+ 		'profile_img',
  		 ]
 
  		labels={
+ 		'descripcion':'Poner aqui una descripcion personal (opcional)',
+ 		'numeroTelefono':'Digitar numero telefonico (opcional)',
  		'es_CreadorDeContenido' : 'Quiere ser creador de contenido',
  		'profile_img': 'Imagen de Perfil'
  		   }
  		widgets={
 
  		}
+class infoForm2(forms.ModelForm):
+ 	class Meta:
+ 		model=infousuario
+ 		fields=[
+ 		'descripcion',
+ 		'numeroTelefono',
+ 		'profile_img',
+ 		 ]
+
+ 		labels={
+ 		'descripcion':'Poner aqui una descripcion personal (opcional)',
+ 		'numeroTelefono':'Digitar numero telefonico (opcional)',
+ 		'profile_img': 'Imagen de Perfil'
+ 		   }
+ 		widgets={
+
+ 		}
+
 class contenidoTarjetaForm(forms.ModelForm):
 	class Meta:
 		model=infoTarjeta

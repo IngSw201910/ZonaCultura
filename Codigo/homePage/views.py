@@ -170,6 +170,7 @@ def registro_view(request):
 			profile.user=user
 			#-------------------------------------------------
 			profile.tieneCuentaActivada=False
+			profile.cuentaCerrada=False
 			if profile.es_CreadorDeContenido :
 				if "@javeriana.edu.co" in profile.user.email:
 					print('pass')
@@ -217,6 +218,8 @@ def perfil_view(request):
 		user.es_Colaborador= True
 		user.save()
 		return redirect('/Perfil')
+	if request.GET.get('editarperfil'):
+		return redirect('/EditarUsuario')
 	if request.GET.get('NoserColaborador'):
 		user.es_Colaborador= False
 		user.save()
@@ -997,9 +1000,9 @@ def editarUsuarioInfo(request):
 	#asegurarse que el usuario sea el mismo
 	usuario=infousuario.objects.get(user=request.user)
 	if request.method =='POST':
-		Form=RegistroForm(request.POST,instance=usuario.user)
+		Form=RegistroForm2(request.POST,instance=usuario.user)
 		Form2=competenciasForm(request.POST,instance=usuario.aficiones)
-		Form3=infoForm(request.POST,request.FILES,instance=usuario)
+		Form3=infoForm2(request.POST,request.FILES,instance=usuario)
 		print("aca llegue")
 		if Form.is_valid():
 			user=Form.save()
@@ -1013,9 +1016,9 @@ def editarUsuarioInfo(request):
 			print("\n***********Formulario no valido")
 			return HttpResponse("Fallo")
 	else:
-		Form=RegistroForm(instance=usuario.user)
+		Form=RegistroForm2(instance=usuario.user)
 		Form2=competenciasForm(instance=usuario.aficiones)
-		Form3=infoForm(instance=usuario)
+		Form3=infoForm2(instance=usuario)
 	return render(request,'Registro2.html',{'user_form':Form,'competencias_Form':Form2,'profile_form':Form3})
 
 @login_required(login_url='/')

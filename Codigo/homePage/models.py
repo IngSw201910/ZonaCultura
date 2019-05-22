@@ -132,13 +132,16 @@ class contenidoMultimedia(models.Model):
 	genero=models.ForeignKey(GeneroMultimedia, on_delete=models.SET_NULL, null=True)
 
 class infousuario(models.Model):
+	cuantaCerrada=models.BooleanField(default=False)
 	tieneCuentaActivada=models.BooleanField(default=True)
 	balance= models.IntegerField(default=0,validators=[MinValueValidator(50)])
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
+	descripcion=models.TextField(max_length=130, default="")
 	aficiones= models.ForeignKey(competencias,on_delete=models.CASCADE,null=True)
 	es_CreadorDeContenido= models.BooleanField(default=False)
 	profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
 	es_Colaborador= models.BooleanField(default=False)
+	numeroTelefono=models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000000),MaxValueValidator(9999999999)])
 
 	def __str__(self):
 		return'{}'.format(self.user.first_name + ' '+self.user.last_name)
