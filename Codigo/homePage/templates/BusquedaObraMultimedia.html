@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Búsqueda de obras multimedia</title>
-</head>
-<body>
-  <p>Bienvenido al buscador de obras multimedia Aquí podrá buscar obras literarias acorde a sus títulos y/o acorde al
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/diseño.css">
+{% endblock %}
+{% block title %}
+Busqueda Multimedia
+{% endblock %}
+{% block content %}
+<p id="p2">Bienvenido al buscador de obras multimedia. Aquí podrá buscar videos acorde a sus títulos y/o acorde al
   género (o géneros) al que pertenesca(n).</p>
 
-  <form class="site-form" enctype="multipart/form-data" method = "POST" action="/BusquedaObraMultimediaResultado">
+  <form class="form-inline my-2 my-lg-2" method = "POST" action="/BusquedaObraMultimediaResultado">
 		{% csrf_token %}
-		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search" name="buscarstring">
-    <div class="btn-group-vertical" data-toggle="buttons">
+		<input class="form-control mr-sm-0" type="text" placeholder="Escribe una palabra clave del título" id="input-search2" name="buscarstring">
 
-      <input type="checkbox" id = "cb1" name="check1" value="comedia" ><label id = "c1">Comedia </label>
+
+    <div class="btn3-group-vertical" data-toggle="buttons">
+			<input type="checkbox" id = "cb1" name="check1" value="comedia" ><label id = "c1">Comedia </label>
 			<input type="checkbox" id = "cb2" name="check2" value="drama" ><label id = "c2">Drama </label>
 			<input type="checkbox" id = "cb3" name="check3" value="retrato" ><label id = "c3">Retrato </label>
 			<input type="checkbox" id = "cb4" name="check4" value="terror" ><label id = "c4">Terror </label>
@@ -29,12 +32,11 @@
 			<input type="checkbox" id = "cb15" name="check15" value="infantil" ><label id = "c15">Infantil </label>
 			<input type="checkbox" id = "cb16" name="check16" value="sociopolitico" ><label id = "c16">Sociopolítico </label>
 			<input type="checkbox" id = "cb17" name="check17" value="animacion" ><label id = "c17">Animación </label>
-
     </div>
-    <button class="btn btn-success" type="submit" id="Buscar">Buscar</button>
-    <br>
-    <br>
+
+		<br>
+
+		<button class="btn btn-success" type="submit" id="Buscar2">Buscar</button>
+ 
   </form>
-   <a href="BusquedaEspecifica">Regresar</a>
-</body>
-</html>
+{% endblock %}

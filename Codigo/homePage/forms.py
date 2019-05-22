@@ -17,6 +17,7 @@ from homePage.models import BusquedaString
 from homePage.models import Mensajes
 from homePage.models import Contrato
 from homePage.models import ComentarioObraLiteraria
+from homePage.models import ComentarioMultimedia
 from django.forms import ModelForm
 
 
@@ -24,7 +25,7 @@ from django.forms import ModelForm
 class logInForm (forms.Form):
 	nombreUsuario=forms.CharField(max_length=150, required=True, label ="Nombre de Usuario",widget=(forms.TextInput()))
 	contraseniaUsuario= forms.CharField(max_length=150, required=True, label= "Contraseña",widget=(forms.PasswordInput()))
-class generoMulimediaForm(forms.ModelForm):
+class GeneroMultimediaForm(forms.ModelForm):
 	class Meta:
 		model=GeneroMultimedia
 		fields=[
@@ -401,6 +402,24 @@ class comenycaliForm(ModelForm):
 class comenycaliFormLibro(ModelForm):
 	class Meta:
 		model=ComentarioObraLiteraria
+		fields= [
+		'califi',
+		'comentario'
+		]
+		labels={
+		'califi': 'Puntaje de 1-5',
+		'comentario':'Comentarios acerca de la obra'
+		}
+		widgets={
+		'califi':forms.NumberInput(attrs={'class':'form-control'}),
+		'comentario':forms.TextInput(attrs={'class':'form-control'}),
+ 			#'formato':forms.CheckboxSelectMultiple(),
+ 			#'genero': forms.CheckboxSelectMultiple(),
+ 			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple
+ 		}
+class comenycaliFormVideo(ModelForm):
+	class Meta:
+		model=ComentarioMultimedia
 		fields= [
 		'califi',
 		'comentario'

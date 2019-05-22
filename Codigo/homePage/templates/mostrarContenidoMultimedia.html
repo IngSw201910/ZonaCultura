@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>video {{video.title}}</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/diseño.css">
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+{{video.title}}
+{% endblock %}
+{% block content %}
+<h1 class="heading">{{video.title}}</h1>
+{%if hayComentarios%}
+<p><em><b>Puntaje:</b></em>{{promedioCalificacion}}</p>
+{%endif%}
+<p><em><b>Generos:</b></em> {{generos}}</p>
+<p><em><b>Precio:</b></em> {{video.precioV}}</p>
+<p><em><b>Descripcion del video:</b></em> {{video.descripcion}}</p>
+<p><em><b>Formato:</b></em> {{video.Formato}}</p>
+	<center>
+			<img class="center-block" src="{{Libro.imagen.url}}" width="300" height="300" id="imgl">
+	{%if permitir == False%}
+	<p> Ver video:</p>
+	<form method="get">  	
+	<input type="submit" value="ver" name="ver"  id="Comprar2">
+	</form>
 
+	{% endif %}
+		{% if User.pk == video.user.pk %}
+			<button id="Comprar4"><a href="/">EDITAR</a></button>
+		{% else %}
+		<form method="get">
+
+			<input type="submit" value="Añadir al carrito" name="carrito" id="Comprar2">
+		</form>
+		{% endif %}
+
+	</center>	
+	
+
+{%if hayComentarios%}
+<h2 align="center">Comentarios y calificaciones: </h2>
+{% for comentario in comentarios %}
+<p></p>
+<p>Usuario: {{comentario.usuarioComentador}}</p>
+<p>Calificación: {{comentario.califi}}</p>
+<p>Comentario: {{comentario.comentario}} <br/> {% endfor %}</p>
+{%endif%}
+
+{%if hayComentarios == False %}
+ <p>No hay comentarios ni calificaciones en esta obra </p>
+{%	endif	%}
+
+
+
+{% endblock %}
 
 <h1>{{video.title}}</h1>
 <p>Descripcion del video: {{video.descripcion}}</p>

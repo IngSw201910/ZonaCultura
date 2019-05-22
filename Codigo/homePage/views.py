@@ -343,8 +343,90 @@ def mostrarObraLiteraria(request,primaryKey):
 
 @login_required(login_url='/')
 def mostrarMultimedia(request,primaryKey):
-	video=contenidoMultimedia.objects.get(pk=primaryKey)
-	return render(request,'mostrarContenidoMultimedia.html',{'video':video})
+	#allObjects=infoLibro.objects.all()
+	#print([p.pk for p in allObjects])
+	print(primaryKey)
+
+
+	try:
+		video=contenidoMultimedia.objects.get(pk=primaryKey)
+
+
+
+		if(ArticulosComprados.objects.filter(usuario=infousuario.objects.get(user = request.user),multimedia=video).first() is not None):
+			permitir=False
+			print('lo tiene')
+		else:
+			permitir=True
+			print('no lo tiene')
+		if request.GET.get('ver'):
+			return redirect('/')
+
+		if request.GET.get('carrito'):
+			print('Hello! el vvibro con id: ',video.id)
+			c=Carrito.objects.filter(multimedia=video,usuario=infousuario.objects.get(user=request.user)).first()
+			print(c)
+			if c is None :
+				carro=Carrito.objects.create(multimedia= video, usuario=infousuario.objects.get(user=request.user))
+				return redirect('/CarritoVista')
+			else:
+				return HttpResponse("Usted ya tiene este elemento en el carrito")
+			#carro.usuario=infousuario.objects.get(user=request.user)
+			#print("Usuario:",infousuario.objects.get(user=request.user).id)
+	except:
+		print('pppp')
+		raise Http404
+	listaDeGeneros= video.genero
+	print(listaDeGeneros)
+	aux=''
+	if listaDeGeneros.Comedia==True :
+		print('Es de Comedia')
+		aux=aux+'Comedia'
+	if listaDeGeneros.Drama==True :
+		aux=aux+'Drama'
+	if listaDeGeneros.Retrato==True :
+		aux=aux+'Retrato '
+	if listaDeGeneros.Terror==True :
+		aux=aux+'Terror '
+	if listaDeGeneros.CienciaFiccion==True :
+		aux=aux+'Ciencia Ficción '
+	if listaDeGeneros.Accion==True :
+		aux=aux+'Accion'
+	if listaDeGeneros.Belico==True :
+		aux=aux+'Belico'
+	if listaDeGeneros.Aventura==True :
+		aux=aux+'Aventura'
+	if listaDeGeneros.DelOeste==True :
+		aux=aux+'DelOeste'
+	if listaDeGeneros.ArtesMarciales==True :
+		aux=aux+'Artes Marciales'
+	if listaDeGeneros.Fantastico==True :
+		aux=aux+'Fantastico'
+	if listaDeGeneros.Suspenso==True :
+		aux=aux+'Suspenso'
+	if listaDeGeneros.Historico==True :
+		aux=aux+'Historico'
+	if listaDeGeneros.Adolescente==True :
+		aux=aux+'Adolescente'
+	if listaDeGeneros.Infantil==True :
+		aux=aux+'Infantil'
+	if listaDeGeneros.Político_Social==True :
+		aux=aux+'Político Social'
+	if listaDeGeneros.Animacion==True :
+		aux=aux+'Animacion'
+	comentarios=ComentarioMultimedia.objects.filter(video=video)
+	hayComentarios=True
+	promedioCalificacion=0
+	if len(comentarios)== 0:
+		hayComentarios=False
+	else:
+		for comentario in comentarios:
+			promedioCalificacion=promedioCalificacion+comentario.califi
+		promedioCalificacion=promedioCalificacion/len(comentarios)
+	return render(request, 'mostrarContenidoMultimedia.html',{'User':request.user,'video':video,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion})
+
+
+	
 
 @login_required(login_url='/')
 def comprarCredito_view(request):
@@ -412,6 +494,7 @@ def carrito_view(request):
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
 	manualidades=[]
+	multimedias=[]
 	carri=Carrito.objects.filter(usuario= infousuario.objects.get(user = request.user))
 	cantidad=0
 	for item in carri:
@@ -421,7 +504,9 @@ def carrito_view(request):
 		if( item.manualidad is not None):
 			manualidades.append(item.manualidad)
 			cantidad=cantidad+1
-
+		if( item.multimedia is not None):
+			multimedias.append(item.multimedia)
+			cantidad=cantidad+1
 
 	total=0
 
@@ -433,7 +518,8 @@ def carrito_view(request):
 	for m in manualidades:
 		if(m.existencias!=0):
 			total=total+m.precioV
-
+	for v in multimedias:
+			total=total+v.precioV
 		#print(usuario.balance)
 	#if request.GET.get('name'):
 	#		produc=infoLibro.objects.get(Titulo=request.libro.Titulo)
@@ -444,53 +530,59 @@ def carrito_view(request):
 	if request.GET.get('carrito'):#realizar transacciones
 			#print('Hello! el libro con id: ',Libro.id)
 			
-			if usuario.balance >= total:# realizar transaccion
-				usuario.balance=usuario.balance-total
-				print(usuario.balance)
-				usuario.save()
-				for q in libros:
-					p=infousuario.objects.get(user = q.user)
-					p.balance=p.balance+q.PrecioLibro
-					p.save()
-				for n in manualidades:
-					if(n.existencias!=0):
-						m=infousuario.objects.get(user=n.user)
-						m.balance=m.balance+n.precioV
+            if usuario.balance >= total:# realizar transaccion
+                usuario.balance=usuario.balance-total
+                print(usuario.balance)
+                usuario.save()
+                for q in libros:
+                    p=infousuario.objects.get(user = q.user)
+                    p.balance=p.balance+q.PrecioLibro
+                    p.save()
+                for n in manualidades:
+                    if(n.existencias!=0):
+                        m=infousuario.objects.get(user=n.user)
+                        m.balance=m.balance+n.precioV
+                for v in multimedias:
+                    r=infousuario.objects.get(user=v.user)
+                    r.balance=r.balance+v.precioV
 
-
-
-				for item in carri:
-					if(item.libro is not None):
-						ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
-						usuarioD= infousuario.objects.get(user =item.libro.user)
-						Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
-						item.delete()
-						cantidad=cantidad-1
-					if(item.manualidad is not None and item.manualidad.existencias !=0):
-						ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
-						usuarioDd= infousuario.objects.get(user =item.manualidad.user)
-						item.manualidad.existencias=item.manualidad.existencias-1
-						item.manualidad.save()
-						Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
-						item.delete()
-						cantidad=cantidad-1
-				print("hola cssantidad")
-				print(cantidad)
-				if(cantidad!=0):
-					print("hola cantidad")
-					print(cantidad)
-					mjs="No se pudieron comprar todas las unidades, verifique las existencias del producto"
+                for item in carri:
+                    if(item.libro is not None):
+                        ArticulosComprados.objects.create(libro= item.libro, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
+                        usuarioD= infousuario.objects.get(user =item.libro.user)
+                        Compradores.objects.create(libro=item.libro,usuarioDuenio=usuarioD,usuarioComprador=usuario)
+                        item.delete()
+                        cantidad=cantidad-1
+                    if(item.manualidad is not None and item.manualidad.existencias !=0):
+                        ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
+                        usuarioDd= infousuario.objects.get(user =item.manualidad.user)
+                        item.manualidad.existencias=item.manualidad.existencias-1
+                        item.manualidad.save()
+                        Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
+                        item.delete()
+                        cantidad=cantidad-1
+                    if(item.multimedia is not None ):
+                        ArticulosComprados.objects.create(multimedia= item.multimedia, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
+                        usuarioDd= infousuario.objects.get(user =item.multimedia.user)
+                        item.multimedia.save()
+                        Compradores.objects.create(multimedia=item.multimedia,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
+                        item.delete()
+                        cantidad=cantidad-1
+                    print("hola cssantidad")
+                    print(cantidad)
+                if(cantidad!=0):
+                    print("hola cantidad")
+                    print(cantidad)
+                    mjs="No se pudieron comprar todas las unidades, verifique las existencias del producto"
 					#return HttpResponse("No se pudieron comprar todos los elemntos, verifique quizás las existencias del articulo se agotaron ")
-				else:
+                else:
 					
-					auxi=1
-					if(auxi==1):
-						
-						return redirect('/CarritoVista')
-			else:
-				mjs="Usted no posee credito suficiente "
-
-				return redirect('/CompraCredito')#pagina para comprar credito
+                    auxi=1
+                    if(auxi==1):
+                       return redirect('/CarritoVista')
+            else:
+            	mjs="Usted no posee credito suficiente "
+            	return redirect('/CompraCredito')#pagina para comprar credito
 	elif request.GET.get('borrar'):
 		for item in carri:
 			item.delete()
@@ -514,11 +606,19 @@ def carrito_view(request):
 				carr=Carrito.objects.filter(manualidad=manual,usuario=usuario)
 				carr[0].delete()
 				return redirect('/CarritoVista')
+		for video in multimedias:
+			aux2="Video"+str(video.pk)
+			aux2=aux2.strip()
+			if request.GET.get(aux2) is not None:
+				print('Encontro articulo')
+				carr=Carrito.objects.filter(multimedia=video,usuario=usuario)
+				carr[0].delete()
+				return redirect('/CarritoVista')
 
 
 	#print("Total ",total )
 	#print([p.Titulo for p in libros])
-	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'Subtotal': total,'carrito':carri,'mjs':mjs})
+	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'multimedias':multimedias,'Subtotal': total,'carrito':carri,'mjs':mjs})
 @login_required(login_url='/')
 def comprados_view(request):
 	usuario= infousuario.objects.get(user = request.user)
@@ -640,14 +740,23 @@ def AquienDone_view(request):
 
 def SubirContenidoMultimedia_view(request):
     if request.method=='POST':
-        multimedia_form=contenidoMultimediaForm(request.POST)
+        multimedia_form=contenidoMultimediaForm(request.POST, request.FILES)
+        multimedia_form2=GeneroMultimediaForm(request.POST)
         if multimedia_form.is_valid():
+            generos=multimedia_form2.save()
+            producto=multimedia_form.save(commit=False)
+            producto.user=request.user
+            producto.genero=generos
+            producto.save()
             return HttpResponse("Submited")
         else:
+            print("\n***********Formulario no valido")
+            mens="Fallo"
             return HttpResponse("Fallo")
     else:
         multimedia_form=contenidoMultimediaForm()
-    return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form})
+        multimedia_form2=GeneroMultimediaForm()
+    return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form, 'multimedia_form2':multimedia_form2})
 @login_required(login_url='/')
 def subirManualidades_view(request):
 	mens=None

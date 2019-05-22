@@ -16,7 +16,8 @@ Subir Video
 				<form class="site-form" method="post"  enctype="multipart/form-data">
 
 							{% csrf_token %}
-							{{ multimedia_form.as_p}}	
+							{{ multimedia_form.as_p}}
+							{{multimedia_form2.as_p}}	
 
 				<input type="submit" value="Subir producto" id="Comprar">
 				</form>
