@@ -122,6 +122,7 @@ class infoLibro(models.Model):
 	def __str__(self):
 		return'{}'.format(self.Titulo)
 class infousuario(models.Model):
+	tieneCuentaActivada=models.BooleanField(default=True)
 	balance= models.IntegerField(default=0,validators=[MinValueValidator(50)])
 	user= models.OneToOneField (User,on_delete=models.CASCADE)
 	aficiones= models.ForeignKey(competencias,on_delete=models.CASCADE,null=True)

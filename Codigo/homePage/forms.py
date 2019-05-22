@@ -187,6 +187,7 @@ class contenidoLiterarioForm(forms.ModelForm):
 		model=infoLibro
 		fields=[
 		'Titulo',
+		'PrecioLibro',
 		'imagen',
 		'archivo',
 		'Descripcion',
@@ -197,6 +198,7 @@ class contenidoLiterarioForm(forms.ModelForm):
 		labels={
 		'archivo':'Archivo del contenido literario (Solo acepta formato pdf)',
 		'Titulo':'Titulo',
+		'PrecioLibro':'Digitar el precio del libro',
 		'imagen':'Imagen del contenido literario',
 		'Descripcion':'Descripcion',
 		'ISBN':'Numero ISBN',

@@ -48,6 +48,7 @@ urlpatterns=[
 	path('BandejaEntrada', views.bandejaView),
 	path('BandejaEntrada/<int:primaryKey>', views.mensajeView),
 	path('Producto/ContenidoManualidad/Comentar/<int:primaryKey>', views.comentarios_calificacionManu),
+	path('ActivarCuenta/<int:codigo>',views.activarCueta_view),
 # Create your views here.
 		]
 urlpatterns += staticfiles_urlpatterns()

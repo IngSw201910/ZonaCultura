@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import CreateView
@@ -20,8 +21,10 @@ from django.contrib import messages
 
 
 def establecerContacto(usuario1, usuario2):
-	Contactos.objects.create(Pasivo=usuario2, Activo=usuario1)
-	Contactos.objects.create(Activo=usuario2, Pasivo=usuario1)
+	if len(Contactos.objects.filter(Activo=usuario1, Pasivo=usuario2) )== 0 :
+		Contactos.objects.create(Pasivo=usuario2, Activo=usuario1)
+		Contactos.objects.create(Activo=usuario2, Pasivo=usuario1)
+
 @login_required(login_url='/')
 def vistaContactos(request):
 	infoContactos=[]
@@ -126,8 +129,16 @@ def index(request):
 		print(Contrasenia)
 		acceso= authenticate(username=nombreUsuario, password=Contrasenia)
 		if acceso is not None:
-			login(request,acceso)
-			return redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
+		#----------------------------------------------------------------------------------
+			sesionPotencial= User.objects.get(username =nombreUsuario)
+			if infousuario.objects.get(user =sesionPotencial).tieneCuentaActivada:
+				login(request,acceso)
+				return redirect('/')#TODO: return pagina de inicio despues de iniciar sesion
+			else:
+				msj="La cuenta todavia no ha sido activada, por favor revisar correo"
+				return render(request, 'paginaInicio.html',{'form':form,"msj":msj})
+
+		#-------------------------------------------------------------------------------------n redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
 			return HttpResponse("Usuario o contraseña no coincide/existe")
 	else:
@@ -135,7 +146,14 @@ def index(request):
 	return render(request, 'paginaInicio.html',{'form':form})
 # Create your views here.
 
-
+#--------------------------------------------Activar cuenta
+def activarCueta_view(request,codigo):
+	idcuenta=codigo/12345
+	aux=infousuario.objects.get(pk=idcuenta)
+	aux.tieneCuentaActivada=True
+	aux.save()
+	return HttpResponse (aux.user.username+",Su cuenta ha sido activada")
+#----------------------------------------------
 
 def registro_view(request):
 	if request.method =='POST':
@@ -143,13 +161,35 @@ def registro_view(request):
 		User_Form= RegistroForm(request.POST)
 		Info_Form=infoForm(request.POST,request.FILES)
 		if User_Form.is_valid() and Info_Form.is_valid():
-			user=User_Form.save()
-			competencias=Competencias_Form.save()
+			#---------------------------------------------------
+			user=User_Form.save(commit=False)
+			competencias=Competencias_Form.save(commit=False)
 			profile=Info_Form.save(commit=False)
+			#---------------------------------------------------
 			profile.aficiones=competencias
 			profile.user=user
+			#-------------------------------------------------
+			profile.tieneCuentaActivada=False
+			if profile.es_CreadorDeContenido :
+				if "@javeriana.edu.co" in profile.user.email:
+					print('pass')
+				else:
+					msj="Para ser creador de contenido debes poner un correo de extension @javeriana.edu.co"
+					return render(request,'Registro.html', {'competencias_Form':Competencias_Form,'user_form':User_Form, 'profile_form':Info_Form,'msj':msj})
+			user.save()
+			competencias.save()
+			profile.aficiones=competencias
+			profile.user=user
+			#-------------------------------------------
 			profile.save()
-			return redirect('/')
+			#Enviar correo de confirmacion----------------------------------------------
+			subject="Zona Cultura: Correo de confirmacion"
+			message="¡Bienvenido a nuestra comunidad! Para confirmar su cuenta porfavor ir a la pagina: \n"+"http://schaparrop.pythonanywhere.com/ActivarCuenta/"+str(profile.pk*12345)
+			from_email= settings.EMAIL_HOST_USER
+			to_list=[user.email,'santiagochaparro@javeriana.edu.co']
+			send_mail(subject, message, from_email, to_list,fail_silently=False)
+			#Enviar correo de confirmacion fin---------------------------------------------
+			return render(request,'revisarCorreoPorFavor.html')
 	else:
 		Competencias_Form=competenciasForm()
 		User_Form= RegistroForm()
@@ -214,6 +254,10 @@ def subirObraLiteraria_view(request):
 		if Form.is_valid():
 			generos=Form2.save()
 			producto=Form.save(commit=False)
+			print(str(producto.archivo))
+			if str(producto.archivo) =='contenido/books/default.pdf':
+				msj="Error, tiene que subir obligatoriamente un archivo pdf para vender la obra"
+				return render(request,'SubirContenidoLiterario.html',{'Form':Form,'Form2':Form2,'msj':msj})
 			producto.user= request.user
 			producto.genero=generos
 			producto.save()
@@ -223,7 +267,8 @@ def subirObraLiteraria_view(request):
 			return HttpResponse("Submited")
 		else:
 			print("\n***********Formulario no valido")
-			return HttpResponse("Fallo")
+			msj="Error, datos incorrectos en el formulario"
+			return render(request,'SubirContenidoLiterario.html',{'Form':Form,'Form2':Form2,'msj':msj})
 	else:
 		Form2=generoLiterarioForm()
 		Form=contenidoLiterarioForm()
@@ -815,10 +860,13 @@ def editarContenidoLiterario_view(request,primaryKey):
 		if request.method =='POST':
 			Form=contenidoLiterarioForm(request.POST, request.FILES,instance=Libro)
 			Form2=generoLiterarioForm(request.POST,instance=Libro.genero)
-			print("aca llegue")
 			if Form.is_valid():
 				generos=Form2.save()
 				producto=Form.save(commit=False)
+
+				if str(producto.archivo) =='contenido/books/default.pdf':
+					msj="Error, tiene que subir obligatoriamente un archivo pdf para vender la obra"
+					return render(request,'SubirContenidoLiterario.html',{'Form':Form,'Form2':Form2,'msj':msj})
 				producto.user= request.user
 				producto.genero=generos
 				producto.save()
@@ -827,8 +875,8 @@ def editarContenidoLiterario_view(request,primaryKey):
 
 				return HttpResponse("Submited")
 			else:
-				print("\n***********Formulario no valido")
-				return HttpResponse("Fallo")
+				msj="Error en los datos del formulario"
+				return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2,'msj':msj})
 		else:
 			Form=contenidoLiterarioForm(instance=Libro)
 			Form2=generoLiterarioForm(instance=Libro.genero)
