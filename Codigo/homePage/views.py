@@ -467,6 +467,7 @@ def comprados_view(request):
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
 	manualidades=[]
+	infix=None
 	comprados =ArticulosComprados.objects.filter(usuario= infousuario.objects.get(user = request.user))
 	for item in comprados:
 		if( item.libro is not None):#Si es un libro
