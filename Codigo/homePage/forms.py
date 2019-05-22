@@ -12,6 +12,7 @@ from homePage.models import Comentario
 from homePage.models import competencias
 from homePage.models import GeneroLiterario
 from homePage.models import GeneroManualidad
+from homePage.models import GeneroMultimedia
 from homePage.models import BusquedaString
 from homePage.models import Mensajes
 from homePage.models import Contrato
@@ -23,6 +24,52 @@ from django.forms import ModelForm
 class logInForm (forms.Form):
 	nombreUsuario=forms.CharField(max_length=150, required=True, label ="Nombre de Usuario",widget=(forms.TextInput()))
 	contraseniaUsuario= forms.CharField(max_length=150, required=True, label= "Contraseña",widget=(forms.PasswordInput()))
+class generoMulimediaForm(forms.ModelForm):
+	class Meta:
+		model=GeneroMultimedia
+		fields=[
+		'Comedia',
+		'Drama',
+		'Retrato',
+		'Terror',
+		'Accion',
+		'Belico',
+		'CienciaFiccion',
+		'Aventura',
+		'DelOeste',
+		'ArtesMarciales',
+		'Fantastico',
+		'Suspenso',
+		'Historico',
+		'Adolescente',
+		'Infantil',
+		'Político_Social',
+		'Animacion',
+		]
+		widgets={
+		'Comedia':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Drama':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Retrato':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Terror':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Accion':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Belico':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'CienciaFiccion':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Aventura':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'DelOeste':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'ArtesMarciales':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Fantastico':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Suspenso':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Historico':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Adolescente':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Infantil':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Político_Social':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Animacion':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Comedia':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Drama':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Tragicomedia':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Terror':forms.CheckboxInput(attrs={'class':'form-control'}),
+		'Ciencia_Ficción':forms.CheckboxInput(attrs={'class':'form-control'}),
+		}
 class generoLiterarioForm(forms.ModelForm):
 	class Meta:
 		model=GeneroLiterario
@@ -254,7 +301,6 @@ class contenidoMultimediaForm(ModelForm):
 	class Meta:
 		model=contenidoMultimedia
 		fields= [
-		'user',
 		'title',
 		'descripcion',
 		'formato',
@@ -263,7 +309,6 @@ class contenidoMultimediaForm(ModelForm):
 		'fecha',
 		]
 		labels={
-		'user': 'Nombre del Autor',
 		'title': 'Titulo del Video',
 		'descripcion':'Descripcion del Video',
 		'formato':'Formato del Video',
@@ -272,6 +317,11 @@ class contenidoMultimediaForm(ModelForm):
 		'fecha': 'Fecha de Creacion',
 		}
 		widgets={
+		'title':forms.TextInput(attrs={'class':'form-control'}),
+		'descripcion':forms.TextInput(attrs={'class':'form-control'}),
+		'formato':forms.TextInput(attrs={'class':'form-control'}),
+		'precioV':forms.TextInput(attrs={'class':'form-control'}),
+		'fecha':forms.TextInput(attrs={'class':'form-control'}),
  			#'formato':forms.CheckboxSelectMultiple(),
  			#'genero': forms.CheckboxSelectMultiple(),
  			#'is_Creador_De_Contenido':forms.CheckBoxSelectMultiple

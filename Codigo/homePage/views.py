@@ -235,7 +235,6 @@ def mostrarObraLiteraria(request,primaryKey):
 
 
 	try:
-
 		Libro=infoLibro.objects.get(pk=primaryKey)
 
 
@@ -507,16 +506,7 @@ def compradores_view(request):
 
 
 
-def SubirContenidoMultimedia_view(request):
-    if request.method=='POST':
-        multimedia_form=contenidoMultimediaForm(request.POST)
-        if multimedia_form.is_valid():
-            return HttpResponse("Submited")
-        else:
-            return HttpResponse("Fallo")
-    else:
-        multimedia_form=contenidoMultimediaForm()
-    return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form})
+
 
 @login_required(login_url='/')
 def Donacion_view(request,primaryKey):
@@ -589,7 +579,16 @@ def AquienDone_view(request):
 	return render(request,'AquienDone.html',{'usuariosQDone':usuariosQDone})
 
 
-
+def SubirContenidoMultimedia_view(request):
+    if request.method=='POST':
+        multimedia_form=contenidoMultimediaForm(request.POST)
+        if multimedia_form.is_valid():
+            return HttpResponse("Submited")
+        else:
+            return HttpResponse("Fallo")
+    else:
+        multimedia_form=contenidoMultimediaForm()
+    return render(request,'SubirVideo.html',{'multimedia_form': multimedia_form})
 @login_required(login_url='/')
 def subirManualidades_view(request):
 	if request.method =='POST':

@@ -16,39 +16,34 @@ Catalogo Videos
       </div>
       <div class="col col-6">
         <div class="container-lit conteiner">
-          <h1 align="center" id="prim">Videos</h1>
+          <h1  align="center" id="prim">Videos</h1>
           <form class="site-form" method="post">
-            <table class="table table-hover">
-              <thead>
-                <tr class="table-primary">
-                  <th scope="row">ID</th>
-                  <td>Titulo</td>
-                  <td>Descripcion</td>
-                  <td>Autor</td>
-                  <td>Precio</td>
-                </tr>
-              </thead>
-              <tbody>
-                {% if videos %}
-                {% for video in videos %}
-                <tr>
-                  <td><a href="Producto/ContenidoMultimedia/{{video.pk}}">{{video.pk}}</a></td>
-                  <td>{{video.title}}</td>
-                  <td>{{video.descripcion}}</td>
-                  <td>{{video.user.username}}</td>
-                  <td>{{video.precioV}}</td>
-                </tr>
+            {% csrf_token %}
+              {% if videos %}
+              {% for video in videos %}
+              
+              <div class="section">
+                  <h4><a href="Producto/ContenidoMultimedia/{{video.pk}}">Articulo: {{video.pk}}</a></h4>
+                  <h1><em>{{video.title}}</em></h1>
+                  <figure><img src="{{manu.imagen.url}}" height="200px" width="200px" align="center" id="image">
+                  </figure>
+                  <h2>Descripcion: </h2>
+                  <p>{{video.descripcion}}</p>
+                  <h3>Autor: </h3>
+                  <p>{{video.user}}</p>
+                </div>
+           
                 {% endfor %}
 
                 {% else %}
-                <h1>No hay registros de videos</h1>
-                {% endif %}
-              </tbody>
-            </table>
+                <h1 align="center">No hay registros de Videos</h1>
+                {% endif %}            
           </form>
         </div>
       </div>
       <div class="col col-3"></div>
     </div>
   </div>
+
+    
 {% endblock %}

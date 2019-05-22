@@ -1,18 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Seleccionar contenido</title>
-</head>
-<body>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Subir Video
+{% endblock %}
+{% block content %}
+<h1 class="heading">Hora de Subir tu Contenido Mulimedia</h1>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<h2>Rellenar los campos del siguiente formulario para comenzar a vender su producto multimedia</h2>
+				<form class="site-form" method="post"  enctype="multipart/form-data">
 
-<h1>Bienvenido a la seccion donde puede subir su obra multimedia</h1>
-<p>Ingrese la info del video</p>
-	<form action="/" class="site-form" method="post">
-  		{% csrf_token %}
-		{{ multimedia_form.as_p}}	
-		<input type="submit" value="Subir Video">
-	</form>
+							{% csrf_token %}
+							{{ multimedia_form.as_p}}	
+
+				<input type="submit" value="Subir producto" id="Comprar">
+				</form>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
 
 
-</body>
-</html>
+{% endblock %}
