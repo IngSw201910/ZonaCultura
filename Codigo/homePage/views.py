@@ -39,7 +39,7 @@ def vistaContactos(request):
 			if request.GET.get(aux1) is not None:
 				print('Encontro articulo')
 				url= '/EnviarMensaje/'+aux1
-				print(url)
+				print("ava",url)
 				return redirect(url)
 	return render(request,'verContactos.html',{'infoContactos':infoContactos,'hayContactos':hayContactos})
 
@@ -474,8 +474,22 @@ def comprados_view(request):
 			libros.append(item.libro)
 		if( item.manualidad is not None):#Si es un libro
 			manualidades.append(item.manualidad)
+			establecerContacto(item.manualidad.user,request.user)
+			print("contacto ok")
+			infoUsu=item.manualidad.user
+			aux1=""+str(infoUsu.pk)	
+			aux1=aux1.strip()
+			#print(aux1)
+			if request.GET.get(aux1) is not None:
+				print('Encontro articulo')
+				url= '/EnviarMensaje/'+aux1
+				print("ava",url)
+				return redirect(url)
+				
 
-	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades})
+
+
+	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades,'infoUsu':infoUsu})
 @login_required(login_url='/')
 def compradores_view(request):
 	usuario= infousuario.objects.get(user = request.user)

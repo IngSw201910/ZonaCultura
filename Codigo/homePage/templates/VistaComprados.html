@@ -18,12 +18,17 @@ Vista comprados
 			<h2><em><i>Artículos:<em><i></h2>
 
 			{% for Libro in libros %}
+			<h4><a href="Producto/ContenidoLiterario/{{Libro.pk}}">
 			<p><em>Nombre Obra literaria:<em> {{Libro.Titulo}}</p>
 			<p>_____________________________</p>
 			{%endfor%}
 			{% for Manualidad in manualidades %}
-			<td><a href="Producto/ContenidoManualidad/Comentar/{{Manualidad.pk}}">Comentar</td>
-			<p><em>Nombre Obra Manual:<em> {{Manualidad.title}}</p>
+			<p>
+			<td><h4><a href="Producto/ContenidoManualidad/{{Manualidad.pk}}"><p><em>Nombre Obra Manual:<em> {{Manualidad.title}}</p></em></em></a></h4> <td><a href="Producto/ContenidoManualidad/Comentar/{{Manualidad.pk}}">Comentar</td></p>
+			<form method="get">
+             	 <input type="submit" value="Enviar Mensaje"  name="{{infoUsu.pk}}" id="msj">
+        		</form>
+
 				<p>_____________________________</p>	
 			{%endfor%}
 		</center>
