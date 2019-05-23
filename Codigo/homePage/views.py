@@ -684,14 +684,17 @@ def compradores_view(request):
 	usuario= infousuario.objects.get(user = request.user)
 	usuariosCompradores=[]
 	usuariosCompraManu=[]
+	usuariosCompraVid=[]
 	compradxres=Compradores.objects.filter(usuarioDuenio=infousuario.objects.get(user = request.user))
 	for item in compradxres:
 		if( item.usuarioComprador is not None and item.libro is not None ):#Si es un libro
 			usuariosCompradores.append(item)
 		if( item.usuarioComprador is not None and item.manualidad is not None ):#Si es un libro
 			usuariosCompraManu.append(item)
+		if( item.usuarioComprador is not None and item.multimedia is not None ):#Si es un libro
+			usuariosCompraVid.append(item)
 
-	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores,'usuariosCompraManu':usuariosCompraManu})
+	return render(request,'VistaCompradores.html',{'usuariosCompradores':usuariosCompradores,'usuariosCompraManu':usuariosCompraManu,'usuariosCompraVid':usuariosCompraVid})
 
 
 
@@ -1046,7 +1049,7 @@ def editarMultimedia_view(request,primaryKey):
         multimedia_form=contenidoMultimediaForm(instance=video)
         multimedia_form2=GeneroMultimediaForm(instance=video.genero)
     return render(request,'EditarContenidoMultimedia.html',{'Form':multimedia_form,'Form2':multimedia_form2,'mensjj':mensjj})
-    
+
 @login_required(login_url='/')
 def editarUsuarioInfo(request):
 	#asegurarse que el usuario sea el mismo
