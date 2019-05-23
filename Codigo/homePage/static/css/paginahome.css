@@ -21,6 +21,12 @@
 	margin-left: 15px;
 	font-family: 'Baloo Bhai', cursive;
 }
+#content2{
+	margin-top: 50px;
+	border-style: solid;
+	border-color: black;
+	background-color:#9E97D7 ;
+}
 .container-info{
 	background-color: #9E97D7;
 	margin-top: 150px;

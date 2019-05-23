@@ -72,7 +72,8 @@ def EnviarMensaje(request, primaryKey):
 			mensaje.Receptor=User.objects.get(id=primaryKey)
 			mensaje.fecha=datetime.now()
 			mensaje.save()
-			return HttpResponse("Mensaje Enviado")
+			msj="Mensaje enviado con exito"
+			return render(request,'HomePage.html',{'msj':msj})
 		#end if
 	else:
 		form=MensajeForm()
@@ -158,7 +159,9 @@ def contratar_view(request, primaryKey):
 				else:
 					return redirect('/CompraCredito')
 			else:
-				return HttpResponse("El usuario al que desea contratar no es se ha confirmado como colaborador. Por favor busque a alguien más")
+				msj="El usuario al que desea contratar no es se ha confirmado como colaborador. Por favor busque a alguien más"
+				return render(request,'Contratar.html',{'Receptor':infousuario.objects.get(pk=primaryKey),'Contrato_Form':Contrato_Form, 'msj':msj })
+				
 		else:
 			Contrato_Form = ContratoForm()
 
@@ -189,7 +192,6 @@ def contrato_view(request, primaryKey):
 	if request.GET.get('Salir'):
 		logout(request)
 		return redirect('/')
-
 	contrato = Contrato.objects.get(pk=primaryKey, Receptor=request.user)
 	msj = None
 	if request.GET.get('aceptar'):
@@ -247,7 +249,8 @@ def index(request):
 
 		#-------------------------------------------------------------------------------------n redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
-			return HttpResponse("Usuario o contraseña no coincide/existe")
+			msj="Usuario o contraseña no coincide/existe"
+			return render(request, 'paginaInicio.html',{'form':form,"msj":msj})
 	else:
 		form=logInForm()
 	return render(request, 'paginaInicio.html',{'form':form})
@@ -259,7 +262,8 @@ def activarCueta_view(request,codigo):
 	aux=infousuario.objects.get(pk=idcuenta)
 	aux.tieneCuentaActivada=True
 	aux.save()
-	return HttpResponse (aux.user.username+",Su cuenta ha sido activada")
+	msj="Su cuenta ha sido Activada con exito"
+	return render(request, 'paginaInicio.html',{'form':form,"msj":msj})
 #----------------------------------------------
 
 def registro_view(request):
@@ -316,7 +320,7 @@ def homePage_view(request):
 
 @login_required(login_url='/')
 def perfil_view(request):
-
+	
 	user=infousuario.objects.get(user=request.user)
 	if request.GET.get('Salir'):
 		logout(request)

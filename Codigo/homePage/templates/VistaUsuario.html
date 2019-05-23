@@ -73,7 +73,7 @@ Usuario {{Usu.user.first_name}}
 					{% csrf_token %}
 				 <button class="btn btn-success"><a href="Donacion/{{Usu.pk}}">donar</a></button>
 				 {%if Usu.es_Colaborador %}
-					<button type="submit" class="btn btn-secondary" value="Ofrecer Contrato" name="contratar"><a href="Contratar/{{Usu.pk}}">Ofrecer Contrato</a></button>
+					<button type="submit" class="btn btn-success" value="Ofrecer Contrato" name="contratar"><a href="Contratar/{{Usu.pk}}">Ofrecer Contrato</a></button>
 				{%endif%}
 			</form>
 				</div>

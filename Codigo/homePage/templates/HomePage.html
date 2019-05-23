@@ -26,7 +26,11 @@ Home Page
       <div class="col col-3"></div>
     </div>
   </div>
-
+<script>
+  {%if msj is not None%}
+      alert('{{ msj }}');
+    {%endif%}
+</script>
 {% endblock %}
   
 

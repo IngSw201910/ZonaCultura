@@ -1,9 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cerrar cuenta</title>
+	<link rel="stylesheet" href="static/css/Registro.css">
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap1.min.css">
+	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+	<script type="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    
+</head>
+<body class="body">
+	<div class="section">
+		<button type="submit" class="btn btn-primary"><a href="/HomePage"><i class="fas fa-caret-square-left"></i>  Volver</a></button>
+	</div>
+	<div>
+		<div class="columns row">
+			<div class="column-2 col col-3"></div>
+			<div class="column col col-6">
+				<h1 class="heading">SIGA SIENDO PARTE DE NUESTRA <br> COMUNIDAD</h1>				
+			</div>
+			<div class="col col-3"></div>			
+		</div>
+	</div>
+	<div class="conteiner conteiner">
+	</div>
+	<div>
+		<div class="row">
+			<div class="col col-6">
+				<div class="container-2 conteiner">
 
-<p> ¿Estas seguro de que quieres cerrar tu cuenta?</p> 
+						<h1 align="center">¿Estas seguro de que quieres cerrar tu cuenta?</h1> 
+						<form method = "GET">
 
-<form method = "GET">
+						<button  class="btn btn-secondary" type="submit"  value="Si" name='Si'>Si</button>
 
-<button  class="btn btn-secondary" type="submit"  value="Si" name='Si'>Si</button>
+						<button  class="btn btn-secondary" type="submit"  value="No" name='No'>No</button>
+					</form>
+				</div>
+			</div>
+			<div class="col col-3"><img src="static/img/manchas2.png" class="image-2" width="300" height="300"></div>
+		</div>
+	</div>
+<script>
+	{%if msj is not None%}
+    	alert('{{ msj }}');
+    {%endif%}
+</script>
+</body>
+</html>
 
-<button  class="btn btn-secondary" type="submit"  value="No" name='No'>No</button>
-</form>
+
+
