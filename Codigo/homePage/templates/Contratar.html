@@ -21,6 +21,11 @@ Contratar
 			  	{% csrf_token %}
 				{{ Contrato_Form.as_p }}
 				<input type="submit" value="Contratar" id="Contratar">
+        <script>
+        	{%if msj is not None%}
+            	alert('{{ msj }}');
+            {%endif%}
+        </script>
 			</form>
 		</div>
 	<div class="col col-3"></div>

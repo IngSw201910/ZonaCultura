@@ -27,6 +27,10 @@ def establecerContacto(usuario1, usuario2):
 
 @login_required(login_url='/')
 def vistaContactos(request):
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	infoContactos=[]
 	hayContactos=True;
 	listaContactos=Contactos.objects.filter(Activo=request.user)
@@ -49,6 +53,10 @@ def vistaContactos(request):
 
 @login_required(login_url='/')
 def EnviarMensaje(request, primaryKey):
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	esContato=False
 	listaContactos=Contactos.objects.filter(Activo=request.user)
 	for q in listaContactos:
@@ -74,6 +82,11 @@ def EnviarMensaje(request, primaryKey):
 
 @login_required(login_url='/')
 def bandejaView (request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	hayMensajes=True
 	listaMensajes=Mensajes.objects.order_by('-fecha').filter(Receptor=request.user)
 	for Mensaje in listaMensajes:
@@ -89,6 +102,11 @@ def bandejaView (request):
 
 @login_required(login_url='/')
 def video_View(request, primaryKey):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	video=contenidoMultimedia.objects.get(pk=primaryKey)
 	if video is not None:
 		return render(request, 'visualizarVideo.html',{'video':video})
@@ -98,6 +116,11 @@ def video_View(request, primaryKey):
 
 @login_required(login_url='/')
 def mensajeView(request, primaryKey):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	Mensaje=Mensajes.objects.get(pk=primaryKey, Receptor=request.user)
 	if request.GET.get('responder'):
 		return redirect('/EnviarMensaje/'+str(Mensaje.Emisor.pk))
@@ -108,13 +131,18 @@ def mensajeView(request, primaryKey):
 
 @login_required(login_url='/')
 def contratar_view(request, primaryKey):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	if request.method =='POST' or request.method =='GET':
 		Contrato_Form = ContratoForm(request.POST)
 		if Contrato_Form.is_valid():
 
 			auxEmisor = infousuario.objects.get(user=request.user)
 			auxReceptor = infousuario.objects.get(pk=primaryKey)
-
+			msj =None
 			if auxReceptor.es_Colaborador:
 				data = Contrato_Form.cleaned_data
 				salario = data.get("valorOfrecido")
@@ -125,7 +153,8 @@ def contratar_view(request, primaryKey):
 					contrato = Contrato.objects.create(valorOfrecido = salario, Emisor = auxEmisor.user, Receptor = auxReceptor.user, Titulo = titulo, Cuerpo = mensaje)
 					auxEmisor.balance = auxEmisor.balance - salario
 					auxEmisor.save()
-					return HttpResponse("Contrato enviado.")
+					msj = "Contrato enviado"
+					return render(request,'Contratar.html',{'Receptor':infousuario.objects.get(pk=primaryKey),'Contrato_Form':Contrato_Form, 'msj':msj })
 				else:
 					return redirect('/CompraCredito')
 			else:
@@ -137,6 +166,11 @@ def contratar_view(request, primaryKey):
 
 @login_required(login_url='/')
 def bandejaContrato_view (request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	hayContratos = True
 	contratosRecibidos=Contrato.objects.order_by('-fecha').filter(Receptor=request.user)
 	for contratoDado in contratosRecibidos:
@@ -151,15 +185,21 @@ def bandejaContrato_view (request):
 
 @login_required(login_url='/')
 def contrato_view(request, primaryKey):
-	contrato = Contrato.objects.get(pk=primaryKey, Receptor=request.user)
 
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
+	contrato = Contrato.objects.get(pk=primaryKey, Receptor=request.user)
+	msj = None
 	if request.GET.get('aceptar'):
 		establecerContacto(contrato.Emisor, contrato.Receptor)
 		auxReceptor = infousuario.objects.get(user = contrato.Receptor)
 		auxReceptor.balance = auxReceptor.balance + contrato.valorOfrecido
 		auxReceptor.save()
 		contrato.delete()
-		return HttpResponse("El contrato ha sido aceptado. Se ha añadido al usuario a sus lista de contactos.")
+		msj = "El contrato ha sido aceptado. Se ha añadido al usuario a sus lista de contactos."
+		return render(request, 'contrato.html',{'contrato': contrato, 'msj':msj})
 
 	if request.GET.get('rechazar'):
 		auxEmisor = infousuario.objects.get(user = contrato.Emisor)
@@ -276,6 +316,7 @@ def homePage_view(request):
 
 @login_required(login_url='/')
 def perfil_view(request):
+
 	user=infousuario.objects.get(user=request.user)
 	if request.GET.get('Salir'):
 		logout(request)
@@ -307,6 +348,11 @@ def perfil_view(request):
 
 @login_required(login_url='/')
 def cerrarCuenta_view(request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	if request.GET.get('Si'):
 		aux=infousuario.objects.get(user=request.user)
 		aux.cuantaCerrada=True
@@ -324,6 +370,7 @@ def libros_view(request):
 
 @login_required(login_url='/')
 def multimedia_view(request):
+
 	videos=contenidoMultimedia.objects.all()
 	contexto={'videos':videos}
 	return render(request,'catalogoVideos.html',contexto)
@@ -333,10 +380,20 @@ def manualidad_view(request):
 	return render(request,'catalogoMultimedia.html',contexto)
 @login_required(login_url='/')
 def subirObra_view (request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	return render(request,'SubirObra.html');
 
 @login_required(login_url='/')
 def subirObraLiteraria_view(request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	if request.method =='POST':
 		Form=contenidoLiterarioForm(request.POST, request.FILES)
 		Form2=generoLiterarioForm(request.POST)
@@ -434,6 +491,10 @@ def mostrarObraLiteraria(request,primaryKey):
 def mostrarMultimedia(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	print(primaryKey)
 
 
@@ -519,6 +580,11 @@ def mostrarMultimedia(request,primaryKey):
 
 @login_required(login_url='/')
 def comprarCredito_view(request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	msj=None
 	if request.method =='POST':
 
@@ -711,6 +777,11 @@ def carrito_view(request):
 	return render(request,'CarritoVista.html',{'libros':libros, 'manualidades': manualidades,'multimedias':multimedias,'Subtotal': total,'carrito':carri,'mjs':mjs})
 @login_required(login_url='/')
 def comprados_view(request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	usuario= infousuario.objects.get(user = request.user)
 	libros=[]
 	manualidades=[]
@@ -738,6 +809,11 @@ def comprados_view(request):
 	return render(request,'VistaComprados.html',{'libros':libros,'manualidades':manualidades,'infix':infix})
 @login_required(login_url='/')
 def compradores_view(request):
+
+	if request.GET.get('Salir'):
+		logout(request)
+		return redirect('/')
+
 	usuario= infousuario.objects.get(user = request.user)
 	usuariosCompradores=[]
 	usuariosCompraManu=[]
@@ -1319,11 +1395,11 @@ def busquedaObraGeneral_view(request):
 
 	for libro in libros:
 		if palabra in libro.Titulo:
-				librosPasan.append(libro)
+			librosPasan.append(libro)
 
 	for manualidad in manualidades:
 		if palabra in manualidad.title:
-				manualidadesPasan.append(manualidad)
+			manualidadesPasan.append(manualidad)
 
 	for video in videos:
 		if palabra in video.title:

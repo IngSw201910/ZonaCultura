@@ -86,7 +86,7 @@ Resultado Busqueda
           </thead>
           <tbody>
             <tr>
-              <td><a href="Producto/ContenidoMultimedia/{{manualidad.pk}}">{{manualidad.pk}}</a></td>
+              <td><a href="Producto/ContenidoManualidad/{{manualidad.pk}}">{{manualidad.pk}}</a></td>
               <td>{{manualidad.title}}</td>
               <td>
                 {% if manualidad.genero.Bodegon %}
@@ -149,8 +149,8 @@ Resultado Busqueda
 
       <div class="container-lit conteiner">
         <h1 class="heading">Obras Multimedia Encontradas</h1>
-        
-            
+
+
       {% if videosPasan %}
           <form class="site-form" method="post">
           <table class="table table-hover">
@@ -237,7 +237,7 @@ Resultado Busqueda
               {% else %}
               <h1 align="center">No hay registros de obras multimedia que cumplan con esas características</h1>
               {% endif %}
-     
+
         </form>
       </div>
 

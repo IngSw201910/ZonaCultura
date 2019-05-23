@@ -26,6 +26,11 @@ Visualizar contrato
       </form>
       <form method="get">
         <input type="submit" value="Aceptar contrato" name="aceptar" id="accept">
+        <script>
+        	{%if msj is not None%}
+            	alert('{{ msj }}');
+            {%endif%}
+        </script>
       </form>
 		</div>
 	<div class="col col-3"></div>
