@@ -588,6 +588,7 @@ def carrito_view(request):
                     if(item.manualidad is not None and item.manualidad.existencias !=0):
                         ArticulosComprados.objects.create(manualidad= item.manualidad, usuario=usuario)#esto va a cambiar cuando agregemos multimedia y manualidades
                         usuarioDd= infousuario.objects.get(user =item.manualidad.user)
+                        establecerContacto(item.manualidad.user,request.user)
                         item.manualidad.existencias=item.manualidad.existencias-1
                         item.manualidad.save()
                         Compradores.objects.create(manualidad=item.manualidad,usuarioDuenio=usuarioDd,usuarioComprador=usuario)
@@ -663,7 +664,6 @@ def comprados_view(request):
 			libros.append(item.libro)
 		if( item.manualidad is not None):#Si es un libro
 			manualidades.append(item.manualidad)
-			establecerContacto(item.manualidad.user,request.user)
 			print("contacto ok")
 			infix=item.manualidad.user
 			aux1=""+str(infix.pk)	
