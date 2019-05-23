@@ -10,10 +10,10 @@ Usuario {{Usu.user.first_name}}
 	<div class="row">
 			<div class="col col-3">
 				<h1 class="namess">{{Usu.user.username}} </h1>
-				<div class="img-conteiner">	
+				<div class="img-conteiner">
 					<img src="{{Usu.profile_img.url}}" width="300" height="300">
 				</div>
-				
+
 			</div>
 			<div class="col col-6">
 				<div class="container-info conteiner">
@@ -22,7 +22,7 @@ Usuario {{Usu.user.first_name}}
 					<h2><em><i>Talentos:</i></em></h2>
 						<font face="Trebuchet MS" size="5"><p>
 								{% if Usu.aficiones.Escritor %}
-						
+
 								Escritor |
 								{% endif %}
 								{% if Usu.aficiones.Pintor %}
@@ -72,12 +72,12 @@ Usuario {{Usu.user.first_name}}
 				<form method="get">
 					{% csrf_token %}
 				 <button class="btn btn-success"><a href="Donacion/{{Usu.pk}}">donar</a></button>
-	  				{%if Usu.es_Colaborador %}
-	   			 <button type="submit" class="btn btn-secondary" value="Ofrecer Contrato" name="contratar"> Ofrecer Contrato </button>
-	 			 {%endif%}
+				 {%if Usu.es_Colaborador %}
+					<button type="submit" class="btn btn-secondary" value="Ofrecer Contrato" name="contratar"><a href="Contratar/{{Usu.pk}}">Ofrecer Contrato</a></button>
+				{%endif%}
 			</form>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>

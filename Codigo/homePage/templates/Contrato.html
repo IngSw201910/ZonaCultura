@@ -1,20 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Contrato</title>
-</head>
-<body>
-  <p>Titulo del Contrato: {{Contrato.Titulo}}</p>
-  <p>De: {{Contrato.Emisor.first_name}} {{Contrato.Emisor.last_name}} ({{Contrato.Emisor.username}})</p>
-  <p>
-  	Contenido del Contrato:
-  	{{Contrato.Cuerpo}}
-  </p>
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Visualizar contrato
+{% endblock %}
+{% block content %}
+<h1 class="heading">Contrato: </h1>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<center>
+			<h2><em>Titulo del contrato: <em> {{contrato.Titulo}}</h2>
+			<h3><em>De: </em>{{contrato.Emisor.first_name}} {{contrato.Emisor.last_name}} ({{contrato.Emisor.username}})</h3>
+			<h3>
+			<em>Contenido del contrato:</em></h3>
+			<p>
+			{{contrato.Cuerpo}}
+			</p>
+			</center>
+      <form method="get">
+        <input type="submit" value="Rechazar contrato" name="rechazar" id="reject">
+      </form>
+      <form method="get">
+        <input type="submit" value="Aceptar contrato" name="aceptar" id="accept">
+      </form>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
 
-
-  <form method="get">
-    <input type="submit" value="Aceptar contrato" name="aceptar">
-    <input type="submit" value="Rechazar contrato" name="eliminar">
-  </form>
-</body>
-</html>
+{% endblock %}

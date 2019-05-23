@@ -107,14 +107,69 @@ def mensajeView(request, primaryKey):
 		raise Http404
 
 @login_required(login_url='/')
-def contratoView(request, primaryKey):
-	Contrato = Contrato.objects.get(pk=primaryKey, Receptor=request.user)
+def contratar_view(request, primaryKey):
+	if request.method =='POST' or request.method =='GET':
+		Contrato_Form = ContratoForm(request.POST)
+		if Contrato_Form.is_valid():
 
-	if request.GET.get('responder'):
-		return redirect('/EnviarMensaje/'+str(Mensaje.Emisor.pk))
+			auxEmisor = infousuario.objects.get(user=request.user)
+			auxReceptor = infousuario.objects.get(pk=primaryKey)
 
-	if Mensaje is not None:
-		return render(request, 'Contrato.html',{'Contrato':Contrato})
+			if auxReceptor.es_Colaborador:
+				data = Contrato_Form.cleaned_data
+				salario = data.get("valorOfrecido")
+				titulo = data.get("Titulo")
+				mensaje = data.get("Cuerpo")
+
+				if auxEmisor.balance >= salario:
+					contrato = Contrato.objects.create(valorOfrecido = salario, Emisor = auxEmisor.user, Receptor = auxReceptor.user, Titulo = titulo, Cuerpo = mensaje)
+					auxEmisor.balance = auxEmisor.balance - salario
+					auxEmisor.save()
+					return HttpResponse("Contrato enviado.")
+				else:
+					return redirect('/CompraCredito')
+			else:
+				return HttpResponse("El usuario al que desea contratar no es se ha confirmado como colaborador. Por favor busque a alguien más")
+		else:
+			Contrato_Form = ContratoForm()
+
+	return render(request,'Contratar.html',{'Receptor':infousuario.objects.get(pk=primaryKey),'Contrato_Form':Contrato_Form})
+
+@login_required(login_url='/')
+def bandejaContrato_view (request):
+	hayContratos = True
+	contratosRecibidos=Contrato.objects.order_by('-fecha').filter(Receptor=request.user)
+	for contratoDado in contratosRecibidos:
+			aux1 = str(contratoDado.pk)
+			aux1 = aux1.strip()
+			if request.GET.get(aux1) is not None:
+				contratoDado.delete()
+				return redirect('/BandejaContrato')
+	if not contratosRecibidos:
+		hayContratos = False
+	return render(request, 'BandejaContrato.html',{'contratos':contratosRecibidos, 'hayContratos':hayContratos})
+
+@login_required(login_url='/')
+def contrato_view(request, primaryKey):
+	contrato = Contrato.objects.get(pk=primaryKey, Receptor=request.user)
+
+	if request.GET.get('aceptar'):
+		establecerContacto(contrato.Emisor, contrato.Receptor)
+		auxReceptor = infousuario.objects.get(user = contrato.Receptor)
+		auxReceptor.balance = auxReceptor.balance + contrato.valorOfrecido
+		auxReceptor.save()
+		contrato.delete()
+		return HttpResponse("El contrato ha sido aceptado. Se ha añadido al usuario a sus lista de contactos.")
+
+	if request.GET.get('rechazar'):
+		auxEmisor = infousuario.objects.get(user = contrato.Emisor)
+		auxEmisor.balance = auxEmisor.balance + contrato.valorOfrecido
+		auxEmisor.save()
+		contrato.delete()
+		return redirect('/BandejaContrato')
+
+	if contrato is not None:
+		return render(request, 'contrato.html',{'contrato': contrato})
 	else:
 		raise Http404
 
@@ -149,7 +204,7 @@ def index(request):
 				msj="La cuenta todavia no ha sido activada, por favor revisar correo"
 				return render(request, 'paginaInicio.html',{'form':form,"msj":msj})
 
-			
+
 		#-------------------------------------------------------------------------------------n redirect('/HomePage')#TODO: return pagina de inicio despues de iniciar sesion
 		else:
 			return HttpResponse("Usuario o contraseña no coincide/existe")
@@ -242,6 +297,8 @@ def perfil_view(request):
 		return redirect('/BandejaEntrada')
 	if request.GET.get('cerrarcuenta'):
 		return redirect('/CerrarCuenta')
+	if request.GET.get('Contratos'):
+		return redirect('/BandejaContrato')
 	return render(request, 'PerfilPropio.html',{'user':user})
 
 
@@ -458,13 +515,13 @@ def mostrarMultimedia(request,primaryKey):
 	return render(request, 'mostrarContenidoMultimedia.html',{'User':request.user,'video':video,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion})
 
 
-	
+
 
 @login_required(login_url='/')
 def comprarCredito_view(request):
 	msj=None
 	if request.method =='POST':
-		
+
 		Card_Form= contenidoTarjetaForm(request.POST)
 		Credit_Form= contenidoCreditForm(request.POST)
 		if Card_Form.is_valid() and Credit_Form.is_valid():
@@ -561,7 +618,7 @@ def carrito_view(request):
 
 	if request.GET.get('carrito'):#realizar transacciones
 			#print('Hello! el libro con id: ',Libro.id)
-			
+
             if usuario.balance >= total:# realizar transaccion
                 usuario.balance=usuario.balance-total
                 print(usuario.balance)
@@ -609,7 +666,7 @@ def carrito_view(request):
                     mjs="No se pudieron comprar todas las unidades, verifique las existencias del producto"
 					#return HttpResponse("No se pudieron comprar todos los elemntos, verifique quizás las existencias del articulo se agotaron ")
                 else:
-					
+
                     auxi=1
                     if(auxi==1):
                        return redirect('/CarritoVista')
@@ -666,7 +723,7 @@ def comprados_view(request):
 			manualidades.append(item.manualidad)
 			print("contacto ok")
 			infix=item.manualidad.user
-			aux1=""+str(infix.pk)	
+			aux1=""+str(infix.pk)
 			aux1=aux1.strip()
 			#print(aux1)
 			if request.GET.get(aux1) is not None:
@@ -674,7 +731,7 @@ def comprados_view(request):
 				url= '/EnviarMensaje/'+aux1
 				print("ava",url)
 				return redirect(url)
-				
+
 
 
 
@@ -745,8 +802,7 @@ def mostrarUsuario(request,primaryKey):
 	try:
 		Usu=infousuario.objects.get(pk=primaryKey)
 		if request.GET.get('contratar'):
-			return redirect('/')
-		print("hola1")
+			return redirect('/VistaUsuario/Usuario/Contratar/'+Usu.pk)
 	except:
 		raise Http404
 	return render(request, 'VistaUsuario.html' ,{'Usu':Usu})
@@ -1030,7 +1086,7 @@ def editarMultimedia_view(request,primaryKey):
     mensjj=None
     video=contenidoMultimedia.objects.get(pk=primaryKey)
     if video.user.pk != request.user.pk: ##LO AGREGO SANTIAGO
-        raise Http404	
+        raise Http404
     if request.method=='POST':
         multimedia_form=contenidoMultimediaForm(request.POST, request.FILES,instance=video)
         multimedia_form2=GeneroMultimediaForm(request.POST,instance=video.genero)

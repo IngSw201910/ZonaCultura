@@ -1,0 +1,31 @@
+{% extends 'plantillaGeneral.html' %}
+	{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	{% endblock %}
+
+{% block title %}
+Contratar
+{% endblock %}
+{% block content %}
+
+
+<h1 class="heading" align="center">Rellenar los campos del siguiente formulario para contratar al usuario seleccionado</h1>
+
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<h2><em><i>Nombre del usuario al que que desea contratar : </i></em><br>{{Receptor.user.first_name}} {{Receptor.user.last_name}}</h2>
+			<form class="site-form" method="post"  enctype="multipart/form-data">
+			  	{% csrf_token %}
+				{{ Contrato_Form.as_p }}
+				<input type="submit" value="Contratar" id="Contratar">
+			</form>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+</div>
+
+
+{% endblock %}

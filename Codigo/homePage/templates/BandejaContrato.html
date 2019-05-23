@@ -1,0 +1,33 @@
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+Bandeja
+{% endblock %}
+{% block content %}
+<h1 class="heading">Bandeja de Contratos</h1>
+<center>
+{% if hayContratos == False%}
+<h2>No hay contratos</h2>
+{% endif %}
+
+{% if hayContratos == True%}
+	<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<center>
+	{% for contrato in contratos %}
+		<p><i><font face="Trebuchet MS" size="5"><a href="/BandejaContrato/{{contrato.pk}}">  {{contrato.Titulo}} </i></a> de :  <em>{{contrato.Emisor.first_name}} {{contrato.Emisor.last_name}} -- ({{contrato.Emisor.username}}) </em> </p> </font>
+	{%endfor%}
+		</center>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
+
+{%endif%}
+</center>
+{% endblock %}
