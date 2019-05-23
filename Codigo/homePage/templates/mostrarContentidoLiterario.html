@@ -30,10 +30,12 @@
 		{% if User.pk == Libro.user.pk %}
 			<button id="Comprar4"><a href="/Producto/ContenidoLiterario/Editar/{{Libro.pk}}">EDITAR</a></button>
 		{% else %}
+		{%if permitir2 %}
 		<form method="get">
 
 			<input type="submit" value="Añadir al carrito" name="carrito" id="Comprar2">
 		</form>
+		{% endif %}
 		{% endif %}
 
 	</center>	

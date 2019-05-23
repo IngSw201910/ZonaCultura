@@ -424,14 +424,15 @@ def mostrarObraLiteraria(request,primaryKey):
 	#allObjects=infoLibro.objects.all()
 	#print([p.pk for p in allObjects])
 	print(primaryKey)
-
-
+	permitir2=True
+	mostrarBotonCarrito=True
 	try:
 		Libro=infoLibro.objects.get(pk=primaryKey)
 
 
 
 		if(ArticulosComprados.objects.filter(usuario=infousuario.objects.get(user = request.user),libro=Libro).first() is not None):
+			permitir2=False
 			permitir=False
 			print('lo tiene')
 		else:
@@ -447,16 +448,20 @@ def mostrarObraLiteraria(request,primaryKey):
 					response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
 					return response
 				#print(file_path)
-
+		c=Carrito.objects.filter(libro=Libro,usuario=infousuario.objects.get(user=request.user)).first()
+		if c is not None:
+			permitir2=False
 		if request.GET.get('carrito'):
 			print('Hello! el libro con id: ',Libro.id)
-			c=Carrito.objects.filter(libro=Libro,usuario=infousuario.objects.get(user=request.user)).first()
 			print(c)
 			if c is None :
 				carro=Carrito.objects.create(libro= Libro, usuario=infousuario.objects.get(user=request.user))
 				return redirect('/CarritoVista')
 			else:
-				return HttpResponse("Usted ya tiene este elemento en el carrito")
+
+				mostrarBotonCarrito=False
+
+
 			#carro.usuario=infousuario.objects.get(user=request.user)
 			#print("Usuario:",infousuario.objects.get(user=request.user).id)
 	except:
@@ -484,7 +489,7 @@ def mostrarObraLiteraria(request,primaryKey):
 		for comentario in comentarios:
 			promedioCalificacion=promedioCalificacion+comentario.califi
 		promedioCalificacion=promedioCalificacion/len(comentarios)
-	return render(request, 'mostrarContentidoLiterario.html',{'User':request.user,'Libro':Libro,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion})
+	return render(request, 'mostrarContentidoLiterario.html',{'User':request.user,'Libro':Libro,'generos':aux, 'permitir':permitir, 'hayComentarios':hayComentarios, 'comentarios':comentarios, 'promedioCalificacion':promedioCalificacion, 'mostrarBotonCarrito':mostrarBotonCarrito, 'permitir2':permitir2})
 
 
 @login_required(login_url='/')
