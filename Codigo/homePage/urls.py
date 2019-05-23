@@ -38,6 +38,8 @@ urlpatterns=[
 	path('Producto/ContenidoLiterario/Comentar/<int:primaryKey>', views.comentarios_calificacionLibro),
 	path('Producto/ContenidoManualidad/Editar/<int:primaryKey>', views.editarManualidades_view),
 	path('Producto/ContenidoLiterario/Editar/<int:primaryKey>', views.editarContenidoLiterario_view),
+	path('Producto/ContenidoMultimedia/Editar/<int:primaryKey>', views.editarMultimedia_view),
+	path('VistaVideo/<int:primaryKey>', views.video_View),
 	path('VistaUsuario/Usuario/<int:primaryKey>', views.mostrarUsuario),
 	path('Producto/ContenidoMultimedia/<int:primaryKey>', views.mostrarMultimedia),
 	path('Producto/ContenidoLiterario/<int:primaryKey>', views.mostrarObraLiteraria),

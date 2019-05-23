@@ -87,7 +87,13 @@ def bandejaView (request):
 	return render(request, 'Bandeja.html',{'listaMensajes':listaMensajes, 'hayMensajes':hayMensajes})
 
 
-
+@login_required(login_url='/')
+def video_View(request, primaryKey):
+	video=contenidoMultimedia.objects.get(pk=primaryKey)
+	if video is not None:
+		return render(request, 'visualizarVideo.html',{'video':video})
+	else:
+		raise Http404
 
 
 @login_required(login_url='/')
@@ -1017,7 +1023,30 @@ def editarContenidoLiterario_view(request,primaryKey):
 			Form2=generoLiterarioForm(instance=Libro.genero)
 
 		return render(request,'EditarManualidad.html',{'Form':Form,'Form2':Form2})
-
+def editarMultimedia_view(request,primaryKey):
+    mensjj=None
+    video=contenidoMultimedia.objects.get(pk=primaryKey)
+    if video.user.pk != request.user.pk: ##LO AGREGO SANTIAGO
+        raise Http404	
+    if request.method=='POST':
+        multimedia_form=contenidoMultimediaForm(request.POST, request.FILES,instance=video)
+        multimedia_form2=GeneroMultimediaForm(request.POST,instance=video.genero)
+        if multimedia_form.is_valid():
+            generos=multimedia_form2.save()
+            producto=multimedia_form.save(commit=False)
+            producto.user=request.user
+            producto.genero=generos
+            producto.save()
+            mensjj="Submited"
+        else:
+            print("\n***********Formulario no valido")
+            mens="Fallo"
+            return HttpResponse("Fallo")
+    else:
+        multimedia_form=contenidoMultimediaForm(instance=video)
+        multimedia_form2=GeneroMultimediaForm(instance=video.genero)
+    return render(request,'EditarContenidoMultimedia.html',{'Form':multimedia_form,'Form2':multimedia_form2,'mensjj':mensjj})
+    
 @login_required(login_url='/')
 def editarUsuarioInfo(request):
 	#asegurarse que el usuario sea el mismo

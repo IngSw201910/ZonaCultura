@@ -21,12 +21,12 @@
 	{%if permitir == False%}
 	<p> Ver video:</p>
 	<form method="get">  	
-	<input type="submit" value="ver" name="ver"  id="Comprar2">
+	<button type="submit" value="ver" name="ver"  id="Comprar4"><a href="/VistaVideo/{{video.pk}}">VER</a></button> 
 	</form>
 
 	{% endif %}
 		{% if User.pk == video.user.pk %}
-			<button id="Comprar4"><a href="/">EDITAR</a></button>
+			<button id="Comprar4"><a href="/Producto/ContenidoMultimedia/Editar/{{video.pk}}">EDITAR</a></button>
 		{% else %}
 		<form method="get">
 
@@ -54,15 +54,3 @@
 
 {% endblock %}
 
-<h1>{{video.title}}</h1>
-<p>Descripcion del video: {{video.descripcion}}</p>
-
-<p> video: </p><video src="{{video.clip.url}}" controls></video>
-
-
-
-<a href="/HomePage">Volver a la Pagina de Inicio</a>
-
-
-</body>
-</html>

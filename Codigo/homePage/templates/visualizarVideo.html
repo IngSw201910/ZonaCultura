@@ -1,0 +1,28 @@
+{% extends 'plantillaGeneral.html' %}
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}
+{{video.title}}
+{% endblock %}
+{% block content %}
+<h1 class="heading">{{video.title}}</h1>
+<div class="row">
+	<div class="col col-3"></div>
+	<div class="col col-6">
+		<div class="container-7 conteiner">
+			<center>
+				<h2><em><i>Descripcion del video:</em></i></h2>
+				<p>	{{video.descripcion}}	</p> 
+
+				<h2><em><i>video: </em></i></h2>
+				<video src="{{video.clip.url}}" controls></video>
+
+			</center>
+		</div>
+	<div class="col col-3"></div>
+	</div>
+<div>
+	
+{% endblock %}
